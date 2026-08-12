@@ -1,0 +1,1562 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FYUL Interview Prep — Supply Product Manager</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f5f5f3;
+      --surface: #ffffff;
+      --surface2: #f0f0ee;
+      --border: #e0e0dc;
+      --border2: #ccccca;
+      --green: #1a7a40;
+      --teal: #0e7a74;
+      --blue: #1a6a85;
+      --red: #c0392b;
+      --yellow: #a07800;
+      --text: #1a1a1a;
+      --muted: #888888;
+      --gradient: linear-gradient(135deg, #1a7a40 0%, #0e7a74 50%, #1a6a85 100%);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      font-size: 14px;
+    }
+
+    /* ── HEADER ── */
+    .header {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 0 40px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(10px);
+    }
+
+    .header-left { display: flex; align-items: center; gap: 16px; }
+
+    .logo {
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .header-divider {
+      width: 1px;
+      height: 20px;
+      background: var(--border2);
+    }
+
+    .header-subtitle {
+      font-size: 13px;
+      color: var(--muted);
+      font-weight: 400;
+    }
+
+    .progress-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .progress-bar-outer {
+      width: 100px;
+      height: 3px;
+      background: var(--border2);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+
+    .progress-bar-inner {
+      height: 100%;
+      background: var(--gradient);
+      border-radius: 2px;
+      transition: width 0.4s ease;
+      width: 0%;
+    }
+
+    #progress-text { font-variant-numeric: tabular-nums; }
+
+    /* ── LAYOUT ── */
+    .layout {
+      display: grid;
+      grid-template-columns: 240px 1fr;
+      min-height: calc(100vh - 60px);
+    }
+
+    /* ── SIDEBAR ── */
+    .sidebar {
+      background: var(--surface);
+      border-right: 1px solid var(--border);
+      padding: 20px 0;
+      position: sticky;
+      top: 60px;
+      height: calc(100vh - 60px);
+      overflow-y: auto;
+    }
+
+    .nav-label {
+      font-size: 9px;
+      font-weight: 700;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 1.4px;
+      padding: 10px 20px 6px;
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 7px 20px;
+      font-size: 12.5px;
+      color: var(--muted);
+      cursor: pointer;
+      border-left: 2px solid transparent;
+      transition: all 0.15s;
+      text-decoration: none;
+    }
+
+    .nav-item:hover { color: var(--text); background: rgba(0,0,0,0.04); }
+
+    .nav-item.active {
+      color: var(--green);
+      background: rgba(26,122,64,0.06);
+      border-left-color: var(--green);
+    }
+
+    .nav-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .dot-1 { background: var(--green); }
+    .dot-2 { background: var(--teal); }
+    .dot-3 { background: var(--blue); }
+    .dot-4 { background: var(--yellow); }
+    .dot-5 { background: var(--red); }
+    .dot-ref { background: var(--muted); }
+
+    .nav-count {
+      margin-left: auto;
+      font-size: 10px;
+      color: var(--muted);
+      background: var(--surface2);
+      border: 1px solid var(--border2);
+      border-radius: 8px;
+      padding: 1px 5px;
+    }
+
+    .sidebar-divider {
+      height: 1px;
+      background: var(--border);
+      margin: 12px 0;
+    }
+
+    /* ── CONTENT ── */
+    .content {
+      padding: 36px 48px 64px;
+      max-width: 860px;
+    }
+
+    /* ── QUICK REFERENCE ── */
+    .section { margin-bottom: 48px; }
+
+    .section-heading {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .section-tag {
+      font-size: 9px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      padding: 3px 8px;
+      border-radius: 3px;
+    }
+
+    .tag-green { background: rgba(127,232,160,0.1); color: var(--green); }
+    .tag-teal  { background: rgba(78,205,196,0.1);  color: var(--teal);  }
+    .tag-blue  { background: rgba(69,183,209,0.1);  color: var(--blue);  }
+    .tag-yellow{ background: rgba(255,230,109,0.1); color: var(--yellow);}
+    .tag-red   { background: rgba(255,107,107,0.1); color: var(--red);   }
+    .tag-muted { background: rgba(120,120,120,0.1); color: var(--muted); }
+
+    .section-title {
+      font-size: 18px;
+      font-weight: 600;
+    }
+
+    /* Metric cards */
+    .metric-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .metric-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px;
+    }
+
+    .metric-label {
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 6px;
+    }
+
+    .metric-value {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--green);
+      line-height: 1.1;
+    }
+
+    .metric-sub {
+      font-size: 11px;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+
+    /* Language table */
+    .lang-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .lang-table th {
+      padding: 10px 16px;
+      text-align: left;
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .lang-table th.bad-head { color: var(--red); background: rgba(255,107,107,0.05); }
+    .lang-table th.good-head { color: var(--green); background: rgba(127,232,160,0.05); }
+
+    .lang-table td {
+      padding: 9px 16px;
+      font-size: 12.5px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+      line-height: 1.5;
+    }
+
+    .lang-table tr:last-child td { border-bottom: none; }
+    .lang-table .bad-cell { color: #b03030; }
+    .lang-table .good-cell { color: #1a6e38; }
+
+    /* ── QUESTION CARDS ── */
+    .q-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      margin-bottom: 12px;
+      overflow: hidden;
+      transition: border-color 0.2s;
+    }
+
+    .q-card:hover { border-color: var(--border2); }
+    .q-card.open { border-color: rgba(127,232,160,0.2); }
+    .q-card.rated-good { border-color: rgba(127,232,160,0.35); }
+    .q-card.rated-ok   { border-color: rgba(255,230,109,0.35); }
+    .q-card.rated-bad  { border-color: rgba(255,107,107,0.35); }
+
+    .q-header {
+      padding: 18px 20px;
+      cursor: pointer;
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      user-select: none;
+    }
+
+    .q-num {
+      width: 28px;
+      height: 28px;
+      border-radius: 7px;
+      background: var(--surface2);
+      border: 1px solid var(--border2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--muted);
+      flex-shrink: 0;
+      transition: all 0.2s;
+      margin-top: 1px;
+    }
+
+    .q-card.rated-good .q-num { background: rgba(127,232,160,0.1); border-color: var(--green); color: var(--green); }
+    .q-card.rated-ok   .q-num { background: rgba(255,230,109,0.1); border-color: var(--yellow); color: var(--yellow); }
+    .q-card.rated-bad  .q-num { background: rgba(255,107,107,0.1); border-color: var(--red); color: var(--red); }
+
+    .q-text {
+      flex: 1;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text);
+      line-height: 1.55;
+    }
+
+    .q-text em {
+      font-style: normal;
+      color: var(--muted);
+      font-size: 12px;
+      display: block;
+      margin-top: 3px;
+    }
+
+    .q-chevron {
+      width: 24px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--muted);
+      font-size: 12px;
+      transition: transform 0.2s;
+      flex-shrink: 0;
+      margin-top: 3px;
+    }
+
+    .q-card.open .q-chevron { transform: rotate(180deg); color: var(--green); }
+
+    /* Answer */
+    .q-body {
+      display: none;
+      border-top: 1px solid var(--border);
+    }
+
+    .q-card.open .q-body { display: block; }
+
+    .q-body-inner {
+      padding: 20px 20px 20px 62px;
+    }
+
+    .answer-label {
+      font-size: 9px;
+      font-weight: 700;
+      color: var(--green);
+      text-transform: uppercase;
+      letter-spacing: 1.4px;
+      margin-bottom: 10px;
+    }
+
+    .answer-text {
+      font-size: 13.5px;
+      color: #333333;
+      line-height: 1.75;
+    }
+
+    .answer-text strong { color: var(--text); font-weight: 600; }
+
+    .answer-text ul {
+      margin: 8px 0 8px 16px;
+    }
+
+    .answer-text li {
+      margin-bottom: 4px;
+    }
+
+    .coach-box {
+      margin-top: 14px;
+      padding: 12px 14px;
+      background: rgba(26,122,64,0.05);
+      border: 1px solid rgba(26,122,64,0.15);
+      border-radius: 8px;
+      font-size: 12.5px;
+      color: #555;
+      line-height: 1.6;
+    }
+
+    .coach-box strong { color: var(--green); }
+
+    /* Self-rate */
+    .self-rate {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 14px;
+      padding-top: 14px;
+      border-top: 1px solid var(--border);
+    }
+
+    .rate-label {
+      font-size: 11px;
+      color: var(--muted);
+      margin-right: 4px;
+    }
+
+    .rate-btn {
+      padding: 4px 11px;
+      border-radius: 5px;
+      border: 1px solid var(--border2);
+      background: var(--surface2);
+      color: var(--muted);
+      font-size: 11.5px;
+      font-family: inherit;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .rate-btn:hover { color: var(--text); border-color: #999; }
+    .rate-btn.sel-bad  { background: rgba(255,107,107,0.1); border-color: var(--red);    color: var(--red); }
+    .rate-btn.sel-ok   { background: rgba(255,230,109,0.1); border-color: var(--yellow); color: var(--yellow); }
+    .rate-btn.sel-good { background: rgba(127,232,160,0.1); border-color: var(--green);  color: var(--green); }
+
+    /* ── ASK SECTION ── */
+    .ask-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .ask-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 16px;
+    }
+
+    .ask-q {
+      font-size: 13px;
+      color: #333333;
+      line-height: 1.5;
+      font-style: italic;
+    }
+
+    .ask-why {
+      margin-top: 8px;
+      font-size: 11px;
+      font-style: normal;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .ask-why strong { color: var(--teal); }
+
+    /* ── SCROLLBAR ── */
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 3px; }
+
+    @media (max-width: 900px) {
+      .layout { grid-template-columns: 1fr; }
+      .sidebar { display: none; }
+      .content { padding: 24px 20px; }
+      .metric-grid { grid-template-columns: 1fr 1fr; }
+      .ask-grid { grid-template-columns: 1fr; }
+      .header { padding: 0 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══════════════════════════════ HEADER ══════════════════════════════ -->
+<header class="header">
+  <div class="header-left">
+    <div class="logo">FYUL★</div>
+    <div class="header-divider"></div>
+    <div class="header-subtitle">Supply Product Manager · Mock Interview</div>
+  </div>
+  <div class="progress-wrap">
+    <span id="progress-text">0 / 20</span>
+    <div class="progress-bar-outer">
+      <div class="progress-bar-inner" id="progress-bar"></div>
+    </div>
+  </div>
+</header>
+
+<!-- ══════════════════════════════ LAYOUT ══════════════════════════════ -->
+<div class="layout">
+
+  <!-- SIDEBAR -->
+  <nav class="sidebar">
+    <div class="nav-label">Chuleta</div>
+    <a href="#ref" class="nav-item">
+      <span class="nav-dot dot-ref"></span> Métricas clave
+    </a>
+    <a href="#language" class="nav-item">
+      <span class="nav-dot dot-ref"></span> Lenguaje a usar/evitar
+    </a>
+
+    <div class="sidebar-divider"></div>
+    <div class="nav-label">Bloques Marcel</div>
+
+    <a href="#b1" class="nav-item">
+      <span class="nav-dot dot-1"></span> Visión de Plataforma
+      <span class="nav-count">5</span>
+    </a>
+    <a href="#b2" class="nav-item">
+      <span class="nav-dot dot-2"></span> Rigor en PRDs
+      <span class="nav-count">5</span>
+    </a>
+    <a href="#b3" class="nav-item">
+      <span class="nav-dot dot-3"></span> IA y Automatización
+      <span class="nav-count">4</span>
+    </a>
+    <a href="#b4" class="nav-item">
+      <span class="nav-dot dot-4"></span> Métricas y Datos
+      <span class="nav-count">4</span>
+    </a>
+    <a href="#b5" class="nav-item">
+      <span class="nav-dot dot-5"></span> Colaboración y Conflicto
+      <span class="nav-count">2</span>
+    </a>
+
+    <div class="sidebar-divider"></div>
+    <div class="nav-label">Tu turno</div>
+    <a href="#ask" class="nav-item">
+      <span class="nav-dot dot-ref"></span> Preguntas a Marcel
+    </a>
+  </nav>
+
+  <!-- CONTENT -->
+  <main class="content">
+
+    <!-- ─── MÉTRICAS CLAVE ─── -->
+    <section class="section" id="ref">
+      <div class="section-heading">
+        <span class="section-tag tag-muted">Chuleta</span>
+        <h2 class="section-title">Métricas clave a memorizar</h2>
+      </div>
+
+      <div class="metric-grid">
+        <div class="metric-card">
+          <div class="metric-label">Baseline activación</div>
+          <div class="metric-value">6.5 días</div>
+          <div class="metric-sub">Tiempo medio inicial de activación</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-label">Resultado conseguido</div>
+          <div class="metric-value">31 horas</div>
+          <div class="metric-sub">−80% sobre baseline · objetivo era &lt;48h</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-label">Impacto en oferta</div>
+          <div class="metric-value">+34%</div>
+          <div class="metric-sub">Proveedores activos al mes tras la mejora</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-label">Reducción ops manual</div>
+          <div class="metric-value">−70%</div>
+          <div class="metric-sub">Intervenciones manuales por catálogo procesado</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-label">LLM taxonomy mapping</div>
+          <div class="metric-value">Semanas → min</div>
+          <div class="metric-sub">Mapeo automático de atributos heterogéneos a taxonomía interna</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-label">Meta FYUL</div>
+          <div class="metric-value">&lt; 24 h</div>
+          <div class="metric-sub">0 → live sin intervención interna</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── LENGUAJE ─── -->
+    <section class="section" id="language">
+      <div class="section-heading">
+        <span class="section-tag tag-muted">Chuleta</span>
+        <h2 class="section-title">Lenguaje a usar / evitar</h2>
+      </div>
+      <table class="lang-table">
+        <thead>
+          <tr>
+            <th class="bad-head">❌ NUNCA digas</th>
+            <th class="good-head">✅ Sustitúyelo por</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="bad-cell">«Mejoramos significativamente el onboarding»</td>
+            <td class="good-cell">«Redujimos el Time-to-Live un 80%, de 6.5 días a 31 horas»</td>
+          </tr>
+          <tr>
+            <td class="bad-cell">«Trabajo muy bien con los ingenieros»</td>
+            <td class="good-cell">«Escribo PRDs solution-complete e involucro al Tech Lead en Discovery para validar viabilidad antes de la ejecución»</td>
+          </tr>
+          <tr>
+            <td class="bad-cell">«La IA ayudó mucho a operaciones»</td>
+            <td class="good-cell">«Los LLMs con output estructurado redujeron en un 70% las intervenciones manuales por catálogo»</td>
+          </tr>
+          <tr>
+            <td class="bad-cell">«Creo que esto puede funcionar»</td>
+            <td class="good-cell">«La hipótesis era X, el baseline era Y, el resultado fue Z»</td>
+          </tr>
+          <tr>
+            <td class="bad-cell">«Discovery durante la entrega»</td>
+            <td class="good-cell">«Discovery completo antes de que el PRD llegue a ingeniería. Sin sorpresas en ejecución»</td>
+          </tr>
+          <tr>
+            <td class="bad-cell">«Implementamos muchas mejoras»</td>
+            <td class="good-cell">«Dos o tres iniciativas bien ejecutadas, con métricas de aceptación definidas antes de empezar»</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- ══════════════ BLOQUE 1 ══════════════ -->
+    <section class="section" id="b1">
+      <div class="section-heading">
+        <span class="section-tag tag-green">Bloque 1 / 5</span>
+        <h2 class="section-title">Visión de Producto y Platform Mindset</h2>
+      </div>
+
+      <!-- Q1 -->
+      <div class="q-card" data-q="1">
+        <div class="q-header" onclick="toggleQ(this)">
+          <div class="q-num">1</div>
+          <div class="q-text">
+            "At FYUL, our goal is to enable Decorators to go from zero to live in under 24 hours without internal intervention. How do you approach designing self-onboarding experiences for complex B2B supply platforms?"
+            <em>Pregunta de apertura. Marcel quiere ver estructura mental, no entusiasmo.</em>
+          </div>
+          <div class="q-chevron">▼</div>
+        </div>
+        <div class="q-body">
+          <div class="q-body-inner">
+            <div class="answer-label">Tu respuesta</div>
+            <div class="answer-text">
+              I structure self-onboarding around three pillars. First, <strong>standardized entry</strong>: templates and real-time API validation so bad data gets rejected before it enters the pipeline. Second, <strong>background batch validation</strong>: automated checks that process catalog submissions without human review, with retry logic and partial error isolation. Third, <strong>guided error handling</strong>: when something fails, the Decorator sees the exact row, the exact field, and a clear fix instruction directly in the portal — zero support tickets.<br><br>
+              In practice, this means the ops team only touches exceptions, not the default flow. At my last role, this structure reduced Time-to-Live from 6.5 days to 31 hours — an 80% reduction — with no increase in headcount.
+            </div>
+            <div class="coach-box">
+              <strong>Tip del entrevistador:</strong> La estructura en tres pilares demuestra pensamiento sistemático. Cierra siempre con el número concreto. Marcel está escuchando si distingues entre «diseñar para el proveedor» vs «diseñar para que ops no necesite intervenir».
+            </div>
+            <div class="self-rate">
+              <span class="rate-label">¿Cómo te salió?</span>
+              <button class="rate-btn" onclick="rate(this, 'bad', 1)">Flojo</button>
+              <button class="rate-btn" onclick="rate(this, 'ok', 1)">Regular</button>
+              <button class="rate-btn" onclick="rate(this, 'good', 1)">Sólido</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Q2 -->
+      <div class="q-card" data-q="2">
+        <div class="q-header" onclick="toggleQ(this)">
+          <div class="q-num">2</div>
+          <div class="q-text">
+            "How do you balance making the platform simple for non-technical suppliers while maintaining strict data structures for your catalog system?"
+            <em>Testa si entiendes que la UX es una capa encima de un esquema rígido, no una negociación con él.</em>
+          </div>
+          <div class="q-chevron">▼</div>
+        </div>
+        <div class="q-body">
+          <div class="q-body-inner">
+            <div class="answer-label">Tu respuesta</div>
+            <div class="answer-text">
+              The data schema is non-negotiable — it's what makes the catalog interoperable across FYUL's merchant network. What I do is hide the complexity in the UI layer, not in the data layer.<br><br>
+              For non-technical Decorators: guided drag-and-drop, auto-mapping suggestions for common field formats, and progressive disclosure — you only see advanced fields if you need them. For technical Decorators: direct API with full schema documentation, bulk upload via CSV with column mapping tools. Both paths write to the same rigid backend schema. The interface adapts; the data contract never does.
+            </div>
+            <div class="coach-box">
+              <strong>Tip del entrevistador:</strong> La frase clave es «the data contract never changes». Marcel quiere que no confundas flexibilidad de UX con flexibilidad de datos. Si dices «lo adaptamos caso por caso», señal de alerta.
+            </div>
+            <div class="self-rate">
+              <span class="rate-label">¿Cómo te salió?</span>
+              <button class="rate-btn" onclick="rate(this, 'bad', 2)">Flojo</button>
+              <button class="rate-btn" onclick="rate(this, 'ok', 2)">Regular</button>
+              <button class="rate-btn" onclick="rate(this, 'good', 2)">Sólido</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Q3 -->
+      <div class="q-card" data-q="3">
+        <div class="q-header" onclick="toggleQ(this)">
+          <div class="q-num">3</div>
+          <div class="q-text">
+            "In a marketplace ecosystem, how do you decide where FYUL sets rigid rules versus where we leave flexibility for suppliers to define their own offers?"
+            <em>Pregunta de platform mindset. Quiere ver que entiendes el modelo de plataforma, no solo el portal de proveedor.</em>
+          </div>
+          <div class="q-chevron">▼</div>
+        </div>
+        <div class="q-body">
+          <div class="q-body-inner">
+            <div class="answer-label">Tu respuesta</div>
+            <div class="answer-text">
+              FYUL fixes everything that affects interoperability and the merchant experience: product taxonomy, order format, fulfillment SLAs, data schema. These are non-negotiable because inconsistency there breaks the merchant's trust in the platform.<br><br>
+              Suppliers control their commercial variables: pricing, catalog range, production capacity, and lead times. Those are their competitive levers — FYUL shouldn't own them.<br><br>
+              The rule of thumb I use: <strong>if two suppliers sharing the same attribute definition creates value for merchants, FYUL owns it. If it's a source of competitive differentiation between suppliers, they own it.</strong>
+            </div>
+            <div class="coach-box">
+              <strong>Tip del entrevistador:</strong> La regla del pulgar es memorable y demuestra criterio. Evita decir «depende» sin el marco. Marcel quiere ver que tienes un principio, no que negocias caso a caso.
+            </div>
+            <div class="self-rate">
+              <span class="rate-label">¿Cómo te salió?</span>
+              <button class="rate-btn" onclick="rate(this, 'bad', 3)">Flojo</button>
+              <button class="rate-btn" onclick="rate(this, 'ok', 3)">Regular</button>
+              <button class="rate-btn" onclick="rate(this, 'good', 3)">Sólido</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Q4 -->
+      <div class="q-card" data-q="4">
+        <div class="q-header" onclick="toggleQ(this)">
+          <div class="q-num">4</div>
+          <div class="q-text">
+            "What's your process for mapping out a supplier's end-to-end journey from initial sign-up to their first published product?"
+            <em>Quiere ver rigor analítico en cómo diagnosticas el funnel.</em>
+          </div>
+          <div class="q-chevron">▼</div>
+        </div>
+        <div class="q-body">
+          <div class="q-body-inner">
+            <div class="answer-label">Tu respuesta</div>
+            <div class="answer-text">
+              I map it as a conversion funnel with five stages: <strong>Registration → Integration → Catalog Mapping → Validation → Publication</strong>. For each stage I track three numbers: conversion rate, median time spent, and drop-off rate.<br><br>
+              The goal is to identify the single stage with the highest drop-off multiplied by the longest time — that's where I focus first. In most supplier onboarding systems I've worked on, the bottleneck is Catalog Mapping: suppliers get stuck because their attribute format doesn't match the platform schema. That's where automation and guided tooling have the highest leverage.
+            </div>
+            <div class="coach-box">
+              <strong>Tip del entrevistador:</strong> El framework funnel + tres métricas por etapa es específico y accionable. Mencionar que ya tienes una hipótesis del cuello de botella muestra que no empiezas de cero en este dominio.
+            </div>
+            <div class="self-rate">
+              <span class="rate-label">¿Cómo te salió?</span>
+              <button class="rate-btn" onclick="rate(this, 'bad', 4)">Flojo</button>
+              <button class="rate-btn" onclick="rate(this, 'ok', 4)">Regular</button>
+              <button class="rate-btn" onclick="rate(this, 'good', 4)">Sólido</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Q5 -->
+      <div class="q-card" data-q="5">
+        <div class="q-header" onclick="toggleQ(this)">
+          <div class="q-num">5</div>
+          <div class="q-text">
+            "How do you approach localization, multi-currency, or regional compliance requirements when scaling supplier onboarding globally?"
+            <em>Testa si piensas en internacionalización como arquitectura, no como parche.</em>
+          </div>
+          <div class="q-chevron">▼</div>
+        </div>
+        <div class="q-body">
+          <div class="q-body-inner">
+            <div class="answer-label">Tu respuesta</div>
+            <div class="answer-text">
+              I design for localization from day one, not as an afterthought. The core principle: <strong>separate business logic from locale configuration</strong>. Tax rules, currencies, regulatory fields, and compliance requirements are injected via configuration — not hardcoded into the catalog model.<br><br>
+              In practice, this means five concrete decisions:
+              <ul>
+                <li><strong>Dynamic attribute schemas per region.</strong> A Decorator in Germany sees REACH compliance fields and VAT inputs; one in the US sees sales tax fields. The validation engine is identical — only the ruleset changes. Adding a new market is a config change, not a dev cycle.</li>
+                <li><strong>Tax as an independent layer.</strong> Decorator prices are always net-of-tax in the catalog. A separate, configurable tax service applies country-specific rules at the price layer. When the EU introduced OSS in 2021, platforms with VAT hardcoded in the catalog model faced major migrations. Platforms with it as a separate layer just updated configuration.</li>
+                <li><strong>Data residency configurable from the start.</strong> Onboarding collects sensitive Decorator data — company details, fiscal documents. GDPR requires specific storage and retention rules in Europe that differ from the US. If data residency isn't a configurable parameter from day one, every new market becomes a compliance project.</li>
+                <li><strong>Address validation by country code, not hardcoded regex.</strong> A UK postcode validator breaks for Japanese or Brazilian addresses. The fix is a configurable address validation library keyed to <code>country_code</code>. Printful already operates across multiple countries — a Decorator in Japan has a completely different address format that a single regex will silently reject.</li>
+                <li><strong>Catalog data language normalized at ingestion.</strong> The portal UI can be in the local language, but catalog data entering the system must be normalized to a base encoding. If product names enter in any charset without normalization, attribute matching and search break. Decorators from any region should publish in a format merchants can consume consistently.</li>
+              </ul>
+              The test I apply: can we onboard a Decorator in a new country by changing configuration only, with zero code changes? If the answer is no, we have localization debt.
+            </div>
+            <div class="coach-box">
+              <strong>Tip del entrevistador:</strong> FYUL opera con Printify/Printful en múltiples países — esta pregunta tiene peso real. El ejemplo del OSS/VAT de 2021 es concreto y verificable. No cuentes los cinco puntos enteros; elige dos (VAT layer + dynamic schemas) y menciona que tienes el framework completo si Marcel quiere profundizar.
+            </div>
+            <div class="self-rate">
+              <span class="rate-label">¿Cómo te salió?</span>
+              <button class="rate-btn" onclick="rate(this, 'bad', 5)">Flojo</button>
+              <button class="rate-btn" onclick="rate(this, 'ok', 5)">Regular</button>
+              <button class="rate-btn" onclick="rate(this, 'good', 5)">Sólido</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════ BLOQUE 2 ══════════════ -->
+    <section class="section" id="b2">
+      <div class="section-heading">
+        <span class="section-tag tag-teal">Bloque 2 / 5</span>
+        <h2 class="section-title">Rigor en Ejecución y PRDs</h2>
+      </div>
+
+      <!-- Q6 -->
+      <div class="q-card" data-q="6">
+        <div class="q-header" onclick="toggleQ(this)">
+          <div class="q-num">6</div>
+          <div class="q-text">
+            "Our JD emphasizes 'solution-complete PRDs' with no 'discovery disguised as delivery'. How do you ensure your PRDs are fully detailed before handover?"
+            <em>Esta frase viene literalmente de la job description. Espera que la cites.</em>
+          </div>
+          <div class="q-chevron">▼</div>
+        </div>
+        <div class="q-body">
+          <div class="q-body-inner">
+            <div class="answer-label">Tu respuesta</div>
+            <div class="answer-text">
+              Discovery is a gate, not a phase that runs in parallel to delivery. A PRD doesn't go to engineering until it contains: <strong>quantified problem statement</strong> with baseline data, <strong>user stories</strong> with explicit acceptance criteria, <strong>data flow diagrams</strong> for any pipeline or integration, an <strong>edge case matrix</strong> with frequency and resolution for each, and a <strong>sign-off from the Engineering Manager</strong> confirming feasibility before I write a single line of acceptance test.<br><br>
+              If I can't answer "what's the acceptance test for this edge case?" then I haven't finished Discovery. Engineering should never have to go back to me mid-sprint for a clarification I should have anticipated.
+            </div>
+            <div class="coach-box">
+              <strong>Tip del entrevistador:</strong> Listar los cinco componentes del PRD con nombre específico demuestra que no es retórica. La frase «Engineering should never have to come back to me» es exactamente el contrato que Marcel quiere escuchar.
+            </div>
+            <div class="self-rate">
+              <span class="rate-label">¿Cómo te salió?</span>
+              <button class="rate-btn" onclick="rate(this, 'bad', 6)">Flojo</button>
+              <button class="rate-btn" onclick="rate(this, 'ok', 6)">Regular</button>
+              <button class="rate-btn" onclick="rate(this, 'good', 6)">Sólido</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Q7 -->
+      <div class="q-card" data-q="7">
+        <div class="q-header" onclick="toggleQ(this)">
+          <div class="q-num">7</div>
+          <div class="q-text">
+            "How do you manage edge cases during feature definition without scope creeping the initial release?"
+            <em>Quiere ver que tienes un criterio de corte claro, no «lo vemos sprint a sprint».</em>
+          </div>
+          <div class="q-chevron">▼</div>
+        </div>
+        <div class="q-body">
+          <div class="q-body-inner">
+            <div class="answer-label">Tu respuesta</div>
+            <div class="answer-text">
+              I use a frequency-impact matrix. Every edge case gets scored on two axes: how often does it happen (% of transactions), and what's the cost if it fails (revenue impact, ops burden).<br><br>
+              The rule: if an edge case affects less than 5% of transactions AND takes more than 30% of estimated dev time, it doesn't go into v1. It gets an operational workaround — a manual process for the ops team — documented in the PRD, with a ticket created immediately for v1.1.<br><br>
+              This means I'm not hiding the edge case — I'm explicitly deciding to defer it and own the cost of the interim workaround. That's a product decision, not a gap.
+            </div>
+
+            <!-- VISUAL: Frequency-Impact Matrix -->
+            <div style="margin: 18px 0;">
+              <div style="font-size:11px; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:1.2px; margin-bottom:12px;">Frequency × Impact Matrix</div>
+              <div style="position:relative; width:100%; max-width:480px;">
+                <!-- Grid -->
+                <svg viewBox="0 0 480 320" xmlns="http://www.w3.org/2000/svg" style="width:100%; height:auto; display:block;">
+                  <defs>
+                    <marker id="arrowX" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+                      <path d="M0,0 L0,6 L8,3 z" fill="#999"/>
+                    </marker>
+                    <marker id="arrowY" markerWidth="8" markerHeight="8" refX="3" refY="6" orient="auto">
+                      <path d="M0,8 L6,8 L3,0 z" fill="#999"/>
+                    </marker>
+                  </defs>
+
+                  <!-- Quadrant fills -->
+                  <!-- Q3: High freq, Low impact → Monitor -->
+                  <rect x="60" y="160" width="180" height="130" fill="rgba(255,230,109,0.06)" rx="4"/>
+                  <!-- Q1: High freq, High impact → Ship in v1 -->
+                  <rect x="240" y="160" width="200" height="130" fill="rgba(127,232,160,0.08)" rx="4"/>
+                  <!-- Q4: Low freq, Low impact → Ignore / backlog -->
+                  <rect x="60" y="20" width="180" height="140" fill="rgba(120,120,120,0.05)" rx="4"/>
+                  <!-- Q2: Low freq, High impact → Operational workaround -->
+                  <rect x="240" y="20" width="200" height="140" fill="rgba(255,107,107,0.07)" rx="4"/>
+
+                  <!-- Grid lines -->
+                  <line x1="240" y1="20" x2="240" y2="290" stroke="#ccccca" stroke-width="1" stroke-dasharray="4,3"/>
+                  <line x1="60" y1="160" x2="440" y2="160" stroke="#ccccca" stroke-width="1" stroke-dasharray="4,3"/>
+
+                  <!-- Axes -->
+                  <line x1="60" y1="290" x2="445" y2="290" stroke="#aaaaaa" stroke-width="1.5" marker-end="url(#arrowX)"/>
+                  <line x1="60" y1="290" x2="60" y2="12" stroke="#aaaaaa" stroke-width="1.5" marker-end="url(#arrowY)"/>
+
+                  <!-- Axis labels -->
+                  <text x="250" y="312" font-size="11" fill="#777" font-family="Inter,sans-serif" text-anchor="middle">Frequency (% of transactions)</text>
+                  <text x="14" y="160" font-size="11" fill="#777" font-family="Inter,sans-serif" text-anchor="middle" transform="rotate(-90,14,160)">Business Impact</text>
+
+                  <!-- Axis ticks -->
+                  <text x="150" y="306" font-size="9" fill="#888" font-family="Inter,sans-serif" text-anchor="middle">&lt; 5%</text>
+                  <text x="340" y="306" font-size="9" fill="#888" font-family="Inter,sans-serif" text-anchor="middle">&gt; 5%</text>
+                  <text x="52" y="230" font-size="9" fill="#888" font-family="Inter,sans-serif" text-anchor="end">Low</text>
+                  <text x="52" y="100" font-size="9" fill="#888" font-family="Inter,sans-serif" text-anchor="end">High</text>
+
+                  <!-- Quadrant labels -->
+                  <!-- Q1: Top-right — Ship in v1 -->
+                  <text x="340" y="44" font-size="10" font-weight="700" fill="#1a7a40" font-family="Inter,sans-serif" text-anchor="middle">SHIP IN V1</text>
+                  <text x="340" y="58" font-size="9" fill="#666" font-family="Inter,sans-serif" text-anchor="middle">High freq · High impact</text>
+                  <text x="340" y="70" font-size="9" fill="#555" font-family="Inter,sans-serif" text-anchor="middle">Mandatory scope</text>
+
+                  <!-- Q2: Top-left — Monitor, defer -->
+                  <text x="150" y="44" font-size="10" font-weight="700" fill="#a07800" font-family="Inter,sans-serif" text-anchor="middle">MONITOR</text>
+                  <text x="150" y="58" font-size="9" fill="#666" font-family="Inter,sans-serif" text-anchor="middle">Low freq · High impact</text>
+                  <text x="150" y="70" font-size="9" fill="#555" font-family="Inter,sans-serif" text-anchor="middle">Design for, ship in v1.1</text>
+
+                  <!-- Q3: Bottom-right — Operational workaround -->
+                  <text x="340" y="178" font-size="10" font-weight="700" fill="#0e7a74" font-family="Inter,sans-serif" text-anchor="middle">SIMPLIFY</text>
+                  <text x="340" y="192" font-size="9" fill="#666" font-family="Inter,sans-serif" text-anchor="middle">High freq · Low impact</text>
+                  <text x="340" y="204" font-size="9" fill="#555" font-family="Inter,sans-serif" text-anchor="middle">Reduce friction, low dev cost</text>
+
+                  <!-- Q4: Bottom-left — Ignore -->
+                  <text x="150" y="178" font-size="10" font-weight="700" fill="#999" font-family="Inter,sans-serif" text-anchor="middle">DEFER / IGNORE</text>
+                  <text x="150" y="192" font-size="9" fill="#999" font-family="Inter,sans-serif" text-anchor="middle">Low freq · Low impact</text>
+                  <text x="150" y="204" font-size="9" fill="#999" font-family="Inter,sans-serif" text-anchor="middle">Backlog or ops workaround</text>
+
+                  <!-- Example dots — FYUL catalog edge cases -->
+                  <!-- Dot A: Duplicate SKU submission — high freq, medium-high impact → v1 -->
+                  <circle cx="310" cy="90" r="7" fill="#1a7a40" opacity="0.8"/>
+                  <text x="322" y="87" font-size="9" fill="#555" font-family="Inter,sans-serif">A</text>
+
+                  <!-- Dot B: Missing CMYK profile — high freq, low impact → simplify -->
+                  <circle cx="350" cy="220" r="7" fill="#0e7a74" opacity="0.8"/>
+                  <text x="362" y="217" font-size="9" fill="#555" font-family="Inter,sans-serif">B</text>
+
+                  <!-- Dot C: Multi-currency price mismatch — low freq, high impact → monitor -->
+                  <circle cx="130" cy="75" r="7" fill="#a07800" opacity="0.8"/>
+                  <text x="142" y="72" font-size="9" fill="#555" font-family="Inter,sans-serif">C</text>
+
+                  <!-- Dot D: Unsupported image format edge case — low freq, low impact → defer -->
+                  <circle cx="160" cy="240" r="7" fill="#bbbbbb" opacity="0.9" stroke="#aaaaaa" stroke-width="1"/>
+                  <text x="172" y="237" font-size="9" fill="#555" font-family="Inter,sans-serif">D</text>
+                </svg>
+
+                <!-- Legend -->
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:6px; margin-top:10px; font-size:11px;">
+                  <div style="display:flex; align-items:center; gap:7px; color:#555;">
+                    <span style="width:10px;height:10px;border-radius:50%;background:#1a7a40;flex-shrink:0;"></span>
+                    <span><strong style="color:#222;">A</strong> — Duplicate SKU on submission</span>
+                  </div>
+                  <div style="display:flex; align-items:center; gap:7px; color:#555;">
+                    <span style="width:10px;height:10px;border-radius:50%;background:#0e7a74;flex-shrink:0;"></span>
+                    <span><strong style="color:#222;">B</strong> — Missing CMYK profile</span>
+                  </div>
+                  <div style="display:flex; align-items:center; gap:7px; color:#555;">
+                    <span style="width:10px;height:10px;border-radius:50%;background:#a07800;flex-shrink:0;"></span>
+                    <span><strong style="color:#222;">C</strong> — Multi-currency price mismatch</span>
+                  </div>
+                  <div style="display:flex; align-items:center; gap:7px; color:#555;">
+                    <span style="width:10px;height:10px;border-radius:50%;background:#bbbbbb;border:1px solid #aaaaaa;flex-shrink:0;"></span>
+                    <span><strong style="color:#222;">D</strong> — Unsupported image format</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="coach-box">
+              <strong>Tip del entrevistador:</strong> La distinción «esto es una decisión explícita de product, no un gap» es importante. Marcel quiere que asumas la responsabilidad de diferir, no que lo evites. Si Marcel pregunta por un ejemplo concreto, usa el caso B (CMYK) o D — casos reales del dominio de print-on-demand.
+            </div>
+            <div class="self-rate">
+              <span class="rate-label">¿Cómo te salió?</span>
+              <button class="rate-btn" onclick="rate(this, 'bad', 7)">Flojo</button>
+              <button class="rate-btn" onclick="rate(this, 'ok', 7)">Regular</button>
+              <button class="rate-btn" onclick="rate(this, 'good', 7)">Sólido</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Q8 -->
+      <div class="q-card" data-q="8">
+        <div class="q-header" onclick="toggleQ(this)">
+          <div class="q-num">8</div>
+          <div class="q-text">
+            "Describe how you work day-to-day with your Engineering Manager and engineers. How do you ensure engineering owns the roadmap alongside you?"
+            <em>FYUL dice explícitamente «Engineering owns this roadmap too». No es cortesía, es una expectativa real.</em>
+          </div>
+          <div class="q-chevron">▼</div>
+        </div>
+        <div class="q-body">
+          <div class="q-body-inner">
+            <div class="answer-label">Tu respuesta</div>
+            <div class="answer-text">
+              I draw a clear line: I own the <em>what</em> and <em>why</em>, engineering owns the <em>how</em>. But ownership of the roadmap is shared — the EM is a co-author, not a consumer.<br><br>
+              In practice: I involve the Tech Lead in Discovery, before the PRD is written, specifically to pressure-test feasibility. I reserve 20% of sprint capacity as an ongoing allocation for tech debt and infrastructure work — that's the EM's budget to spend, not mine. I also frame business metrics as inputs to engineering decisions: «this refactor reduces catalog sync latency from 10 minutes to 30 seconds, which directly unblocks the activation funnel». Engineers who understand the <em>why</em> behind their work make better technical decisions independently.
+            </div>
+            <div class="coach-box">
+              <strong>Tip del entrevistador:</strong> «20% de capacidad reservada para tech debt» es un número concreto que demuestra que no es retórica. La frase sobre latencia + impacto en el funnel muestra que traduces problemas técnicos a lenguaje de negocio, y viceversa.
+            </div>
+            <div class="self-rate">
+              <span class="rate-label">¿Cómo te salió?</span>
+              <button class="rate-btn" onclick="rate(this, 'bad', 8)">Flojo</button>
+              <button class="rate-btn" onclick="rate(this, 'ok', 8)">Regular</button>
+              <button class="rate-btn" onclick="rate(this, 'good', 8)">Sólido</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Q9 -->
+      <div class="q-card" data-q="9">
+        <div class="q-header" onclick="toggleQ(this)">
+          <div class="q-num">9</div>
+          <div class="q-text">
+            "How do you handle technical debt when engineering wants to refactor infrastructure that directly impacts your product timelines?"
+            <em>Conflicto real. Quiere ver cómo equilibras sin ceder sin criterio.</em>
+          </div>
+          <div class="q-chevron">▼</div>
+        </div>
+        <div class="q-body">
+          <div class="q-body-inner">
+            <div class="answer-label">Tu respuesta</div>
+            <div class="answer-text">
+              I evaluate tech debt by its ROI, not by its urgency. I ask engineering to translate the refactor into business terms: «if we do this, what metric improves and by how much?» A refactor that reduces catalog sync latency from 10 minutes to 30 seconds, and that's blocking 40% of validation errors, is a business priority — it just looks like infrastructure.<br><br>
+              If the refactor has a clear throughput or reliability impact on the supplier activation funnel, it gets prioritized. If it's purely internal cleanliness with no measurable user impact, it goes into the 20% tech capacity budget — important, but not at the expense of committed product milestones.
+            </div>
+            <div class="coach-box">
+              <strong>Tip del entrevistador:</strong> La clave es que no dices «sí siempre» ni «no por defecto». Tienes un filtro: ¿impacta una métrica de usuario medible? Si la respuesta es sí, el tech debt es un feature disfrazado.
+            </div>
+            <div class="self-rate">
+              <span class="rate-label">¿Cómo te salió?</span>
+              <button class="rate-btn" onclick="rate(this, 'bad', 9)">Flojo</button>
+              <button class="rate-btn" onclick="rate(this, 'ok', 9)">Regular</button>
+              <button class="rate-btn" onclick="rate(this, 'good', 9)">Sólido</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Q10 -->
+      <div class="q-card" data-q="10">
+        <div class="q-header" onclick="toggleQ(this)">
+          <div class="q-num">10</div>
+          <div class="q-text">
+            "How do you define acceptance criteria for complex background processes like bulk catalog data pipelines?"
+            <em>Muy técnica. Si dices «que funcione correctamente» es un fail instantáneo.</em>
+          </div>
+          <div class="q-chevron">▼</div>
+        </div>
+        <div class="q-body">
+          <div class="q-body-inner">
+            <div class="answer-label">Tu respuesta</div>
+            <div class="answer-text">
+              For background pipelines, acceptance criteria are always quantitative, not qualitative. I define four dimensions:
+              <ul>
+                <li><strong>Throughput:</strong> e.g., process 10,000 SKUs per minute at p95</li>
+                <li><strong>Error tolerance:</strong> overall failure rate below 1%; partial errors isolate the bad rows, not the full batch</li>
+                <li><strong>Retry policy:</strong> exponential backoff with a maximum of 3 retries before dead-letter queue</li>
+                <li><strong>Observability:</strong> structured error logs that include row ID, field name, error type, and a human-readable fix instruction — both for the ops dashboard and for the Decorator portal</li>
+              </ul>
+              A pipeline that silently fails 2% of SKUs and logs nothing is worse than a pipeline with a 5% failure rate that gives Decorators actionable feedback.
+            </div>
+            <div class="coach-box">
+              <strong>Tip del entrevistador:</strong> Listar cuatro dimensiones con valores concretos (no rangos vagos) demuestra que has especificado pipelines reales. La frase final sobre observabilidad muestra madurez de producto: el peor bug no es el error, es el error silencioso.
+            </div>
+            <div class="self-rate">
+              <span class="rate-label">¿Cómo te salió?</span>
+              <button class="rate-btn" onclick="rate(this, 'bad', 10)">Flojo</button>
+              <button class="rate-btn" onclick="rate(this, 'ok', 10)">Regular</button>
+              <button class="rate-btn" onclick="rate(this, 'good', 10)">Sólido</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════ BLOQUE 3 ══════════════ -->
+    <section class="section" id="b3">
+      <div class="section-heading">
+        <span class="section-tag tag-blue">Bloque 3 / 5</span>
+        <h2 class="section-title">Automatización, IA y Herramientas Internas</h2>
+      </div>
+
+      <!-- Q11 -->
+      <div class="q-card" data-q="11">
+        <div class="q-header" onclick="toggleQ(this)">
+          <div class="q-num">11</div>
+          <div class="q-text">
+            "Supplier onboarding involves complex catalog validation. How have you used automation or AI/LLMs to replace manual operations tasks in the past?"
+            <em>Quiere un ejemplo concreto con impacto medido. No teoría.</em>
+          </div>
+          <div class="q-chevron">▼</div>
+        </div>
+        <div class="q-body">
+          <div class="q-body-inner">
+            <div class="answer-label">Tu respuesta</div>
+            <div class="answer-text">
+              The clearest example: catalog taxonomy mapping. Suppliers submit product attributes in dozens of different formats and naming conventions. Previously, an ops team member would manually map each supplier's attributes to our internal taxonomy — that took days per supplier and didn't scale.<br><br>
+              I spec'd a solution using LLMs with structured JSON output to auto-map incoming attributes to the internal taxonomy. The model was prompted to return field-level confidence scores; anything below 0.85 flagged for human review. Result: <strong>processing time from days to minutes per supplier</strong>, and <strong>manual intervention reduced by 70%</strong>. The 15% of low-confidence mappings that still needed human review were the genuinely ambiguous cases — not the routine ones. Ops quality actually improved because they focused on the hard cases.
+            </div>
+            <div class="coach-box">
+              <strong>Tip del entrevistador:</strong> El detalle del «confidence threshold 0.85» demuestra que has implementado esto, no solo leído sobre ello. Y el cierre — ops quality improved porque se enfocaron en los casos difíciles — muestra que entiendes que la automatización debe amplificar al equipo humano, no solo reemplazarlo.
+            </div>
+            <div class="self-rate">
+              <span class="rate-label">¿Cómo te salió?</span>
+              <button class="rate-btn" onclick="rate(this, 'bad', 11)">Flojo</button>
+              <button class="rate-btn" onclick="rate(this, 'ok', 11)">Regular</button>
+              <button class="rate-btn" onclick="rate(this, 'good', 11)">Sólido</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Q12 -->
+      <div class="q-card" data-q="12">
+        <div class="q-header" onclick="toggleQ(this)">
+          <div class="q-num">12</div>
+          <div class="q-text">
+            "How do you prioritize building internal operational tooling versus public-facing supplier features?"
+            <em>FYUL es explícito: owns both. Quiere tu marco de priorización.</em>
+          </div>
+          <div class="q-chevron">▼</div>
+        </div>
+        <div class="q-body">
+          <div class="q-body-inner">
+            <div class="answer-label">Tu respuesta</div>
+            <div class="answer-text">
+              I prioritize by leverage: what unlocks the most supply per unit of engineering effort? An internal tool that doubles an ops agent's throughput — letting them validate 200 suppliers per day instead of 100 — has a direct and immediate impact on assortment. A cosmetic improvement to the supplier portal has a marginal impact on activation rates unless it's removing a specific drop-off point.<br><br>
+              The honest answer is: internal tooling is often underinvested because it's less visible. But if the bottleneck to scaling supply is an ops team manually processing exceptions, then internal tooling is the product work, not a side project. I treat ops as a primary user, not a downstream consumer.
+            </div>
+            <div class="coach-box">
+              <strong>Tip del entrevistador:</strong> «I treat ops as a primary user» es una señal de madurez que Marcel valora. Muchos PMs solo piensan en el portal exterior. FYUL explícitamente pone internal tooling en el scope del rol.
+            </div>
+            <div class="self-rate">
+              <span class="rate-label">¿Cómo te salió?</span>
+              <button class="rate-btn" onclick="rate(this, 'bad', 12)">Flojo</button>
+              <button class="rate-btn" onclick="rate(this, 'ok', 12)">Regular</button>
+              <button class="rate-btn" onclick="rate(this, 'good', 12)">Sólido</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Q13 -->
+      <div class="q-card" data-q="13">
+        <div class="q-header" onclick="toggleQ(this)">
+          <div class="q-num">13</div>
+          <div class="q-text">
+            "When an automated onboarding process fails due to bad supplier data, how do you handle exception management and error reporting?"
+            <em>Pregunta operacional. Quiere ver que piensas en el flujo de error con el mismo rigor que el flujo feliz.</em>
+          </div>
+          <div class="q-chevron">▼</div>
+        </div>
+        <div class="q-body">
+          <div class="q-body-inner">
+            <div class="answer-label">Tu respuesta</div>
+            <div class="answer-text">
+              Partial failure is the norm, not the exception. The system should never block a full batch because of bad rows — it processes the valid data and isolates the errors.<br><br>
+              For the Decorator: the portal shows a structured error report with the exact row number, the problematic field, what the expected format is, and a one-line fix instruction. No support ticket needed. For ops: a dashboard that aggregates error types by category — so if 40% of errors this week are «missing CMYK profile», that's a signal to add that validation to the pre-submission checklist, not an individual case to fix. Error patterns become product roadmap signals.
+            </div>
+            <div class="coach-box">
+              <strong>Tip del entrevistador:</strong> El cierre — «error patterns become roadmap signals» — muestra que cierras el loop de feedback. Marcel quiere un PM que use los datos operacionales para mejorar el producto, no solo para apagar fuegos.
+            </div>
+            <div class="self-rate">
+              <span class="rate-label">¿Cómo te salió?</span>
+              <button class="rate-btn" onclick="rate(this, 'bad', 13)">Flojo</button>
+              <button class="rate-btn" onclick="rate(this, 'ok', 13)">Regular</button>
+              <button class="rate-btn" onclick="rate(this, 'good', 13)">Sólido</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Q14 -->
+      <div class="q-card" data-q="14">
+        <div class="q-header" onclick="toggleQ(this)">
+          <div class="q-num">14</div>
+          <div class="q-text">
+            "How do you measure the operational cost savings of a self-service onboarding initiative?"
+            <em>Pregunta de ROI. Quiere una fórmula, no una narrativa.</em>
+          </div>
+          <div class="q-chevron">▼</div>
+        </div>
+        <div class="q-body">
+          <div class="q-body-inner">
+            <div class="answer-label">Tu respuesta</div>
+            <div class="answer-text">
+              I measure it on two dimensions: <strong>cost reduction</strong> and <strong>revenue acceleration</strong>.<br><br>
+              Cost reduction: (hours of manual ops work eliminated per supplier) × (number of new suppliers per month) × (hourly ops cost). That's the direct savings.<br><br>
+              Revenue acceleration: reducing Time-to-Live means suppliers go live earlier and start generating GMV sooner. If average monthly GMV per active supplier is X, and we compress activation by 4 days, that's 4 days × X × number of new suppliers per month in incremental revenue per cohort.<br><br>
+              Most teams only track the first dimension. The second is often larger and more strategic — because it ties supply velocity directly to merchant assortment and revenue.
+            </div>
+            <div class="coach-box">
+              <strong>Tip del entrevistador:</strong> La distinción entre las dos dimensiones — y especialmente nombrar que la segunda es más estratégica — demuestra pensamiento comercial, que la JD pide explícitamente («commercially minded»).
+            </div>
+            <div class="self-rate">
+              <span class="rate-label">¿Cómo te salió?</span>
+              <button class="rate-btn" onclick="rate(this, 'bad', 14)">Flojo</button>
+              <button class="rate-btn" onclick="rate(this, 'ok', 14)">Regular</button>
+              <button class="rate-btn" onclick="rate(this, 'good', 14)">Sólido</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════ BLOQUE 4 ══════════════ -->
+    <section class="section" id="b4">
+      <div class="section-heading">
+        <span class="section-tag tag-yellow">Bloque 4 / 5</span>
+        <h2 class="section-title">Métricas, Datos y Comunicación Directa</h2>
+      </div>
+
+      <!-- Q15 -->
+      <div class="q-card" data-q="15">
+        <div class="q-header" onclick="toggleQ(this)">
+          <div class="q-num">15</div>
+          <div class="q-text">
+            "We value direct, data-backed communication without vague claims. Walk me through a metric you owned, your baseline, your target, and the precise outcome."
+            <em>Pregunta estrella. Memóriza estos números. Es tu historia más importante.</em>
+          </div>
+          <div class="q-chevron">▼</div>
+        </div>
+        <div class="q-body">
+          <div class="q-body-inner">
+            <div class="answer-label">Tu respuesta</div>
+            <div class="answer-text">
+              <strong>Metric owned:</strong> Supplier activation time — from account creation to first published product.<br>
+              <strong>Baseline:</strong> 6.5 days median.<br>
+              <strong>Target:</strong> Under 48 hours.<br>
+              <strong>Actions:</strong> Two parallel initiatives — automated catalog attribute mapping using LLMs with structured output, and a redesign of the validation pipeline to process valid SKUs in parallel while isolating errors.<br>
+              <strong>Outcome:</strong> Median activation time dropped to 31 hours — an 80% reduction. Active supplier count grew 34% month-over-month in the 60 days after launch, because the same acquisition funnel now converted faster.<br><br>
+              The 34% growth matters more than the 31 hours, in my view. The time reduction was the mechanism; the supplier growth was the business result.
+            </div>
+            <div class="coach-box">
+              <strong>Tip del entrevistador:</strong> El cierre — «el crecimiento del 34% es lo que importa, el tiempo fue el mecanismo» — demuestra pensamiento de negocio, no solo de producto. Marcel quiere PMs que conectan palancas técnicas con resultados comerciales.
+            </div>
+            <div class="self-rate">
+              <span class="rate-label">¿Cómo te salió?</span>
+              <button class="rate-btn" onclick="rate(this, 'bad', 15)">Flojo</button>
+              <button class="rate-btn" onclick="rate(this, 'ok', 15)">Regular</button>
+              <button class="rate-btn" onclick="rate(this, 'good', 15)">Sólido</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Q16 -->
+      <div class="q-card" data-q="16">
+        <div class="q-header" onclick="toggleQ(this)">
+          <div class="q-num">16</div>
+          <div class="q-text">
+            "If catalog growth is rising but supplier activation rates are dropping, how would you diagnose and address the issue?"
+            <em>Pregunta de análisis de datos. Quiere ver que no asumes la causa.</em>
+          </div>
+          <div class="q-chevron">▼</div>
+        </div>
+        <div class="q-body">
+          <div class="q-body-inner">
+            <div class="answer-label">Tu respuesta</div>
+            <div class="answer-text">
+              First, I segment before I conclude. Rising catalog + dropping activation almost always means a mix-shift problem: a few large suppliers are uploading high volumes while small suppliers are churning. The aggregate looks healthy but the cohort tells a different story.<br><br>
+              I'd break activation rate by supplier size cohort, acquisition channel, and registration date. My hypothesis: there's a step in the onboarding funnel that works for large sophisticated suppliers — who can handle complex CSV formats or API integrations — but breaks for smaller, less technical ones. Then I look at drop-off points in the funnel by cohort to confirm where the divergence is.<br><br>
+              The fix is almost always dual-track: a simpler guided path for the non-technical cohort, without removing the power-user path for enterprise.
+            </div>
+            <div class="coach-box">
+              <strong>Tip del entrevistador:</strong> «Segment before you conclude» es la respuesta correcta a cualquier diagnóstico de métricas en FYUL. Un aggregate que oculta una divergencia de cohorte es el error más común. Demostrar que lo ves antes de ser preguntado marca la diferencia.
+            </div>
+            <div class="self-rate">
+              <span class="rate-label">¿Cómo te salió?</span>
+              <button class="rate-btn" onclick="rate(this, 'bad', 16)">Flojo</button>
+              <button class="rate-btn" onclick="rate(this, 'ok', 16)">Regular</button>
+              <button class="rate-btn" onclick="rate(this, 'good', 16)">Sólido</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Q17 -->
+      <div class="q-card" data-q="17">
+        <div class="q-header" onclick="toggleQ(this)">
+          <div class="q-num">17</div>
+          <div class="q-text">
+            "How do you define 'time-to-live' for a supplier catalog, and what levers would you pull to reduce it?"
+            <em>Definición precisa primero, luego palancas concretas. No al revés.</em>
+          </div>
+          <div class="q-chevron">▼</div>
+        </div>
+        <div class="q-body">
+          <div class="q-body-inner">
+            <div class="answer-label">Tu respuesta</div>
+            <div class="answer-text">
+              <strong>Definition:</strong> Time-to-Live is the elapsed time from Decorator account creation to the first product being available for purchase by merchants. It's a wall-clock measure, not a processing-time measure — it includes everything the Decorator experiences, including wait times for async validations.<br><br>
+              <strong>Three levers, ranked by impact:</strong>
+              <ul>
+                <li><strong>Eliminate manual approval gates.</strong> Every step that requires a human at FYUL adds 4–24 hours of queue time. The goal is zero required approvals for standard submissions.</li>
+                <li><strong>Real-time validation at submission.</strong> If the Decorator knows their data is invalid at the moment they upload — not 12 hours later — they fix it immediately. Moving validation from async to sync eliminates correction cycles.</li>
+                <li><strong>Assisted catalog mapping.</strong> Auto-suggest field mappings based on the supplier's data structure. Reduces the time a Decorator spends figuring out how to format their catalog.</li>
+              </ul>
+            </div>
+            <div class="coach-box">
+              <strong>Tip del entrevistador:</strong> La distinción «wall-clock, no processing time» es técnicamente precisa y muestra que has medido esto en producción. El ranking de palancas por impacto, con la explicación del «por qué», es la respuesta que espera un Director de Producto, no solo un IC.
+            </div>
+            <div class="self-rate">
+              <span class="rate-label">¿Cómo te salió?</span>
+              <button class="rate-btn" onclick="rate(this, 'bad', 17)">Flojo</button>
+              <button class="rate-btn" onclick="rate(this, 'ok', 17)">Regular</button>
+              <button class="rate-btn" onclick="rate(this, 'good', 17)">Sólido</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Q18 -->
+      <div class="q-card" data-q="18">
+        <div class="q-header" onclick="toggleQ(this)">
+          <div class="q-num">18</div>
+          <div class="q-text">
+            "How do you set KPIs for initiatives where data quality is the main objective?"
+            <em>La calidad de datos es difusa si no la defines como métrica. Quiere precisión.</em>
+          </div>
+          <div class="q-chevron">▼</div>
+        </div>
+        <div class="q-body">
+          <div class="q-body-inner">
+            <div class="answer-label">Tu respuesta</div>
+            <div class="answer-text">
+              Data quality is only useful as a KPI if it's tied to a user outcome. I use three layers:
+              <ul>
+                <li><strong>Input quality:</strong> % of submitted products with all mandatory fields populated at first submission (without re-upload). Target: above 90%.</li>
+                <li><strong>Processing quality:</strong> % of submitted SKUs that pass automated validation without human review. Target: above 95%.</li>
+                <li><strong>Downstream quality:</strong> % of orders cancelled or reworked due to catalog data errors — because that's the merchant impact. A catalog that looks clean but generates 5% order errors is not clean.</li>
+              </ul>
+              The third metric is the one that matters most to the business and the one least teams track. Input quality is a leading indicator; order error rate is the lagging outcome.
+            </div>
+            <div class="coach-box">
+              <strong>Tip del entrevistador:</strong> La estructura leading vs. lagging indicator aplicada a calidad de datos es sofisticada. El tercer KPI — impacto en pedidos cancelados — conecta la calidad de datos con el P&L, que es lo que le importa a Marcel.
+            </div>
+            <div class="self-rate">
+              <span class="rate-label">¿Cómo te salió?</span>
+              <button class="rate-btn" onclick="rate(this, 'bad', 18)">Flojo</button>
+              <button class="rate-btn" onclick="rate(this, 'ok', 18)">Regular</button>
+              <button class="rate-btn" onclick="rate(this, 'good', 18)">Sólido</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════ BLOQUE 5 ══════════════ -->
+    <section class="section" id="b5">
+      <div class="section-heading">
+        <span class="section-tag tag-red">Bloque 5 / 5</span>
+        <h2 class="section-title">Colaboración y Manejo de Conflictos</h2>
+      </div>
+
+      <!-- Q19 -->
+      <div class="q-card" data-q="19">
+        <div class="q-header" onclick="toggleQ(this)">
+          <div class="q-num">19</div>
+          <div class="q-text">
+            "How do you align competing priorities between internal Operations (who want manual overrides) and Product (who want scalable automation)?"
+            <em>Conflicto real en supply platforms. Quiere pragmatismo, no purismo.</em>
+          </div>
+          <div class="q-chevron">▼</div>
+        </div>
+        <div class="q-body">
+          <div class="q-body-inner">
+            <div class="answer-label">Tu respuesta</div>
+            <div class="answer-text">
+              I don't refuse manual overrides — I make them visible and temporary. In the short term, if an override unblocks a supplier that's waiting while we build the automated path, I allow it. But every override gets logged: which case, how often, and what it takes to resolve it manually.<br><br>
+              That log becomes the automation roadmap. The most frequent manual overrides are the first features I build. Over time, the override rate becomes a lagging indicator of automation debt — if it's rising, we're not closing the loop fast enough.<br><br>
+              The goal isn't zero human intervention ever — it's zero <em>routine</em> human intervention. Ops should be handling edge cases, not the default flow.
+            </div>
+            <div class="coach-box">
+              <strong>Tip del entrevistador:</strong> «Every override gets logged and becomes the automation roadmap» es exactamente el loop que FYUL quiere cerrar. No dices no a ops; los conviertes en tu principal fuente de datos sobre qué automatizar.
+            </div>
+            <div class="self-rate">
+              <span class="rate-label">¿Cómo te salió?</span>
+              <button class="rate-btn" onclick="rate(this, 'bad', 19)">Flojo</button>
+              <button class="rate-btn" onclick="rate(this, 'ok', 19)">Regular</button>
+              <button class="rate-btn" onclick="rate(this, 'good', 19)">Sólido</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Q20 -->
+      <div class="q-card" data-q="20">
+        <div class="q-header" onclick="toggleQ(this)">
+          <div class="q-num">20</div>
+          <div class="q-text">
+            "Tell me about a time an initiative failed to deliver its expected outcome. How did you communicate this to leadership and pivot?"
+            <em>La peor respuesta es esquivar. La mejor es mostrar que aprendiste algo específico y actuaste.</em>
+          </div>
+          <div class="q-chevron">▼</div>
+        </div>
+        <div class="q-body">
+          <div class="q-body-inner">
+            <div class="answer-label">Tu respuesta</div>
+            <div class="answer-text">
+              I launched a bulk catalog upload tool targeting enterprise suppliers, expecting it to reduce Time-to-Live for that cohort. The outcome: activation time for enterprise suppliers didn't improve. It stayed flat.<br><br>
+              When I investigated, the bottleneck wasn't the upload tool — it was the internal SLA review process that still required manual sign-off for suppliers above a certain catalog size. I had optimized the wrong stage of the funnel.<br><br>
+              To leadership, I presented it as: <em>«Hypothesis: upload friction was the bottleneck. Result: it wasn't. Actual bottleneck: manual review SLA for large catalogs. New proposal: automated risk tiering that removes review for suppliers meeting quality thresholds, with a 30-day pilot.»</em><br><br>
+              The lesson: I had validated the hypothesis with ops interviews, but not with data on where time was actually spent. I now require quantitative drop-off data before committing to a solution.
+            </div>
+            <div class="coach-box">
+              <strong>Tip del entrevistador:</strong> El formato «Hypothesis → Result → What I got wrong → New proposal con piloto» es la estructura exacta que un Director de Producto quiere ver. El aprendizaje específico — «ahora requiero datos cuantitativos de drop-off antes de comprometerse a una solución» — demuestra que cambió algo en tu proceso, no solo que reflexionaste.
+            </div>
+            <div class="self-rate">
+              <span class="rate-label">¿Cómo te salió?</span>
+              <button class="rate-btn" onclick="rate(this, 'bad', 20)">Flojo</button>
+              <button class="rate-btn" onclick="rate(this, 'ok', 20)">Regular</button>
+              <button class="rate-btn" onclick="rate(this, 'good', 20)">Sólido</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════ PREGUNTAS A MARCEL ══════════════ -->
+    <section class="section" id="ask">
+      <div class="section-heading">
+        <span class="section-tag tag-muted">Tu turno</span>
+        <h2 class="section-title">Las mejores preguntas para hacerle a Marcel</h2>
+      </div>
+      <p style="font-size:13px; color:var(--muted); margin-bottom:20px;">Elige 3–4. Las primeras dos son obligatorias — demuestran que entiendes la complejidad del contexto de FYUL.</p>
+
+      <!-- Bloque: Producto y operativa -->
+      <div style="font-size:9px; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:1.4px; margin-bottom:10px;">Producto y operativa</div>
+      <div class="ask-grid" style="margin-bottom:28px;">
+        <div class="ask-card">
+          <div class="ask-q">"What is currently the single biggest bottleneck preventing Decorators from going live in under 24 hours?"</div>
+          <div class="ask-why"><strong>Por qué:</strong> Demuestra que ya tienes el framework correcto y quieres alinear tu foco desde el primer día.</div>
+        </div>
+        <div class="ask-card">
+          <div class="ask-q">"Given the unification of Printify, Printful, and Snow Commerce — are we building a unified self-service portal from scratch, or integrating three legacy onboarding systems?"</div>
+          <div class="ask-why"><strong>Por qué:</strong> Señala que entiendes la complejidad estratégica real, no la versión idealizada del JD.</div>
+        </div>
+        <div class="ask-card">
+          <div class="ask-q">"How structured is the catalog data coming from new Decorators today — is formatting reasonably standardized or highly fragmented across regions?"</div>
+          <div class="ask-why"><strong>Por qué:</strong> Técnica y operacional. Muestra que ya estás pensando en el scope real del problema de datos.</div>
+        </div>
+        <div class="ask-card">
+          <div class="ask-q">"Are there active AI or LLM initiatives already in production for catalog attribute mapping or validation, or is this still in the discovery phase?"</div>
+          <div class="ask-why"><strong>Por qué:</strong> Muestra que tu experiencia con LLMs en este dominio es relevante y lista para aplicar — no teórica.</div>
+        </div>
+        <div class="ask-card">
+          <div class="ask-q">"How much does internal Operations still intervene in the supplier validation process today — and what's the target automation rate?"</div>
+          <div class="ask-why"><strong>Por qué:</strong> Cuantifica el gap de automatización actual. La respuesta te dice si el trabajo real es construir o escalar.</div>
+        </div>
+        <div class="ask-card">
+          <div class="ask-q">"What is the most critical metric on your dashboard right now for the Supply pillar — the one that would wake you up at night if it moved in the wrong direction?"</div>
+          <div class="ask-why"><strong>Por qué:</strong> Abre una conversación sobre lo que de verdad importa, y te da una señal de si Marcel piensa en activación, calidad de datos, o volumen de catálogo.</div>
+        </div>
+      </div>
+
+      <!-- Bloque: Equipo y forma de trabajar -->
+      <div style="font-size:9px; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:1.4px; margin-bottom:10px;">Equipo y forma de trabajar</div>
+      <div class="ask-grid" style="margin-bottom:28px;">
+        <div class="ask-card">
+          <div class="ask-q">"How is the Supply Product team structured today — PMs, Tech Leads, Engineering Manager, Designers — and how many squads are under this pillar?"</div>
+          <div class="ask-why"><strong>Por qué:</strong> Entender el equipo real antes de aceptar es crítico. También demuestra que piensas en cómo vas a colaborar desde el día uno.</div>
+        </div>
+        <div class="ask-card">
+          <div class="ask-q">"How does the team typically run discovery with Decorators — async research, structured interviews, or embedded ops feedback loops?"</div>
+          <div class="ask-why"><strong>Por qué:</strong> Muestra que no das por sentado cómo se hace discovery en FYUL, y que tienes criterio sobre los distintos modelos.</div>
+        </div>
+        <div class="ask-card">
+          <div class="ask-q">"What does a healthy week look like for a PM in this team — how much is roadmap, how much is unblocking engineering, how much is stakeholder management?"</div>
+          <div class="ask-why"><strong>Por qué:</strong> La pregunta más honesta sobre el día a día real. La respuesta te dice si el rol es más de discovery o más de ejecución operacional.</div>
+        </div>
+        <div class="ask-card">
+          <div class="ask-q">"What does success look like for this role in the first 90 days — is it shipping something specific, or establishing a diagnostic baseline first?"</div>
+          <div class="ask-why"><strong>Por qué:</strong> Te da los criterios de evaluación reales antes de empezar, y muestra que piensas en impacto a corto plazo, no solo en visión.</div>
+        </div>
+      </div>
+
+      <!-- Bloque: Dirección de empresa -->
+      <div style="font-size:9px; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:1.4px; margin-bottom:10px;">Dirección de empresa y objetivos</div>
+      <div class="ask-grid">
+        <div class="ask-card">
+          <div class="ask-q">"With Printify, Printful and Snow Commerce now under FYUL — what's the north star metric for the Supply pillar in 2026? Is it catalog breadth, Decorator activation rate, or something else?"</div>
+          <div class="ask-why"><strong>Por qué:</strong> Demuestra que entiendes que la integración de tres empresas tiene tensiones de priorización reales, y que no asumes que el JD lo dice todo.</div>
+        </div>
+        <div class="ask-card">
+          <div class="ask-q">"How does leadership at FYUL define success for this team in the next 12 months — and what would need to be true for this role to be considered a clear win?"</div>
+          <div class="ask-why"><strong>Por qué:</strong> La más directa y la más útil para ti: te da los criterios de evaluación antes de aceptar la oferta.</div>
+        </div>
+      </div>
+    </section>
+
+    <div class="footer" style="margin-top:48px; padding:24px 0; border-top:1px solid var(--border); text-align:center; font-size:12px; color:var(--muted);">
+      FYUL Supply PM · Interview Prep · 20 preguntas · Entrevistador: Marcel Kilgenstein (Director de Producto)
+    </div>
+
+  </main>
+</div>
+
+<script>
+  const totalQ = 20;
+  const ratings = {};
+
+  function toggleQ(header) {
+    const card = header.closest('.q-card');
+    card.classList.toggle('open');
+  }
+
+  function rate(btn, level, qNum) {
+    const card = btn.closest('.q-card');
+    const buttons = card.querySelectorAll('.rate-btn');
+
+    buttons.forEach(b => b.classList.remove('sel-bad', 'sel-ok', 'sel-good'));
+    card.classList.remove('rated-bad', 'rated-ok', 'rated-good');
+
+    btn.classList.add('sel-' + level);
+    card.classList.add('rated-' + level);
+
+    ratings[qNum] = level;
+    updateProgress();
+  }
+
+  function updateProgress() {
+    const rated = Object.keys(ratings).length;
+    const pct = (rated / totalQ) * 100;
+    document.getElementById('progress-bar').style.width = pct + '%';
+    document.getElementById('progress-text').textContent = rated + ' / ' + totalQ;
+  }
+
+  // Smooth scroll for nav links
+  document.querySelectorAll('.nav-item').forEach(link => {
+    link.addEventListener('click', function(e) {
+      const href = this.getAttribute('href');
+      if (href && href.startsWith('#')) {
+        e.preventDefault();
+        const target = document.querySelector(href);
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }
+    });
+  });
+
+  // Active nav on scroll
+  const sections = document.querySelectorAll('section[id], section.section[id]');
+  const navItems = document.querySelectorAll('.nav-item');
+
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navItems.forEach(item => item.classList.remove('active'));
+        const active = document.querySelector('.nav-item[href="#' + entry.target.id + '"]');
+        if (active) active.classList.add('active');
+      }
+    });
+  }, { threshold: 0.2, rootMargin: '-60px 0px -40% 0px' });
+
+  sections.forEach(s => observer.observe(s));
+</script>
+</body>
+</html>
