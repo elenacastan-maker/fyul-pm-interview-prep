@@ -7,13 +7,13 @@ This project uses Claude Code (with multi-agent orchestration) to help a Product
 ## What was built
 
 1. **Interview preparation guide** — Deep research on FYUL's Supply Tech team, 20 likely interview questions with structured answers, and 20 questions to ask the interviewer.
-2. **PM Exercise: Premium Leather Goods** — A two-page leadership document (PRFAQ format) to convince Product Leadership to prioritize or deprioritize the initiative of expanding into premium leather goods.
+2. **PM Exercise: Premium Leather Goods** — A two-page leadership document (PRD format) to convince Product Leadership to prioritize or deprioritize the initiative of expanding into premium leather goods.
 3. **Interactive HTML study guide** — A fully self-contained web app (`output/prep-fyul.html`) with progress tracking, flashcard-style Q&A review, and dark/light mode.
 
 ## How agents were used
 
 - A **research agent** gathered market context on premium leather goods, print-on-demand trends, and Printify/Printful capabilities.
-- A **writing agent** drafted the PRFAQ document and the interview answer guide following FYUL's direct, data-backed communication style.
+- A **writing agent** drafted the PRD document and the interview answer guide following FYUL's direct, data-backed communication style.
 - A **frontend agent** built the interactive HTML study tool from the content above.
 
 ## File structure

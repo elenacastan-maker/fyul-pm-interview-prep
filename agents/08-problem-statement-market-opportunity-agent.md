@@ -6,7 +6,7 @@ Covers problem framing, merchant demand signals, competitor pressure, and ROI st
 Numbers are NOT hardcoded — they are pulled from the business calculator (see `output/roi-calculator.js`).
 
 Connected agents:
-- [Agent 03](03-pm-exercise-agent.md) — PRFAQ document consumes this output
+- [Agent 03](03-pm-exercise-agent.md) — PRD document consumes this output
 - [Agent 07](07-engineering-ai-supply-mapping-layer-agent.md) — Supply Mapping Layer consumes decoration specs
 
 ## Prompt used
@@ -149,7 +149,7 @@ Produce the following sections in order:
 5. RECOMMENDATION (1 paragraph: prioritize/deprioritize + top 3 supporting reasons)
 
 Style: FYUL standard — direct, data-backed, no vague language.
-Format: Markdown, ready to paste into leadership doc or PRFAQ FAQ section.
+Format: Markdown, ready to paste into leadership doc or PRD FAQ section.
 </output_format>
 ```
 
