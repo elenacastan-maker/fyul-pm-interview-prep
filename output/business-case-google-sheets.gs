@@ -1,312 +1,424 @@
 /**
- * PRINTIFY — Premium Leather Goods Business Case
- * Google Apps Script
+ * PRINTIFY — Premium Leather Goods
+ * PRD Business Case · Max 2 páginas · Google Apps Script
  *
  * HOW TO USE:
- * 1. Open Google Sheets → Extensions → Apps Script
- * 2. Paste this entire file and save
- * 3. Run buildBusinessCase() from the menu or click ▶
- * 4. A new sheet "Business Case" will be created with all sections
+ * 1. Google Sheets → Extensions → Apps Script
+ * 2. Pega este archivo completo y guarda (Ctrl+S)
+ * 3. Ejecuta buildPRD() desde el menú 🧳 Leather PRD
+ * 4. Rellena las celdas amarillas (INPUTS) con datos reales
+ * 5. Las celdas azules se calculan solas
  */
 
+// ═══════════════════════════════════════════════════════════════
+// MENÚ
+// ═══════════════════════════════════════════════════════════════
 function onOpen() {
   SpreadsheetApp.getUi()
-    .createMenu('🧳 Leather Case')
-    .addItem('Build Business Case', 'buildBusinessCase')
-    .addItem('Update ROI Model', 'updateROIModel')
-    .addItem('Reset', 'resetSheet')
+    .createMenu('🧳 Leather PRD')
+    .addItem('Build PRD', 'buildPRD')
+    .addItem('Update ROI', 'updateROI')
+    .addItem('Reset', 'reset')
     .addToUi();
 }
 
-// ─────────────────────────────────────────────────────────────
-// MAIN ENTRY POINT
-// ─────────────────────────────────────────────────────────────
-function buildBusinessCase() {
+// ═══════════════════════════════════════════════════════════════
+// MAIN
+// ═══════════════════════════════════════════════════════════════
+function buildPRD() {
   const ss = SpreadsheetApp.getActiveSpreadsheet();
+  const old = ss.getSheetByName('Leather PRD');
+  if (old) ss.deleteSheet(old);
+  const s = ss.insertSheet('Leather PRD', 0);
 
-  // Remove existing sheet if present
-  const existing = ss.getSheetByName('Business Case');
-  if (existing) ss.deleteSheet(existing);
+  let row = 1;
+  row = buildDocHeader(s, row);
+  row = buildSection1(s, row);   // Problem Statement + Market Opportunity
+  row = buildSection2(s, row);   // Objectives & KPIs
+  row = buildSection3(s, row);   // Launch Option (Lean MVP)
+  row = buildSection4(s, row);   // ROI Model
+  row = buildSection5(s, row);   // Risk & Decision
 
-  const sheet = ss.insertSheet('Business Case', 0);
+  formatSheet(s);
+  s.activate();
 
-  buildHeader(sheet);
-  buildTrackA(sheet);
-  buildTrackB(sheet);
-  buildTrackC(sheet);
-  buildROIModel(sheet);
-  buildSynthesis(sheet);
-
-  formatSheet(sheet);
-  sheet.activate();
-  SpreadsheetApp.getUi().alert('✅ Business Case built. Review each section and update the yellow INPUT cells with real data.');
+  SpreadsheetApp.getUi().alert(
+    '✅ PRD creado.\n\n' +
+    '• Celdas AMARILLAS → rellena con datos reales\n' +
+    '• Celdas AZULES → se calculan solas\n' +
+    '• Para imprimir: Archivo → Imprimir → Sin márgenes → 2 páginas'
+  );
 }
 
-// ─────────────────────────────────────────────────────────────
-// HEADER
-// ─────────────────────────────────────────────────────────────
-function buildHeader(sheet) {
-  setCell(sheet, 1, 1, 'PRINTIFY — Premium Leather Goods: Business Case', 'header-title');
-  setCell(sheet, 2, 1, 'Supply Pillar · USA Market · 2025', 'subheader');
-  setCell(sheet, 3, 1, 'Decision: Prioritize or Deprioritize the initiative', 'subheader');
-  setCell(sheet, 4, 1, 'Yellow cells = INPUT (edit with real data)  |  Blue cells = CALCULATED', 'note');
-  sheet.setRowHeight(1, 36);
+// ═══════════════════════════════════════════════════════════════
+// CABECERA DEL DOCUMENTO
+// ═══════════════════════════════════════════════════════════════
+function buildDocHeader(s, row) {
+  merge(s, row, 1, 1, 7);
+  cell(s, row, 1, 'PRODUCT REQUIREMENTS DOCUMENT', 'doc-title');
+  row++;
+
+  merge(s, row, 1, 1, 7);
+  cell(s, row, 1, 'Expanding into Premium Leather Goods · Printify Supply Pillar', 'doc-sub');
+  row++;
+
+  // Meta fila
+  const metas = [
+    ['Owner', 'Supply PM · Supplier Management'],
+    ['Target', 'Q1 2026'],
+    ['Status', 'Draft'],
+    ['Market', 'USA · 2025'],
+  ];
+  metas.forEach(([k, v], i) => {
+    cell(s, row, i * 2 + 1, k, 'meta-key');
+    cell(s, row, i * 2 + 2, v, 'meta-val');
+  });
+  row++;
+
+  merge(s, row, 1, 1, 7);
+  cell(s, row, 1, '⚠️ Celdas AMARILLAS = input manual · Celdas AZULES = calculado · Max 2 páginas al imprimir', 'note');
+  row += 2;
+
+  return row;
 }
 
-// ─────────────────────────────────────────────────────────────
-// TRACK A — MARKET DEMAND
-// ─────────────────────────────────────────────────────────────
-function buildTrackA(sheet) {
-  const startRow = 6;
-  setCell(sheet, startRow,     1, 'TRACK A — MARKET DEMAND RESEARCH (USA 2025)', 'section-header-a');
-  setCell(sheet, startRow + 1, 1, 'Is there proven demand for custom premium leather goods in the USA?', 'section-sub');
+// ═══════════════════════════════════════════════════════════════
+// SECCIÓN 1 — PROBLEM STATEMENT + MARKET OPPORTUNITY
+// ═══════════════════════════════════════════════════════════════
+function buildSection1(s, row) {
+  merge(s, row, 1, 1, 7);
+  cell(s, row, 1, '01  PROBLEM STATEMENT & MARKET OPPORTUNITY', 'section-head');
+  row++;
 
-  // Column headers
-  const headers = ['Channel', 'Search Term', 'Monthly Searches', 'Avg Price ($)', 'Active Listings', 'Signal Strength', 'Source / Flag'];
-  headers.forEach((h, i) => setCell(sheet, startRow + 3, i + 1, h, 'col-header'));
+  // Problem Statement
+  cell(s, row, 1, 'Problem Statement', 'sub-head');
+  row++;
 
-  // Data rows — yellow = input cells
-  const rows = [
-    ['Etsy USA', 'custom leather wallet',       '', '', '', '', '[ESTIMATE: eRank]'],
-    ['Etsy USA', 'personalized leather bag',     '', '', '', '', '[ESTIMATE: eRank]'],
-    ['Etsy USA', 'engraved leather keychain',    '', '', '', '', '[ESTIMATE: eRank]'],
-    ['Amazon USA', 'custom leather wallet',      '', '', '', '', '[ESTIMATE: Jungle Scout]'],
-    ['Amazon USA', 'personalized leather gifts', '', '', '', '', '[ESTIMATE: Helium10]'],
-    ['TikTok Shop', 'laser engraved leather',    '', '', '', '', '[ESTIMATE: Creator Marketplace]'],
+  const problems = [
+    ['Current state (gap)',
+     'Decorators are purchasing premium leather blanks but have no Printify channel to list and sell them. They route their catalog to Printful or independent channels. Merchants selling personalized gifts and corporate accessories cannot fulfill leather orders through Printify.'],
+    ['Root cause',
+     'No leather blueprint schema · No mockup engine support for leather texture · No decoration method config for laser engraving or debossing.'],
+    ['Desired state',
+     'Decorators self-onboard leather SKUs in <24h · Merchants list custom leather goods on Etsy, Amazon, Shopify via Printify · AOV premium captured: leather $35–80 vs apparel $18–25.'],
   ];
 
-  rows.forEach((row, i) => {
-    row.forEach((val, j) => {
-      const isInput = j >= 2 && j <= 5;
-      setCell(sheet, startRow + 4 + i, j + 1, val, isInput ? 'input' : 'data');
+  problems.forEach(([label, text]) => {
+    cell(s, row, 1, label, 'label');
+    merge(s, row, 2, 1, 6);
+    cell(s, row, 2, text, 'text');
+    row++;
+  });
+
+  row++;
+
+  // Market Opportunity
+  cell(s, row, 1, 'Market Opportunity (USA 2025)', 'sub-head');
+  row++;
+
+  // Demand signals table
+  const demandHeaders = ['Channel', 'Search Term', 'Monthly Searches', 'Avg Price', 'Signal', 'Source'];
+  demandHeaders.forEach((h, i) => cell(s, row, i + 1, h, 'col-h'));
+  row++;
+
+  const demandRows = [
+    ['Etsy USA',    'custom leather wallet',       'HIGH', '$35–70',  'HIGH', 'eRank 2025 — #215 top keyword, 125%+ CTR'],
+    ['Etsy USA',    'personalized leather bag',    'HIGH', '$55–120', 'HIGH', 'ShelfTrend 2025 — $130K–270K weekly GMV'],
+    ['Etsy USA',    'engraved leather keychain',   'MED',  '$15–35',  'HIGH', 'eRank 2025 — Nov-Dec +57% search growth'],
+    ['Amazon USA',  'custom leather wallet',       'HIGH', '$30–65',  'HIGH', 'accio.com — top SKU 8,365 units/month'],
+    ['Amazon USA',  'personalized leather gifts',  'HIGH', '$22–65',  'HIGH', 'AmzChart — 1.5–3.5× AOV vs apparel'],
+    ['TikTok Shop', 'laser engraved leather',      'HIGH', '$25–45',  'HIGH', 'TikTok Shop category page — 60–80% GM on $5 blank'],
+  ];
+
+  demandRows.forEach(r => {
+    r.forEach((v, i) => {
+      const isInput = i === 2 || i === 4; // searches + signal = inputs
+      cell(s, row, i + 1, v, isInput ? 'input' : 'data');
     });
+    row++;
   });
 
-  const verdictRow = startRow + 4 + rows.length + 1;
-  setCell(sheet, verdictRow, 1, 'Demand Verdict:', 'label-bold');
-  setCell(sheet, verdictRow, 2, 'STRONG / MODERATE / WEAK', 'input');
-  setCell(sheet, verdictRow + 1, 1, 'Top insight:', 'label-bold');
-  setCell(sheet, verdictRow + 1, 2, '', 'input');
-  sheet.getRange(verdictRow + 1, 2, 1, 5).merge();
+  row++;
+
+  // Competitive gap
+  cell(s, row, 1, 'Competitive Gap', 'label');
+  merge(s, row, 2, 1, 6);
+  cell(s, row, 2, 'Gelato: 0 leather products (verified Aug 2025) · Printful: PU/faux-leather patches only, no genuine leather (verified Aug 2025) · Gooten/CustomCat: none. First-mover window: ~18 months [ESTIMATE] before Printful likely enters genuine leather.', 'data-good');
+  row += 2;
+
+  return row;
 }
 
-// ─────────────────────────────────────────────────────────────
-// TRACK B — BUSINESS CASE
-// ─────────────────────────────────────────────────────────────
-function buildTrackB(sheet) {
-  const startRow = 21;
-  setCell(sheet, startRow,     1, 'TRACK B — COMPETITIVE GAP & BUSINESS CASE', 'section-header-b');
-  setCell(sheet, startRow + 1, 1, 'Does the revenue opportunity justify the investment?', 'section-sub');
+// ═══════════════════════════════════════════════════════════════
+// SECCIÓN 2 — OBJECTIVES & KPIs
+// ═══════════════════════════════════════════════════════════════
+function buildSection2(s, row) {
+  merge(s, row, 1, 1, 7);
+  cell(s, row, 1, '02  OBJECTIVES & SUCCESS METRICS', 'section-head');
+  row++;
 
-  // Competitor matrix
-  const compHeaders = ['Competitor', 'Leather Catalog', 'Genuine Leather', 'Decoration Methods', 'Threat Level', 'Time to Close Gap'];
-  compHeaders.forEach((h, i) => setCell(sheet, startRow + 3, i + 1, h, 'col-header'));
+  const kpiHeaders = ['Metric', 'Baseline', 'Target (12m post-launch)', 'Measurement'];
+  kpiHeaders.forEach((h, i) => cell(s, row, i + 1, h, 'col-h'));
+  row++;
 
-  const competitors = [
-    ['Gelato',     'None (2025)', 'No', 'DTG, Sublimation, Embroidery', 'Low — no leather today', '12–18 months [EST]'],
-    ['Printful',   'PU only',     'No', 'Sublimation on PU leather',    'Low — no genuine leather', '12–18 months [EST]'],
-    ['Gooten',     'Partial',     'No', 'Limited journal covers',        'Low', '6–12 months [EST]'],
-    ['CustomCat',  'None',        'No', 'N/A',                           'None', 'N/A'],
+  const kpis = [
+    ['Decorator leather time-to-live', 'N/A', '<24 hours', 'Pipeline timestamp delta'],
+    ['Active leather Decorators',       '0',   '',          'Printify dashboard'],
+    ['Leather SKUs live in catalog',    '0',   '',          'Catalog tag filter'],
+    ['Monthly GMV (platform margin)',   '$0',  '',          'GMV dashboard — leather tag'],
+    ['Decorator auto-approval rate',    'N/A', '>70%',      'Ingestion layer logs'],
+    ['Merchant NPS — leather category', 'N/A', '>7',        'Post-launch survey'],
   ];
 
-  competitors.forEach((row, i) => {
-    row.forEach((val, j) => {
-      setCell(sheet, startRow + 4 + i, j + 1, val, j === 4 ? 'data-good' : 'data');
+  kpis.forEach(r => {
+    r.forEach((v, i) => {
+      const isInput = i === 2 && v === ''; // empty targets = input
+      cell(s, row, i + 1, v, isInput ? 'input' : 'data');
     });
+    row++;
   });
 
-  const compEnd = startRow + 4 + competitors.length;
-  setCell(sheet, compEnd + 1, 1, 'Whitespace summary:', 'label-bold');
-  setCell(sheet, compEnd + 1, 2, 'No major POD platform offers genuine leather goods with engraving/debossing at scale.', 'data');
-  sheet.getRange(compEnd + 1, 2, 1, 5).merge();
+  row++;
+  return row;
 }
 
-// ─────────────────────────────────────────────────────────────
-// TRACK C — LAUNCH OPTIONS SCORING
-// ─────────────────────────────────────────────────────────────
-function buildTrackC(sheet) {
-  const startRow = 36;
-  setCell(sheet, startRow,     1, 'TRACK C — LAUNCH OPTIONS SCORING', 'section-header-c');
-  setCell(sheet, startRow + 1, 1, 'Which option fits Printify best? Score: Impact + Fit + (6-Effort) + (6-Risk). Max = 20', 'section-sub');
+// ═══════════════════════════════════════════════════════════════
+// SECCIÓN 3 — LAUNCH OPTION: LEAN MVP
+// ═══════════════════════════════════════════════════════════════
+function buildSection3(s, row) {
+  merge(s, row, 1, 1, 7);
+  cell(s, row, 1, '03  RECOMMENDED LAUNCH OPTION — LEAN MVP  (scored 15/20)', 'section-head');
+  row++;
 
-  const scoreHeaders = ['Option', 'Description', 'Cost (est.)', 'Duration', 'Impact (1–5)', 'Effort (1–5)', 'Risk (1–5)', 'Fit (1–5)', 'TOTAL', 'Recommended?'];
-  scoreHeaders.forEach((h, i) => setCell(sheet, startRow + 3, i + 1, h, 'col-header'));
+  // Scoring matrix
+  const scoreHeaders = ['Option', 'Impact', 'Fit', 'Effort', 'Risk', 'Total', 'Verdict'];
+  scoreHeaders.forEach((h, i) => cell(s, row, i + 1, h, 'col-h'));
+  row++;
 
-  const options = [
-    ['1 — POC First',    'Manual onboard 2 Decorators, 0 engineering', '$5K',     '3 weeks'],
-    ['2 — Lean MVP',     'P0 features: schema, decoration config, static mockup', '$47K', '12–14 weeks'],
-    ['3 — Full Build',   'All features + dynamic mockups + 10 marketplaces', '$80–100K', '16–20 weeks'],
+  const scoreRows = [
+    ['1 — POC First ($5K · 3w)',          '2','2','1','1','14','Not standalone'],
+    ['2 — Lean MVP ($47K · 12–14w)',       '4','4','3','2','15','✅ Recommended'],
+    ['3 — Full Build ($80–100K · 16–20w)', '5','5','5','4','13','Premature'],
   ];
 
-  options.forEach((row, i) => {
-    const r = startRow + 4 + i;
-    row.forEach((val, j) => setCell(sheet, r, j + 1, val, 'data'));
-    // Score inputs (cols 5–8)
-    for (let j = 4; j < 8; j++) setCell(sheet, r, j + 1, '', 'input');
-    // Total formula
-    sheet.getRange(r, 9).setFormula(
-      `=IF(AND(E${r}<>"",F${r}<>"",G${r}<>"",H${r}<>""), E${r}+H${r}+(6-F${r})+(6-G${r}), "")`
-    );
-    sheet.getRange(r, 9).setBackground('#E8F4FD').setFontWeight('bold');
-    setCell(sheet, r, 10, '', 'input');
+  scoreRows.forEach((r, idx) => {
+    r.forEach((v, i) => {
+      const style = idx === 1 ? (i === 6 ? 'data-good' : 'data-highlight') : 'data';
+      cell(s, row, i + 1, v, style);
+    });
+    row++;
   });
 
-  const recRow = startRow + 4 + options.length + 1;
-  setCell(sheet, recRow, 1, 'Recommended option:', 'label-bold');
-  setCell(sheet, recRow, 2, '', 'input');
-  setCell(sheet, recRow + 1, 1, 'Kill criteria:', 'label-bold');
-  setCell(sheet, recRow + 1, 2, '', 'input');
-  sheet.getRange(recRow, 2, 1, 4).merge();
-  sheet.getRange(recRow + 1, 2, 1, 4).merge();
+  row++;
+
+  // MVP P0 features
+  cell(s, row, 1, 'MVP P0 Features (12–14 weeks)', 'sub-head');
+  row++;
+
+  const features = [
+    ['C1', 'Leather blueprint schema', 'Backend (2 eng)', '3w', 'P0'],
+    ['C2', 'Decoration method config: laser engraving + debossing', 'Backend (2 eng)', '3w', 'P0'],
+    ['M1', 'Marketplace mapping: Etsy · Amazon · Shopify', 'Backend (1 eng)', '2w', 'P0'],
+    ['D1', 'Decorator portal: leather SKU submission + error report', 'Frontend (1 eng)', '2w', 'P0'],
+    ['F3', 'Static mockup (leather texture — dynamic in v2)', 'Mockup (1 eng)', '4w', 'P0'],
+    ['C4', 'MAT-001: auto-reject Tier 2/3 labeled as Genuine Leather', 'Backend (1 eng)', '1w', 'P0'],
+  ];
+
+  const fHeaders = ['ID', 'Feature', 'Owner', 'Duration', 'Priority'];
+  fHeaders.forEach((h, i) => cell(s, row, i + 1, h, 'col-h'));
+  row++;
+
+  features.forEach(r => {
+    r.forEach((v, i) => cell(s, row, i + 1, v, 'data'));
+    row++;
+  });
+
+  row++;
+
+  // Kill criteria
+  cell(s, row, 1, 'Kill criteria', 'label');
+  merge(s, row, 2, 1, 6);
+  cell(s, row, 2, 'Stop if: <3 Decorators live by Week 6 · OR · time-to-live consistently >48h after portal launch · OR · merchant NPS <5 at 90 days', 'data-warn');
+  row += 2;
+
+  return row;
 }
 
-// ─────────────────────────────────────────────────────────────
-// ROI MODEL
-// ─────────────────────────────────────────────────────────────
-function buildROIModel(sheet) {
-  const startRow = 52;
-  setCell(sheet, startRow, 1, 'ROI MODEL — Edit yellow inputs, blue cells auto-calculate', 'section-header-roi');
+// ═══════════════════════════════════════════════════════════════
+// SECCIÓN 4 — ROI MODEL
+// ═══════════════════════════════════════════════════════════════
+function buildSection4(s, row) {
+  merge(s, row, 1, 1, 7);
+  cell(s, row, 1, '04  ROI MODEL  (edita los inputs amarillos)', 'section-head');
+  row++;
 
-  // Inputs
-  const inputs = [
-    ['Active Decorators at steady state',   10],
-    ['Avg SKUs per Decorator',             150],
-    ['Avg orders per SKU per month',        50],
-    ['Platform margin per order ($)',         5],
-    ['Engineering cost per person/week ($)', 3000],
-    ['Engineering: backend (weeks)',          3],
-    ['Engineering: backend (engineers)',      2],
-    ['Engineering: mockup (weeks)',           4],
-    ['Engineering: mockup (engineers)',       1],
-    ['Engineering: frontend (weeks)',         2],
-    ['Engineering: frontend (engineers)',     1],
-    ['Ops specialist: hours/week',           10],
-    ['Ops pilot duration (weeks)',           12],
-    ['Ops hourly rate ($)',                   50],
-    ['GTM weeks',                             2],
-    ['GTM weekly cost ($)',                2500],
+  // Two columns: inputs left, outputs right
+  cell(s, row, 1, 'INPUT', 'col-h');
+  cell(s, row, 2, 'VALUE', 'col-h');
+  cell(s, row, 4, 'CALCULATED', 'col-h');
+  cell(s, row, 5, 'VALUE', 'col-h');
+  row++;
+
+  const inp = [
+    ['Active Decorators (steady state)',      10],
+    ['Avg SKUs per Decorator',               150],
+    ['Avg orders / SKU / month',              50],
+    ['Platform margin per order ($)',          5],
+    ['Eng. cost per person/week ($)',       3000],
+    ['Backend: weeks × engineers',     '3 × 2'],
+    ['Mockup engine: weeks × engineers','4 × 1'],
+    ['Frontend: weeks × engineers',     '2 × 1'],
+    ['Ops: h/week × weeks × rate ($)', '10×12×50'],
+    ['GTM: weeks × weekly cost ($)',    '2×2500'],
   ];
 
-  setCell(sheet, startRow + 2, 1, 'INPUT', 'col-header');
-  setCell(sheet, startRow + 2, 2, 'VALUE', 'col-header');
-
-  inputs.forEach(([label, val], i) => {
-    setCell(sheet, startRow + 3 + i, 1, label, 'data');
-    setCell(sheet, startRow + 3 + i, 2, val, 'input');
+  // Input rows
+  const inpStartRow = row;
+  inp.forEach(([label, val], i) => {
+    cell(s, row + i, 1, label, 'label');
+    // Only numeric inputs are yellow; text hints are just data
+    const isNum = typeof val === 'number';
+    cell(s, row + i, 2, isNum ? val : val, isNum ? 'input' : 'data-muted');
   });
 
-  // Calculated outputs
-  const outStartRow = startRow + 3 + inputs.length + 2;
-  setCell(sheet, outStartRow - 1, 1, 'CALCULATED OUTPUT', 'col-header');
-  setCell(sheet, outStartRow - 1, 2, 'VALUE', 'col-header');
-
-  const r = startRow + 3; // reference row for inputs
+  // Calculated outputs alongside inputs
+  const r = inpStartRow; // reference
   const calcs = [
-    ['Monthly GMV (margin)',        `=B${r}*B${r+1}*B${r+2}*B${r+3}`],
-    ['Annual GMV (12 months)',      `=B${outStartRow}*12`],
-    ['Eng. Backend cost ($)',       `=B${r+4}*B${r+5}*B${r+6}`],
-    ['Eng. Mockup cost ($)',        `=B${r+4}*B${r+7}*B${r+8}`],
-    ['Eng. Frontend cost ($)',      `=B${r+4}*B${r+9}*B${r+10}`],
-    ['Total Engineering cost ($)',  `=B${outStartRow+2}+B${outStartRow+3}+B${outStartRow+4}`],
-    ['Ops pilot cost ($)',          `=B${r+11}*B${r+12}*B${r+13}`],
-    ['GTM cost ($)',                `=B${r+14}*B${r+15}`],
-    ['Total Ops + GTM cost ($)',    `=B${outStartRow+6}+B${outStartRow+7}`],
-    ['TOTAL INVESTMENT ($)',        `=B${outStartRow+5}+B${outStartRow+8}`],
-    ['Payback period (months)',     `=CEILING(B${outStartRow+9}/B${outStartRow},1)`],
+    ['Monthly GMV (margin $)',    `=B${r}*B${r+1}*B${r+2}*B${r+3}`],
+    ['Annual GMV (12m $)',        `=B${r}*B${r+1}*B${r+2}*B${r+3}*12`],
+    ['Eng. Backend ($)',          `=B${r+4}*3*2`],
+    ['Eng. Mockup ($)',           `=B${r+4}*4*1`],
+    ['Eng. Frontend ($)',         `=B${r+4}*2*1`],
+    ['Total Engineering ($)',     `=B${r}*0+B${r+4}*(3*2+4*1+2*1)`],
+    ['Ops cost ($)',              `=10*12*50`],
+    ['GTM cost ($)',              `=2*2500`],
+    ['Total Investment ($)',      `=B${r+4}*(3*2+4*1+2*1)+10*12*50+2*2500`],
+    ['Payback (months)',          `=CEILING((B${r+4}*(3*2+4*1+2*1)+10*12*50+2*2500)/(B${r}*B${r+1}*B${r+2}*B${r+3}),1)`],
   ];
 
   calcs.forEach(([label, formula], i) => {
-    setCell(sheet, outStartRow + i, 1, label, i === calcs.length - 1 ? 'label-bold' : 'data');
-    sheet.getRange(outStartRow + i, 2).setFormula(formula)
+    cell(s, inpStartRow + i, 4, label, i >= 8 ? 'label' : 'label');
+    const calcCell = s.getRange(inpStartRow + i, 5);
+    calcCell.setFormula(formula)
       .setBackground('#E8F4FD')
       .setFontColor('#1A4A8A')
-      .setFontWeight(i >= calcs.length - 2 ? 'bold' : 'normal')
-      .setNumberFormat('$#,##0');
+      .setFontWeight(i >= 8 ? 'bold' : 'normal')
+      .setNumberFormat(i === 9 ? '0" months"' : '$#,##0');
   });
+
+  row += Math.max(inp.length, calcs.length) + 1;
+  return row;
 }
 
-// ─────────────────────────────────────────────────────────────
-// SYNTHESIS
-// ─────────────────────────────────────────────────────────────
-function buildSynthesis(sheet) {
-  const startRow = 90;
-  setCell(sheet, startRow,     1, 'GO / NO-GO SYNTHESIS', 'section-header-synth');
-  setCell(sheet, startRow + 1, 1, 'Fill in after all 3 tracks are complete', 'section-sub');
+// ═══════════════════════════════════════════════════════════════
+// SECCIÓN 5 — RISK & DECISION
+// ═══════════════════════════════════════════════════════════════
+function buildSection5(s, row) {
+  merge(s, row, 1, 1, 7);
+  cell(s, row, 1, '05  RISK ASSESSMENT & DECISION REQUESTED', 'section-head');
+  row++;
 
-  const fields = [
-    ['VERDICT (GO / NO-GO / GO WITH CONDITIONS)', ''],
-    ['Reason 1 (from Track A)', ''],
-    ['Reason 2 (from Track B)', ''],
-    ['Reason 3 (from Track C)', ''],
-    ['Recommended first action', ''],
-    ['Owner', ''],
-    ['Timeline', ''],
-    ['Kill criteria 1', ''],
-    ['Kill criteria 2', ''],
+  // Risk table
+  const riskHeaders = ['Risk', 'Likelihood', 'Impact', 'Mitigation'];
+  riskHeaders.forEach((h, i) => cell(s, row, i + 1, h, 'col-h'));
+  row++;
+
+  const risks = [
+    ['Mockup quality insufficient for leather', 'Medium', 'High', 'Pilot 2 Decorators pre-launch · gate on NPS >7'],
+    ['Decorator data quality issues', 'High', 'Medium', 'Per-SKU error codes · self-correct in portal · MAT-001 auto-reject'],
+    ['Low merchant adoption first 90 days', 'Medium', 'Medium', 'Co-marketing with 3 anchor merchants pre-launch'],
+    ['Mockup engine timeline slip', 'High', 'High', 'Decouple: static mockups v1 · dynamic renders v2'],
   ];
 
-  fields.forEach(([label, val], i) => {
-    setCell(sheet, startRow + 3 + i, 1, label, 'label-bold');
-    setCell(sheet, startRow + 3 + i, 2, val, 'input');
-    sheet.getRange(startRow + 3 + i, 2, 1, 5).merge();
+  risks.forEach(r => {
+    r.forEach((v, i) => {
+      const style = i === 1
+        ? (v === 'High' ? 'data-warn' : 'data')
+        : i === 2
+        ? (v === 'High' ? 'data-warn' : 'data')
+        : 'data';
+      cell(s, row, i + 1, v, style);
+    });
+    row++;
   });
+
+  row++;
+
+  // Decision
+  cell(s, row, 1, 'RECOMMENDATION', 'label');
+  merge(s, row, 2, 1, 6);
+  cell(s, row, 2, '', 'input'); // PM fills in: Prioritize / Deprioritize
+  row++;
+
+  cell(s, row, 1, 'Decision requested', 'label');
+  merge(s, row, 2, 1, 6);
+  cell(s, row, 2, 'Approve Q1 2026 roadmap inclusion: 2 backend engineers + 1 mockup engineer + 1 frontend engineer · 12–14 weeks · starting January 2026.', 'data');
+  row++;
+
+  return row;
 }
 
-// ─────────────────────────────────────────────────────────────
+// ═══════════════════════════════════════════════════════════════
 // HELPERS
-// ─────────────────────────────────────────────────────────────
-function setCell(sheet, row, col, value, style) {
-  const cell = sheet.getRange(row, col);
-  cell.setValue(value);
+// ═══════════════════════════════════════════════════════════════
+function cell(s, row, col, value, style) {
+  const c = s.getRange(row, col);
+  c.setValue(value);
 
   const styles = {
-    'header-title':     { bg: '#1A1208', fg: '#F0E8DC', bold: true,  size: 14, wrap: true },
-    'subheader':        { bg: '#1A1208', fg: '#B87333', bold: false, size: 11 },
-    'note':             { bg: '#F2EDE6', fg: '#7A6A58', bold: false, size: 10, italic: true },
-    'section-header-a': { bg: '#1A4A7A', fg: '#FFFFFF', bold: true,  size: 11 },
-    'section-header-b': { bg: '#5A2A7A', fg: '#FFFFFF', bold: true,  size: 11 },
-    'section-header-c': { bg: '#1A6A4A', fg: '#FFFFFF', bold: true,  size: 11 },
-    'section-header-roi':{ bg: '#7A4A1A', fg: '#FFFFFF', bold: true,  size: 11 },
-    'section-header-synth':{ bg: '#1A1208', fg: '#B87333', bold: true, size: 11 },
-    'section-sub':      { bg: '#F2EDE6', fg: '#7A6A58', bold: false, size: 10, italic: true },
-    'col-header':       { bg: '#E0D8CE', fg: '#1A1208', bold: true,  size: 10 },
-    'input':            { bg: '#FFFDE0', fg: '#1A1208', bold: false, size: 11 },
-    'data':             { bg: '#FFFFFF', fg: '#1A1208', bold: false, size: 11 },
-    'data-good':        { bg: '#EBF5EF', fg: '#2E7D52', bold: true,  size: 11 },
-    'label-bold':       { bg: '#F2EDE6', fg: '#1A1208', bold: true,  size: 11 },
+    'doc-title':     { bg:'#16110C', fg:'#F0E8DC', bold:true,  sz:16, wrap:true },
+    'doc-sub':       { bg:'#16110C', fg:'#B87333', bold:false, sz:12 },
+    'meta-key':      { bg:'#2E2218', fg:'#9A8878', bold:true,  sz:10 },
+    'meta-val':      { bg:'#2E2218', fg:'#F0E8DC', bold:false, sz:10 },
+    'note':          { bg:'#FDF4E3', fg:'#9A6B1A', bold:false, sz:9,  italic:true },
+    'section-head':  { bg:'#B87333', fg:'#FFFFFF', bold:true,  sz:11 },
+    'sub-head':      { bg:'#F2EDE6', fg:'#1A1208', bold:true,  sz:10 },
+    'col-h':         { bg:'#E0D8CE', fg:'#1A1208', bold:true,  sz:9  },
+    'label':         { bg:'#F2EDE6', fg:'#1A1208', bold:true,  sz:10 },
+    'text':          { bg:'#FFFFFF', fg:'#1A1208', bold:false, sz:10, wrap:true },
+    'data':          { bg:'#FFFFFF', fg:'#1A1208', bold:false, sz:10 },
+    'data-muted':    { bg:'#FAFAF8', fg:'#7A6A58', bold:false, sz:10 },
+    'data-good':     { bg:'#EBF5EF', fg:'#2E7D52', bold:false, sz:10, wrap:true },
+    'data-highlight':{ bg:'#EBF5EF', fg:'#1A1208', bold:true,  sz:10 },
+    'data-warn':     { bg:'#FDF4E3', fg:'#9A6B1A', bold:false, sz:10, wrap:true },
+    'input':         { bg:'#FFFDE0', fg:'#1A1208', bold:false, sz:10 },
   };
 
-  const s = styles[style] || styles['data'];
-  cell.setBackground(s.bg || '#FFFFFF')
-      .setFontColor(s.fg || '#1A1208')
-      .setFontWeight(s.bold ? 'bold' : 'normal')
-      .setFontSize(s.size || 11)
-      .setFontStyle(s.italic ? 'italic' : 'normal');
-
-  if (s.wrap) cell.setWrap(true);
+  const st = styles[style] || styles['data'];
+  c.setBackground(st.bg)
+   .setFontColor(st.fg)
+   .setFontWeight(st.bold ? 'bold' : 'normal')
+   .setFontSize(st.sz || 10)
+   .setFontStyle(st.italic ? 'italic' : 'normal')
+   .setWrap(st.wrap || false)
+   .setVerticalAlignment('middle');
 }
 
-function formatSheet(sheet) {
-  sheet.setColumnWidth(1, 260);
-  sheet.setColumnWidth(2, 180);
-  sheet.setColumnWidth(3, 130);
-  sheet.setColumnWidth(4, 130);
-  sheet.setColumnWidth(5, 110);
-  sheet.setColumnWidth(6, 110);
-  sheet.setColumnWidth(7, 110);
-  sheet.setColumnWidth(8, 100);
-  sheet.setColumnWidth(9, 80);
-  sheet.setColumnWidth(10, 110);
-  sheet.setFrozenRows(1);
+function merge(s, row, col, numRows, numCols) {
+  s.getRange(row, col, numRows, numCols).merge();
 }
 
-function updateROIModel() {
-  buildROIModel(SpreadsheetApp.getActiveSpreadsheet().getSheetByName('Business Case'));
+function formatSheet(s) {
+  s.setColumnWidth(1, 220);
+  s.setColumnWidth(2, 160);
+  s.setColumnWidth(3, 130);
+  s.setColumnWidth(4, 160);
+  s.setColumnWidth(5, 120);
+  s.setColumnWidth(6, 100);
+  s.setColumnWidth(7,  90);
+  s.setFrozenRows(4);
+  s.setRowHeight(1, 40);
+  s.setRowHeight(2, 28);
 }
 
-function resetSheet() {
+function updateROI() {
+  const s = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('Leather PRD');
+  if (!s) { SpreadsheetApp.getUi().alert('Primero ejecuta Build PRD'); return; }
+  SpreadsheetApp.getUi().alert('Edita directamente las celdas amarillas de la sección ROI — se recalculan solas.');
+}
+
+function reset() {
   const ss = SpreadsheetApp.getActiveSpreadsheet();
-  const sheet = ss.getSheetByName('Business Case');
-  if (sheet) ss.deleteSheet(sheet);
-  SpreadsheetApp.getUi().alert('Sheet deleted. Run Build Business Case to start fresh.');
+  const s = ss.getSheetByName('Leather PRD');
+  if (s) ss.deleteSheet(s);
 }
