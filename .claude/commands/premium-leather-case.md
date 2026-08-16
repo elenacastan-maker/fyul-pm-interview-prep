@@ -7,7 +7,7 @@ explained as "how I'd validate this with internal Printify data."
 
 ---
 
-STEP 1 — MARKET RESEARCH: LUXURY vs. PREMIUM LEATHER
+STEP 1 — MARKET RESEARCH: PREMIUM LEATHER
 
 SEGMENT A — PREMIUM ($30–$90 AOV): Etsy, Amazon, gifting, personalization
 Research: search volume "custom leather wallet/bag/keychain", BSR top 10, TikTok signals

@@ -1,4 +1,4 @@
-# Agent 15 — Luxury & Premium Leather Orchestrator Agent
+# Agent 15 — Premium Leather Orchestrator Agent
 
 ## Purpose
 Orchestrator agent that runs the full business case validation sequence for the Premium Leather Goods
@@ -6,7 +6,7 @@ initiative. Ties together market research, competitive analysis, business case v
 and a progressive POC → MVP → v2 implementation path.
 
 Adds two layers missing from other agents:
-1. **Luxury vs. Premium distinction** — separate markets, buyer personas, AOV, and channels
+1. **Premium Leather distinction** — separate markets, buyer personas, AOV, and channels
 2. **POC before MVP** — low-cost hypothesis validation before full engineering commitment
 
 ## Agent execution order
@@ -43,7 +43,7 @@ FYUL rules apply throughout:
 
 ---
 
-# STEP 1 — MARKET RESEARCH: LUXURY vs. PREMIUM LEATHER
+# STEP 1 — MARKET RESEARCH: PREMIUM LEATHER
 
 <market_segmentation>
 Before any business case, establish which segment(s) Printify should target.
