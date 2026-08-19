@@ -10,10 +10,7 @@
 
 | Document | View |
 |---|---|
-| **PRD — Premium Leather Goods** | [Open HTML ↗](https://claude.ai/code/artifact/c5863fd5-628d-47cb-8c6b-1d3030667025) |
-| **Plain-language presentation** (grandma-friendly) | [Open HTML ↗](https://claude.ai/code/artifact/4ca0fa54-1237-428e-8bdd-b2e154cbb7e7) |
-| **Email to Marcel** — methodology intro | [Open HTML ↗](https://claude.ai/code/artifact/b077a4a5-5c1c-4bc2-ac8b-41ba34219fae) |
-| **Interview Leadership Q&A** (20 questions, STAR format) | [Open HTML ↗](https://claude.ai/code/artifact/1a249dae-1f71-47fc-bc65-ba19885d3653) |
+| **PRD — Premium Leather Goods** | [elenacastan-maker.github.io/fyul-pm-interview-prep ↗](https://elenacastan-maker.github.io/fyul-pm-interview-prep/) |
 | **Financial model (Excel)** | [`output/finals/Printify_Leather_PRD_Workbook.xlsx`](output/finals/Printify_Leather_PRD_Workbook.xlsx) |
 
 ---
@@ -22,12 +19,9 @@
 
 ```
 output/finals/
-├── premium-leather-prd-fyul.html     ← Full PRD (HTML)
+├── premium-leather-prd-fyul.html     ← Full PRD (HTML) — also live at GitHub Pages
 ├── premium-leather-prd-fyul.docx     ← Full PRD (Word)
 ├── Printify_Leather_PRD_Workbook.xlsx ← 6-sheet financial model
-├── email-printify.html               ← Cover email to Marcel
-├── prd-abuela.html                   ← Plain-language presentation
-├── interview-leadership-qa.html      ← Leadership Q&A prep
 ├── demand_trajectory_v7.png          ← Demand signal chart
 ├── financial_scenarios_v7.png        ← 3-scenario financial chart
 └── monthly_margin_v7.png             ← Annual run-rate chart
