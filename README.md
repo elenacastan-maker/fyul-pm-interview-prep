@@ -1,48 +1,60 @@
-# FYUL Supply PM — Interview Prep with Claude Code
+# FYUL Supply PM — Premium Leather Goods PRD
 
-A multi-agent project built with [Claude Code](https://claude.ai/code) to prepare for a Supply Product Manager interview at **FYUL** (the merged entity of Printify, Printful, and Snow Commerce).
+**PM take-home exercise** for the Supply Product Manager role at FYUL (Printify + Printful + Snow Commerce merger).
 
----
-
-## What's inside
-
-| Folder | Contents |
-|--------|----------|
-| [`agents/`](agents/) | Prompts used for each Claude agent |
-| [`output/`](output/) | Final deliverables |
-| [`docs/`](docs/) | Source context and exercise brief |
-
-### Deliverables
-
-- **[`output/prep-fyul.html`](output/prep-fyul.html)** — Interactive single-file study tool with 20 Q&A flashcards, communication style guide, and questions to ask the interviewer. Open in any browser.
-- **[`output/premium-leather-prd.md`](output/premium-leather-prd.md)** — Two-page PRD for the PM take-home exercise: expand into premium leather goods or not?
-- **[`docs/FYcontext.md`](docs/FYcontext.md)** — Full interview prep guide (Spanish): role context, AI/tech concepts, 20 interview answers, 20 questions to ask Marcel.
+> Task: build a two-page leadership document recommending whether Printify should invest in a premium leather goods category — with a complete business case, financial model, and execution roadmap.
 
 ---
 
-## Agent architecture
+## Live deliverables
+
+| Document | View |
+|---|---|
+| **PRD — Premium Leather Goods** | [Open HTML ↗](https://claude.ai/code/artifact/c5863fd5-628d-47cb-8c6b-1d3030667025) |
+| **Plain-language presentation** (grandma-friendly) | [Open HTML ↗](https://claude.ai/code/artifact/4ca0fa54-1237-428e-8bdd-b2e154cbb7e7) |
+| **Email to Marcel** — methodology intro | [Open HTML ↗](https://claude.ai/code/artifact/b077a4a5-5c1c-4bc2-ac8b-41ba34219fae) |
+| **Interview Leadership Q&A** (20 questions, STAR format) | [Open HTML ↗](https://claude.ai/code/artifact/1a249dae-1f71-47fc-bc65-ba19885d3653) |
+| **Financial model (Excel)** | [`output/finals/Printify_Leather_PRD_Workbook.xlsx`](output/finals/Printify_Leather_PRD_Workbook.xlsx) |
+
+---
+
+## Files in this repo
 
 ```
-01-research-agent      →  Company/role research + market context
-02-interview-prep-agent →  Structured Q&A guide (FYUL communication style)
-03-pm-exercise-agent   →  PM take-home: PRD for leather goods initiative
-04-html-study-tool-agent → Converts guide to interactive HTML
+output/finals/
+├── premium-leather-prd-fyul.html     ← Full PRD (HTML)
+├── premium-leather-prd-fyul.docx     ← Full PRD (Word)
+├── Printify_Leather_PRD_Workbook.xlsx ← 6-sheet financial model
+├── email-printify.html               ← Cover email to Marcel
+├── prd-abuela.html                   ← Plain-language presentation
+├── interview-leadership-qa.html      ← Leadership Q&A prep
+├── demand_trajectory_v7.png          ← Demand signal chart
+├── financial_scenarios_v7.png        ← 3-scenario financial chart
+└── monthly_margin_v7.png             ← Annual run-rate chart
 ```
-
-Each agent's prompt is documented in [`agents/`](agents/).
 
 ---
 
-## How to use
+## The recommendation in one paragraph
 
-1. Open [`output/prep-fyul.html`](output/prep-fyul.html) in a browser to study
-2. Read [`output/premium-leather-prd.md`](output/premium-leather-prd.md) to review the exercise solution
-3. See [`CLAUDE.md`](CLAUDE.md) for full project context
+Printify has zero genuine leather in its catalog — 45 products, 100% synthetic PU. Premium decorators route their best leather orders to PrintKK (50-unit MOQ, no FTC compliance) or direct suppliers. The fix is structural: add 8 schema fields that enable proper leather taxonomy, FTC-compliant AI classification, and marketplace discoverability. Phase-gated investment of $340K over 24 weeks. Kill gate at Month 2: if &lt;15 orders/SKU, halt and reallocate. Base case: 150 SKUs × 20 orders × $8 margin = **$150K/month, payback ~16 months**. First-mover window: 12–18 months — no competitor has built a compliant leather taxonomy yet.
+
+---
+
+## Key numbers
+
+| Metric | Value | Source |
+|---|---|---|
+| US leather goods market | $54.26B · 6.7% CAGR | Nova One Advisor 2025 |
+| Amazon BSR benchmark | BULLIANT wallet — 8,365 units/mo | accio.com 2025 |
+| Etsy "leather" keyword | #215 · +57% search growth Nov–Dec | eRank 2025 |
+| Total investment | $340K · 24 weeks | Phase-gate model |
+| Base case revenue | $150K/month · $1.8M/year | 20 orders/SKU × 150 SKUs × $8 |
+| Kill gate | &lt;15 orders/SKU at Month 2 | Hard stop |
+| Year 5 potential | $18.7M/year | SAM × 50% Printify capture |
 
 ---
 
 ## Built with
 
-- [Claude Code](https://claude.ai/code) — CLI for Claude
-- Claude Sonnet 4.6
-- No frameworks — outputs are standalone Markdown + HTML
+[Claude Code](https://claude.ai/code) · Claude Sonnet 4.6 · Multi-agent architecture (6 agents)
