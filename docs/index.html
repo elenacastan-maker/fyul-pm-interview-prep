@@ -1,0 +1,950 @@
+<title>Printify Supply Pillar PRD v5</title>
+<style>
+  :root{
+    --bg:#FFFFFF;--surface:#F5F5F5;--border:#C5E89A;--text:#111111;
+    --muted:#587048;--accent:#2B5A18;--accent-light:#E8FCC0;
+    --go:#1D6B0F;--go-bg:#F5F5F5;--warn:#444444;--warn-bg:#EBEBEB;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;font-size:10px;line-height:1.5;max-width:960px;margin:0 auto;padding:18px 20px 36px}
+
+  /* PAGE BREAK */
+  .page-break{border-top:2px solid var(--border);margin:14px 0 12px;display:flex;align-items:center;gap:8px;color:var(--muted);font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:.1em}
+  .page-break::after{content:'';flex:1;height:0}
+
+  /* HEADER */
+  .doc-header{border-bottom:2.5px solid var(--accent);padding-bottom:10px;margin-bottom:12px}
+  .doc-eyebrow{font-size:8px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:3px}
+  .doc-title{font-size:17px;font-weight:800;color:var(--text);line-height:1.15;margin-bottom:3px}
+  .doc-subtitle{font-size:8.5px;color:var(--muted);font-style:italic;margin-bottom:7px}
+  .doc-meta-row{display:flex;justify-content:space-between;align-items:center}
+  .doc-tags{display:flex;gap:5px;flex-wrap:wrap}
+  .tag{font-size:8px;color:var(--muted);background:var(--accent-light);padding:2px 7px;border-radius:3px;border:1px solid var(--border)}
+  .verdict{background:var(--go);color:#fff;font-size:8.5px;font-weight:700;padding:3px 11px;border-radius:3px;letter-spacing:.04em}
+
+  /* SECTIONS */
+  .sec{margin-bottom:12px}
+  .sec-hdr{display:flex;align-items:baseline;gap:6px;border-bottom:2px solid var(--accent);padding-bottom:4px;margin-bottom:7px}
+  h2{font-size:10.5px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--accent)}
+  .sq{font-size:8.5px;color:var(--muted);font-style:italic}
+
+  /* STAT GRID */
+  .stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:8px}
+  .stat-tile{background:var(--surface);border:1px solid var(--border);border-top:2px solid var(--accent);border-radius:4px;padding:7px 8px}
+  .stat-n{font-size:18px;font-weight:800;color:var(--accent);line-height:1;margin-bottom:2px}
+  .stat-l{font-size:8.5px;color:var(--muted);line-height:1.35}
+  .stat-l a{color:var(--accent);text-decoration:underline}
+
+  /* TABLES */
+  .tw{overflow-x:auto;margin-bottom:6px}
+  table{width:100%;border-collapse:collapse;font-size:9px}
+  th{text-align:left;font-size:8.5px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#fff;padding:4px 7px;border-bottom:2px solid var(--accent);white-space:nowrap;background:var(--accent)}
+  td{padding:4px 7px;border-bottom:1px solid var(--border);vertical-align:top;line-height:1.45}
+  tr:last-child td{border-bottom:none}
+  .num{font-variant-numeric:tabular-nums}
+  .go-c{color:var(--go);font-weight:700}
+  .warn-c{color:var(--warn);font-weight:700}
+  a{color:var(--accent);text-decoration:none}
+  a:hover{text-decoration:underline}
+  code{font-size:8px;background:var(--accent-light);border:1px solid var(--border);padding:1px 4px;border-radius:2px;font-family:monospace;color:var(--text)}
+
+  /* CALLOUTS */
+  .callout{border-radius:4px;padding:6px 9px;font-size:9px;line-height:1.5;margin-bottom:6px}
+  .callout.info{background:var(--accent-light);border-left:3px solid var(--accent)}
+  .callout.warn{background:var(--warn-bg);border-left:3px solid var(--warn);color:#333}
+
+  /* PILOT TILES */
+  .pilot-row{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:6px}
+  .p-tile{background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:6px 8px;text-align:center}
+  .p-num{font-size:15px;font-weight:800;color:var(--accent);line-height:1.1}
+  .p-lbl{font-size:8px;font-weight:700;color:var(--muted);text-transform:uppercase;line-height:1.35}
+
+  /* STRUCTURAL CONSTRAINTS */
+  .constraints{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;margin-bottom:6px}
+  .constraint-item{background:var(--warn-bg);border-left:2px solid var(--warn);border-radius:0 3px 3px 0;padding:5px 7px;font-size:9px;line-height:1.45}
+  .constraint-item strong{display:block;color:var(--warn);font-size:8px;text-transform:uppercase;letter-spacing:.06em;margin-bottom:2px}
+
+  /* PROXY BASIS */
+  .proxy-grid{display:grid;grid-template-columns:1fr 1fr;gap:5px;margin-bottom:6px;font-size:8.5px}
+  .proxy-col{background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:6px 8px}
+  .proxy-col strong{display:block;color:var(--accent);font-size:8px;text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px}
+  .proxy-col li{margin-left:12px;line-height:1.55;color:var(--muted)}
+
+  /* OKR TABLE */
+  .okr-wrap{display:grid;grid-template-columns:1.65fr 1fr;gap:7px}
+
+  /* REVENUE CARD */
+  .rev-card{background:var(--go-bg);border:1.5px solid var(--go);border-radius:5px;padding:7px 9px;margin-bottom:6px}
+  .rev-card-hdr{font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--go);margin-bottom:5px}
+  .rev-card-nums{display:grid;grid-template-columns:1fr 1fr 1fr;gap:4px;text-align:center}
+  .rev-n{font-size:13px;font-weight:800;line-height:1;color:var(--text)}
+  .rev-l{font-size:8px;color:var(--muted);line-height:1.35}
+  .rev-card-foot{margin-top:4px;font-size:8px;color:var(--muted);border-top:1px solid var(--border);padding-top:3px}
+
+  /* BUILD PLAN */
+  .build-table td:nth-child(1){font-weight:700;font-size:8.5px;width:13%}
+  .build-table td:nth-child(2){width:6%;text-align:center;font-weight:700}
+  .build-table td:nth-child(3){width:6%;text-align:right;font-weight:700;font-variant-numeric:tabular-nums}
+  .build-table td:nth-child(4){width:58%;font-size:9px}
+  .build-table td:nth-child(5){width:17%;font-size:8.5px;color:var(--muted)}
+
+  /* RISKS */
+  .risk-grid{display:grid;grid-template-columns:2.5fr 55px 55px 2.5fr;font-size:9px}
+  .risk-hdr{font-size:8px;font-weight:700;text-transform:uppercase;color:var(--muted);background:var(--surface);padding:3px 6px;border-bottom:1px solid var(--border);border-top:1px solid var(--border)}
+  .risk-row{padding:4px 6px;border-bottom:1px solid var(--border);display:contents}
+  .risk-row>*{padding:4px 6px;border-bottom:1px solid var(--border)}
+  .badge{display:inline-block;font-size:8px;font-weight:700;padding:1px 5px;border-radius:2px;color:#fff}
+  .badge.h{background:var(--warn)}.badge.m{background:var(--accent)}
+
+  /* SOURCES */
+  .sources{background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:6px 9px;font-size:8.5px;color:var(--muted)}
+
+  @media(max-width:640px){.stat-grid,.pilot-row,.constraints{grid-template-columns:repeat(2,1fr)}.proxy-grid{grid-template-columns:1fr}.okr-wrap{grid-template-columns:1fr}}
+</style>
+
+<!-- ══════════════════ PAGE 1 ══════════════════ -->
+
+<!-- HEADER -->
+<div class="doc-header">
+  <div class="doc-eyebrow">PRD · Printify Supply Pillar · v5 Final</div>
+  <div class="doc-title">Premium Leather Goods Integration</div>
+  <div class="doc-subtitle">Technical Specifications and Execution Roadmap for High-Margin Gifting Vertical</div>
+  <div class="doc-meta-row">
+    <div class="doc-tags">
+      <span class="tag"><strong>Owner:</strong> Supply PM</span>
+      <span class="tag"><strong>Audience:</strong> Marcel Kilgenstein</span>
+      <span class="tag"><strong>Date:</strong> Aug 2026</span>
+      <span class="tag">Status: Proposal — Leadership Review</span>
+    </div>
+    <span class="verdict">▶ GO — with pilot gate</span>
+  </div>
+</div>
+
+<!-- PLAIN LANGUAGE SUMMARY -->
+<div style="background:var(--surface);border:1.5px solid var(--accent);border-radius:5px;padding:7px 10px;margin-bottom:9px;font-size:9.5px;line-height:1.55">
+  <div style="font-size:8px;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--accent);margin-bottom:5px">The initiative in plain language</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:6px">
+    <div>
+      <strong style="display:block;color:var(--text);margin-bottom:2px">Why we're building this</strong>
+      Printify only sells fake leather today. Decorators who want to sell real leather wallets or engraved gifts have to go to a competitor — minimum 50 units, no flexibility. We lose that revenue. No competitor has solved quality <em>and</em> legal compliance yet.
+    </div>
+    <div>
+      <strong style="display:block;color:var(--text);margin-bottom:2px">What we will do</strong>
+      Add real leather to Printify — with a smart system that checks every listing meets US quality rules, supports laser engraving, and lets Decorators go live in under 24 hours. One unit at a time. No minimums.
+    </div>
+    <div>
+      <strong style="display:block;color:var(--text);margin-bottom:2px">How we will execute</strong>
+      In controlled steps — each MVP tests whether the opportunity is real before we spend more. First, ask 5 sellers for free (PoC). If they say yes, build the tech. Then launch on Shopify to see if people actually buy. Only if Month 2 sales confirm real demand do we invest in the full marketplace rollout. We never bet the full $340K upfront — we earn the right to spend each next phase.
+    </div>
+    <div style="background:var(--accent-light);border-radius:3px;padding:4px 6px">
+      <strong style="display:block;color:var(--accent);margin-bottom:3px">Why now — the market we can lead</strong>
+      <div style="font-size:9px;line-height:1.5;margin-bottom:5px;color:var(--text)">
+        We have a <strong>12–18 month window</strong> to own this market — no competitor has built a proper leather classification system yet. Shopify just released Material Attributes (2025), letting us test leather products in MVP 2 <em>without waiting for Amazon SP-API approval</em> — proving merchant demand before the full marketplace spend in MVP 3. Every month we wait, our best Decorators keep routing orders to PrintKK and direct suppliers.
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:3px;margin-bottom:4px">
+        <div style="background:var(--surface);border-radius:3px;padding:3px 5px;text-align:center">
+          <div style="font-size:9.5px;font-weight:800;color:var(--accent)">TAM</div>
+          <div style="font-size:12px;font-weight:800;color:var(--text)">~$2.5B/yr</div>
+          <div style="font-size:8px;color:var(--muted)">Total US personalized leather (POD-addressable)</div>
+        </div>
+        <div style="background:var(--surface);border-radius:3px;padding:3px 5px;text-align:center">
+          <div style="font-size:9.5px;font-weight:800;color:var(--accent)">SAM</div>
+          <div style="font-size:12px;font-weight:800;color:var(--text)">~$375M/yr</div>
+          <div style="font-size:8px;color:var(--muted)">Printify-reachable · 15% POD platform share</div>
+        </div>
+      </div>
+      <div style="background:var(--accent-light);border-radius:3px;padding:4px 6px">
+        <div style="font-size:9px;font-weight:800;color:var(--accent);margin-bottom:2px">SOM — 5-Year Leadership Target</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:3px;font-size:8px">
+          <div style="text-align:center">
+            <div style="font-weight:800;color:var(--text);font-size:9px">$1.2M/yr</div>
+            <div style="color:var(--muted)"><strong>Year 1 · Pilot</strong><br>20 active Decorators</div>
+          </div>
+          <div style="text-align:center;border-left:1px solid var(--border);border-right:1px solid var(--border)">
+            <div style="font-weight:800;color:var(--text);font-size:9px">$2.9M/yr</div>
+            <div style="color:var(--muted)"><strong>Year 2 · Scale</strong><br>50 Decorators</div>
+          </div>
+          <div style="text-align:center">
+            <div style="font-weight:800;color:var(--accent);font-size:9px">$18.7M/yr</div>
+            <div style="color:var(--muted)"><strong>Year 5 · Leadership</strong><br>50% SAM · default global POD for FTC-compliant leather</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 01 MARKET OPPORTUNITY -->
+<div class="sec">
+  <div class="sec-hdr">
+    <h2>01 · Market Opportunity &amp; Problem Statement</h2>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:4px;margin-bottom:6px;font-size:9px">
+    <div style="background:var(--accent-light);border-left:2px solid var(--accent);padding:4px 6px;border-radius:0 3px 3px 0">
+      <strong style="color:var(--accent);font-size:8px;text-transform:uppercase;letter-spacing:.06em;display:block;margin-bottom:2px">Why build it</strong>
+      Printify has zero genuine leather in its catalog. Decorators route leather orders to PrintKK (50-unit MOQ) or direct channels — $150–375K/month in platform margin left on the table. No competitor has FTC-compliant taxonomy. First-mover window: 12–18 months.
+    </div>
+    <div style="background:var(--surface);border-left:2px solid var(--border);padding:4px 6px;border-radius:0 3px 3px 0">
+      <strong style="color:var(--accent);font-size:8px;text-transform:uppercase;letter-spacing:.06em;display:block;margin-bottom:2px">What we will do</strong>
+      Add FTC-compliant genuine leather to Printify: 8-field material taxonomy, laser engraving support, and AI classifier (MAT-001) that auto-approves listings in under 24 hours — across Shopify, Etsy, and Amazon.
+    </div>
+    <div style="background:var(--surface);border-left:2px solid var(--border);padding:4px 6px;border-radius:0 3px 3px 0">
+      <strong style="color:var(--accent);font-size:8px;text-transform:uppercase;letter-spacing:.06em;display:block;margin-bottom:2px">How we will execute</strong>
+      Validate demand first (PoC, $0) → build taxonomy + AI (MVP1, $80K) → portal + Shopify pilot (MVP2, $120K) → marketplace launch (MVP3, $120K). Non-negotiable kill gate at Month 2. Total: $340K · 24 weeks.<br><br>
+      <em style="color:var(--muted)">This is not a 6-month project. It is a 6-month build + 2-month measurement window designed to reach the scale decision within the first third of the competitive window — with enough capital remaining ($120K MVP 3 not yet spent at the kill gate) to pivot if the data does not hold.</em>
+    </div>
+  </div>
+
+  <div class="stat-grid">
+    <div class="stat-tile">
+      <div class="stat-n">$54B</div>
+      <div class="stat-l">US leather goods market · $54.26B · 6.7% CAGR<br><a href="https://www.novaoneadvisor.com/report/us-leather-goods-market">Nova One Advisor 2025 ↗</a></div>
+    </div>
+    <div class="stat-tile">
+      <div class="stat-n">$2–3B</div>
+      <div class="stat-l">POD-addressable personalized leather TAM (est.)</div>
+    </div>
+    <div class="stat-tile">
+      <div class="stat-n">8,365</div>
+      <div class="stat-l">Units/mo — BULLIANT wallet BSR · Amazon USA<br><a href="https://www.accio.com/business/amazon-mens-wallet-best-seller">accio.com 2025 ↗</a></div>
+    </div>
+    <div class="stat-tile">
+      <div class="stat-n">60–80%</div>
+      <div class="stat-l">Gross margins · laser-engraved leather · $5 blank cost<br><a href="https://shop.tiktok.com/us/k/laser-engraving-gifts">TikTok Shop ↗</a></div>
+    </div>
+  </div>
+
+  <div class="tw">
+    <table>
+      <thead><tr><th>Channel</th><th>Market demand signal</th><th class="num">AOV range</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Etsy USA</strong></td><td>"leather" — #215 top keyword · 125%+ CTR · +57% search growth Nov-Dec · custom wallets &amp; bags <a href="https://help.erank.com/blog/top-etsy-searches-in-2025/">(eRank 2025 ↗)</a></td><td class="num">$35–70</td></tr>
+        <tr><td><strong>Amazon USA</strong></td><td>Top BSR custom leather wallet SKU: 8,365 units/month confirmed. New POD SKUs enter realistically at 5–20 units/month <a href="https://www.accio.com/business/amazon-mens-wallet-best-seller">(accio.com ↗)</a></td><td class="num">$30–65</td></tr>
+        <tr><td><strong>TikTok Shop</strong></td><td>Validated "laser engraved leather" gifting vertical · impulse gifting demand confirmed <a href="https://shop.tiktok.com/us/k/laser-engraving-gifts">(TikTok Shop ↗)</a></td><td class="num">$25–45</td></tr>
+        <tr style="background:var(--accent-light)"><td><strong>Shopify ★</strong></td><td>Printify's #1 merchant channel (60%+ of Printify GMV). Shopify merchants selling leather goods today source externally. MVP2 pilot validates demand via Shopify stores before marketplace launch — no SP-API approval required.</td><td class="num">$40–80</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="constraints">
+    <div class="constraint-item"><strong>Blueprint Schema</strong>Current 6-field schema lacks parameters for material grade or tannage. Zero quality fields.</div>
+    <div class="constraint-item"><strong>Decoration Support</strong>Global exclusion of <code>laser_engraving</code> and <code>debossing</code> from <code>decoration_methods[]</code>.</div>
+    <div class="constraint-item"><strong>FTC Compliance</strong>No automated MAT-001 labeling enforcement for leather categories. Manual review only.</div>
+  </div>
+
+  <div class="callout info" style="font-size:9.5px">
+    <strong>Market Leadership Opportunity:</strong> Personalized leather gifting is a $2–3B POD-addressable niche with no structured-taxonomy player today. PrintKK serves it but has zero FTC compliance. Decorators who onboard their leather catalog on Printify won't migrate again — catalog lock-in is structural. Capturing this niche first means owning the supply layer before any competitor reacts. <strong>Window: 12–18 months.</strong><br>
+    <strong style="display:block;margin-top:3px">Core Hypothesis:</strong> Decorators serving the USA personalized gifting market ($40–80 AOV) cannot list genuine leather on Printify today, forcing them to route to PrintKK despite its 50-unit MOQ. Fix the taxonomy (MAT-001) + add laser engraving at 1-unit MOQ → they consolidate leather spend on Printify. Validated at ≥$150K GMV/month within 90 days of launch.
+  </div>
+</div>
+
+<!-- 02 FINANCIAL MODELING -->
+<div class="sec">
+  <div class="sec-hdr">
+    <h2>02 · Financial Modeling &amp; Scenarios</h2>
+    <span class="sq">5 Decorators × 30 SKUs · $8 margin/order · $340K total investment</span>
+  </div>
+
+  <!-- INTRO BUSINESS CASE -->
+  <div style="background:var(--surface);border-left:3px solid var(--accent);border-radius:0 4px 4px 0;padding:6px 8px;margin-bottom:6px;font-size:9.5px;line-height:1.55;color:var(--body)">
+    <strong style="color:var(--accent)">The business case rests on one testable assumption:</strong> premium leather customers search on Etsy and Amazon with clear purchase intent — but Printify decorators are invisible to them because the platform can't tag or rank by leather grade. Fixing taxonomy doesn't create demand; it <em>captures demand that already exists</em>. Three questions this section answers:
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:4px;margin-top:5px">
+      <div style="background:var(--go-bg);border-radius:3px;padding:4px 5px"><strong style="color:var(--go)">Is the market real?</strong><br>Amazon US: BULLIANT wallet 8,365 units/mo (BSR confirmed). Etsy US: "leather" = #215 top keyword, +57% search growth. Google Trends US: "personalized leather" rising YoY. US leather goods market: $54B at 6.7% CAGR.</div>
+      <div style="background:var(--warn-bg);border-radius:3px;padding:4px 5px"><strong style="color:var(--warn)">Does the math work?</strong><br>At 20 orders/SKU/mo (top-quartile Etsy), payback is ~15–17 months on $340K. Conservative scenario still profitable — just slower.</div>
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:3px;padding:4px 5px"><strong style="color:var(--accent)">What's the kill condition?</strong><br>If pilot doesn't reach 15 orders/SKU at <strong>Month 2 post-launch</strong> (~W32), we stop. No exceptions. Full team reallocates.</div>
+    </div>
+  </div>
+
+  <div class="tw" style="margin-bottom:5px">
+    <table>
+      <thead><tr><th>Scenario</th><th>Benchmark basis</th><th class="num">Orders/SKU/mo</th><th class="num">Monthly margin</th><th class="num">Payback</th><th>Decision</th></tr></thead>
+      <tbody>
+        <tr style="background:var(--warn-bg)"><td><strong>Conservative</strong></td><td style="color:var(--muted)">POD industry avg 3–12/SKU/mo</td><td class="num">8</td><td class="num warn-c">$60K</td><td class="num warn-c">&gt;36 mo</td><td class="warn-c">KILL at M2 if &lt;15</td></tr>
+        <tr><td><strong>Base Case ✓</strong></td><td style="color:var(--muted)">Top-quartile Etsy · 10–20/SKU/mo <a href="https://www.accio.com/business/best_selling_leather_items_on_etsy">(accio ↗)</a></td><td class="num"><strong>20</strong></td><td class="num go-c"><strong>$150K</strong></td><td class="num">~15–17 mo</td><td class="go-c">GO — planning target</td></tr>
+        <tr style="background:var(--go-bg)"><td><strong>Optimistic</strong></td><td style="color:var(--muted)">Top 5% outliers · 50+/SKU/mo</td><td class="num">50</td><td class="num go-c">$375K</td><td class="num go-c">~9–10 mo</td><td class="go-c">SCALE → 1,500+ SKUs</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="pilot-row">
+    <div class="p-tile"><div class="p-num">5×30</div><div class="p-lbl">Pilot parameters<br>150 SKUs · $24K/mo initial vol.</div></div>
+    <div class="p-tile"><div class="p-num">$340K</div><div class="p-lbl">Total investment<br>24-week roadmap</div></div>
+    <div class="p-tile" style="border-color:var(--warn)"><div class="p-num" style="color:var(--warn)">&lt;15</div><div class="p-lbl">orders/SKU at M2<br>Non-negotiable KILL gate</div></div>
+    <div class="p-tile" style="background:var(--go-bg);border-color:var(--go)"><div class="p-num" style="color:var(--go)">≥50</div><div class="p-lbl">orders/SKU<br>SCALE → 1,500+ SKUs, 10 Dec.</div></div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:4px;margin-bottom:5px;font-size:9px">
+    <div class="proxy-col">
+      <strong>Amazon US — Direct demand signal</strong>
+      <ul>
+        <li>BULLIANT wallet BSR: <strong>8,365 units/mo</strong> (mature listing benchmark) <a href="https://www.accio.com/business/amazon-mens-wallet-best-seller">(accio.com ↗)</a></li>
+        <li>New POD SKUs enter realistically at 5–20 units/mo</li>
+        <li>"Leather wallet" search: 50K+ results · #1 Accessories BSR</li>
+        <li>AOV: $30–65 · high purchase intent, low return rate</li>
+      </ul>
+    </div>
+    <div class="proxy-col">
+      <strong>Etsy US — Search growth signal</strong>
+      <ul>
+        <li>"Leather" = <strong>#215 top keyword</strong> · 125%+ CTR <a href="https://help.erank.com/blog/top-etsy-searches-in-2025/">(eRank 2025 ↗)</a></li>
+        <li>+57% search growth Nov–Dec (gifting season)</li>
+        <li>2M+ active "leather" listings — massive buyer-side demand</li>
+        <li>Top-quartile sellers: 15–25 orders/SKU/mo ← <strong>planning baseline</strong></li>
+      </ul>
+    </div>
+    <div class="proxy-col">
+      <strong>US Market Size + Trend</strong>
+      <ul>
+        <li>US leather goods market: <strong>$54B · 6.7% CAGR</strong> <a href="https://www.novaoneadvisor.com/report/us-leather-goods-market">(Nova One 2025 ↗)</a></li>
+        <li>POD-addressable personalized leather TAM: $2–3B (est.)</li>
+        <li>Google Trends US: "personalized leather" — rising YoY, peak Nov–Dec</li>
+        <li>Amazon US leather category: <strong>50K+ active "leather wallet" listings</strong> · custom leather accessories = #1 accessories sub-category by search volume · top BSR SKU (BULLIANT) 8,365 units/mo</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="callout warn" style="font-size:9.5px"><strong>⚠ Proxy caveat:</strong> 50 orders/SKU = top-5% performance, not base case. Amazon BSR of 8,365 units/mo is a mature listing benchmark; new POD SKUs realistically enter at 5–20 units/month.</div>
+</div>
+
+<!-- 03 OKRs -->
+<div class="sec">
+  <div class="sec-hdr">
+    <h2>03 · OKRs &amp; Success Metrics</h2>
+    <span class="sq">Two layers of measurement: a KPI per build phase (are we building the right thing?) and 7 business OKRs that activate once MVP3 launches (are we moving the business?). The OKRs below only apply post-launch — during the build, each phase has its own success criterion.</span>
+  </div>
+
+  <!-- SECTION A: PHASE KPIs -->
+  <div style="margin-bottom:7px">
+    <div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);border-bottom:1px solid var(--border);padding-bottom:2px;margin-bottom:3px">A · Phase success KPIs — what we're moving, why, and based on what</div>
+    <div class="tw">
+      <table style="font-size:9px;table-layout:fixed;width:100%">
+        <colgroup>
+          <col style="width:8%"><col style="width:13%"><col style="width:11%"><col style="width:11%">
+          <col style="width:19%"><col style="width:20%"><col style="width:18%">
+        </colgroup>
+        <thead>
+          <tr>
+            <th>Phase</th>
+            <th>KPI</th>
+            <th style="color:var(--warn);background:var(--warn-bg)">FROM — today</th>
+            <th>→ TO target</th>
+            <th style="background:#1a4a10;color:#fff">WHY we're moving this</th>
+            <th style="background:#3a3a3a;color:#fff">BASED ON (evidence)</th>
+            <th style="background:#1a4a10;color:#fff">Revenue impact</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- POC -->
+          <tr>
+            <td style="vertical-align:middle;border-right:3px solid var(--border)"><strong>PoC</strong></td>
+            <td style="vertical-align:top"><strong>Existing seller interest</strong></td>
+            <td style="vertical-align:top;color:var(--warn);font-style:italic;font-size:9px">0 confirmed decorators — interest unvalidated</td>
+            <td style="vertical-align:top">≥5 letters of intent from active Printify decorators</td>
+            <td style="vertical-align:top;background:#F5F5F5;font-size:9px">Existing sellers onboard 60% faster than new recruits. Without confirmed interest from current decorators, we have no supply base to build on — and no one to test the portal with</td>
+            <td style="vertical-align:top;font-size:9px;color:var(--muted);font-style:italic">ShelfTrend: premium leather search volume rising YoY · Printify decorator activation data: existing sellers = faster, cheaper, higher quality signal than cold outreach</td>
+            <td style="vertical-align:top;font-size:9px;background:#F5F5F5">No LOIs = no decorators = no SKUs = no revenue at any phase. These 5 commitments set the entire supply foundation</td>
+          </tr>
+          <!-- DESIGN SPRINT -->
+          <tr style="background:var(--surface)">
+            <td style="vertical-align:middle;border-right:3px solid var(--border)"><strong>Design Sprint</strong></td>
+            <td style="vertical-align:top"><strong>Portal usability</strong></td>
+            <td style="vertical-align:top;color:var(--warn);font-style:italic;font-size:9px">No portal exists — onboarding is manual email with Ops (3–5 days)</td>
+            <td style="vertical-align:top">≥3 of 5 decorators self-complete onboarding without help (prototype test)</td>
+            <td style="vertical-align:top;background:#F5F5F5;font-size:9px">Manual ops onboarding costs ~$40/decorator vs $8/order margin. If the portal needs hand-holding, ops cost eliminates the business case before a single SKU goes live</td>
+            <td style="vertical-align:top;font-size:9px;color:var(--muted);font-style:italic">Printify apparel onboarding today: 3–5 days manual · SaaS B2B benchmark: drop-off rate spikes 3× if time-to-value exceeds 24h</td>
+            <td style="vertical-align:top;font-size:9px;background:#F5F5F5">Portal friction determines how fast 150 SKUs are catalogued. Each day of delay = one day less of revenue before the post-launch decision</td>
+          </tr>
+          <!-- MVP1 -->
+          <tr style="background:var(--go-bg)">
+            <td rowspan="4" style="vertical-align:middle;border-right:3px solid var(--go)"><strong>MVP 1</strong><div style="font-size:8px;color:var(--muted);margin-top:2px">$80K · Schema + AI</div></td>
+            <td style="vertical-align:top"><strong>Classifier precision</strong></td>
+            <td style="vertical-align:top;color:var(--warn);font-style:italic;font-size:9px">No classifier — 0% AI coverage, 100% manual review</td>
+            <td style="vertical-align:top">F1 ≥ 0.90 on leather grade test set</td>
+            <td style="vertical-align:top;background:#F5F5F5;font-size:9px">Every downstream step — listings, MAT-001, FTC compliance — depends on correctly distinguishing full-grain from bonded. Below 0.90: legal liability + manual ops overload</td>
+            <td style="vertical-align:top;font-size:9px;color:var(--muted);font-style:italic">LLM classifiers on structured material-label tasks: 85–92% accuracy (Printify compliance team estimate) · FTC Textile Act precedent on leather grade misrepresentation</td>
+            <td style="vertical-align:top;font-size:9px;background:#F5F5F5">Misclassified SKUs get de-listed by marketplaces → direct revenue loss. Accurate classification = algorithm trust → better organic ranking → more orders</td>
+          </tr>
+          <tr style="background:var(--go-bg)">
+            <td style="vertical-align:top"><strong>Taxonomy completeness</strong></td>
+            <td style="vertical-align:top;color:var(--warn);font-style:italic;font-size:9px">0 premium leather attribute fields in Printify catalog today</td>
+            <td style="vertical-align:top">≥15 premium leather attribute fields deployed to catalog backend</td>
+            <td style="vertical-align:top;background:#F5F5F5;font-size:9px">Without grain type, tanning method and finish fields, decorators cannot list premium vs. standard leather — the category stays invisible to buyers searching for "full-grain" or "vegetable-tanned"</td>
+            <td style="vertical-align:top;font-size:9px;color:var(--muted);font-style:italic">Etsy/Amazon attribute analysis: 12–18 fields distinguish premium from commodity leather · Printify today: 0 leather-specific taxonomy fields in catalog backend</td>
+            <td style="vertical-align:top;font-size:9px;background:#F5F5F5">Schema is the prerequisite for every SKU. No taxonomy = no listable SKUs = no revenue at any future phase. This is the single most critical MVP1 output</td>
+          </tr>
+          <tr style="background:var(--go-bg)">
+            <td style="vertical-align:top"><strong>MAT-001 auto-approval</strong></td>
+            <td style="vertical-align:top;color:var(--warn);font-style:italic;font-size:9px">0% auto-approval — every listing reviewed manually today</td>
+            <td style="vertical-align:top">≥88% of listings auto-approved (no manual review)</td>
+            <td style="vertical-align:top;background:#F5F5F5;font-size:9px">Below 88% auto-approval: manual compliance review at 3,000 orders/mo costs $120K in ops vs $24K margin — the unit economics invert entirely at any real volume</td>
+            <td style="vertical-align:top;font-size:9px;color:var(--muted);font-style:italic">Printify compliance team: LLM classifiers on structured tasks reach 85–92% · 88% is the ops break-even floor with a safety margin below best-case</td>
+            <td style="vertical-align:top;font-size:9px;background:#F5F5F5">Auto-approval is the unlock for revenue at scale. Without it, ops cost grows linearly with GMV — making expansion to 1,500 SKUs financially impossible</td>
+          </tr>
+          <tr style="background:var(--go-bg)">
+            <td style="vertical-align:top"><strong>Classifier false-positive rate</strong></td>
+            <td style="vertical-align:top;color:var(--warn);font-style:italic;font-size:9px">N/A — no classifier, no enforcement, PU sold as genuine leather</td>
+            <td style="vertical-align:top">&lt;2% legitimate decorators wrongly rejected</td>
+            <td style="vertical-align:top;background:#F5F5F5;font-size:9px">Each wrongly blocked decorator churns and takes 30 SKUs with them. Above 2%: Ops appeal queue overloads and platform trust erodes (precedent: Printify apparel classifier rollout)</td>
+            <td style="vertical-align:top;font-size:9px;color:var(--muted);font-style:italic">Printify internal UX benchmark: &lt;2% false rejection is the threshold for gated submission flows · above 2%: appeal volume overwhelms Ops within 6 weeks</td>
+            <td style="vertical-align:top;font-size:9px;background:#F5F5F5">1 churned decorator = 30 lost SKUs = ~$4.8K–$9K/mo lost revenue at base-optimistic. Supply loss compounds over time — harder to recover than to prevent</td>
+          </tr>
+          <!-- MVP2 -->
+          <tr>
+            <td rowspan="4" style="vertical-align:middle;border-right:3px solid var(--border)"><strong>MVP 2</strong><div style="font-size:8px;color:var(--muted);margin-top:2px">$120K · Portal + Shopify</div></td>
+            <td style="vertical-align:top"><strong>First real demand signal</strong></td>
+            <td style="vertical-align:top;color:var(--warn);font-style:italic;font-size:9px">0 orders — no premium leather SKUs listable today</td>
+            <td style="vertical-align:top">≥4 orders / SKU / week on Shopify pilot</td>
+            <td style="vertical-align:top;background:#F5F5F5;font-size:9px">Shopify has no indexing delay — cleanest early signal of whether premium leather buyers exist on Printify's primary channel. If not here, unlikely at launch with slower-indexing channels</td>
+            <td style="vertical-align:top;font-size:9px;color:var(--muted);font-style:italic">Etsy top-quartile leather sellers: 15–25/SKU/mo (ShelfTrend 2025) · Shopify = 60%+ of Printify GMV · 4/SKU/week = 16/month → validates base case of 20/SKU/month at scale</td>
+            <td style="vertical-align:top;font-size:9px;background:#F5F5F5"><strong>First actual revenue.</strong> ≥4 orders/SKU/week × $8 margin × 150 SKUs ≈ $4.8K/week → extrapolates to ~$20K/month before full launch</td>
+          </tr>
+          <tr>
+            <td style="vertical-align:top"><strong>SKUs catalogued</strong></td>
+            <td style="vertical-align:top;color:var(--warn);font-style:italic;font-size:9px">0 classifiable premium SKUs — taxonomy fields missing</td>
+            <td style="vertical-align:top">150 approved blueprints (5 decorators × 30 SKUs)</td>
+            <td style="vertical-align:top;background:#F5F5F5;font-size:9px">Etsy and Amazon need 100+ active listings to surface a supplier organically. Below 100 SKUs: category is invisible to buyers — the demand signal in MVP2 never translates to scale</td>
+            <td style="vertical-align:top;font-size:9px;color:var(--muted);font-style:italic">eRank: &lt;100 listings = category invisible · ShelfTrend: top-quartile leather stores avg 120–200 SKUs · 5 Dec × 30 SKUs = minimum viable catalog depth</td>
+            <td style="vertical-align:top;font-size:9px;background:#F5F5F5">150 SKUs × 20 orders × $8 = $24K/month at base case. Each missing SKU at launch is $160/month of foregone revenue at base case</td>
+          </tr>
+          <tr>
+            <td style="vertical-align:top"><strong>Decorator onboarding time</strong></td>
+            <td style="vertical-align:top;color:var(--warn);font-style:italic;font-size:9px">3–5 days — manual email back-and-forth with Ops today</td>
+            <td style="vertical-align:top">&lt;24h from portal open to first approved blueprint</td>
+            <td style="vertical-align:top;background:#F5F5F5;font-size:9px">First real-world test with actual decorators. Drop-off above 24h means incomplete catalog before launch — each drop-off costs 30 SKUs and delays the first revenue signal</td>
+            <td style="vertical-align:top;font-size:9px;color:var(--muted);font-style:italic">SaaS B2B benchmark: drop-off spikes 3× if time-to-value &gt;24h · Printify apparel: 3–5 days without AI vs &lt;24h with Field-Assist Agent (LLM pre-fill)</td>
+            <td style="vertical-align:top;font-size:9px;background:#F5F5F5">Each retained decorator = 30 SKUs × $8 × 20 orders = $4.8K/month. Portal speed is the lever that determines how close to 150 SKUs we actually get</td>
+          </tr>
+          <tr>
+            <td style="vertical-align:top"><strong>Portal form error rate</strong></td>
+            <td style="vertical-align:top;color:var(--warn);font-style:italic;font-size:9px">~20–35% — industry avg for unassisted complex multi-field forms</td>
+            <td style="vertical-align:top">&lt;10% of submitted blueprints rejected</td>
+            <td style="vertical-align:top;background:#F5F5F5;font-size:9px">Each manual review costs ~$40 in ops time vs $8 margin/order. Above 10% error rate at pilot scale: ops cost exceeds revenue before MVP3 even launches</td>
+            <td style="vertical-align:top;font-size:9px;color:var(--muted);font-style:italic">Industry avg for unassisted multi-field enum forms: 20–35% error · AI pre-fill reduces to &lt;10% in comparable deployments (Printify internal UX data)</td>
+            <td style="vertical-align:top;font-size:9px;background:#F5F5F5">Error reduction is margin protection. At &lt;10%: ops cost stays under $8/order. Above 10%: every order loses money on compliance ops before margin is counted</td>
+          </tr>
+          <!-- MVP3 -->
+          <tr style="background:var(--go-bg)">
+            <td rowspan="3" style="vertical-align:middle;border-right:3px solid var(--go)"><strong>MVP 3</strong><div style="font-size:8px;color:var(--muted);margin-top:2px">$120K · Marketplaces</div></td>
+            <td style="vertical-align:top"><strong>Amazon SP-API live</strong></td>
+            <td style="vertical-align:top;color:var(--warn);font-style:italic;font-size:9px">Not integrated — no Printify × Amazon connection today</td>
+            <td style="vertical-align:top">≥150 SKUs approved + indexed on Amazon</td>
+            <td style="vertical-align:top;background:#F5F5F5;font-size:9px">Amazon has a 30-day indexing lag. Must go live at MVP3 start so the 8-week post-launch decision has clean, noise-free Amazon data — not just Shopify</td>
+            <td style="vertical-align:top;font-size:9px;color:var(--muted);font-style:italic">Amazon BSR: new POD SKUs enter at 5–20 orders/month with 30-day indexing stabilisation · Amazon = largest e-commerce market by GMV</td>
+            <td style="vertical-align:top;font-size:9px;background:#F5F5F5">Amazon without Shopify = ~40–60% of total revenue potential unlocked. Missing this channel at launch means the 8-week kill/scale decision is made on incomplete data</td>
+          </tr>
+          <tr style="background:var(--go-bg)">
+            <td style="vertical-align:top"><strong>Etsy integration live</strong></td>
+            <td style="vertical-align:top;color:var(--warn);font-style:italic;font-size:9px">Not integrated for premium leather — no grade-aware sync</td>
+            <td style="vertical-align:top">≥150 SKUs sync'd + category indexed on Etsy</td>
+            <td style="vertical-align:top;background:#F5F5F5;font-size:9px">Same 30-day lag as Amazon. Etsy is the highest-intent marketplace for premium personalised leather — must launch simultaneously so cross-channel data is comparable</td>
+            <td style="vertical-align:top;font-size:9px;color:var(--muted);font-style:italic">ShelfTrend: Etsy leather GMV $130K–$270K/week · top-quartile Etsy leather sellers: 15–25/SKU/mo — highest benchmark used for base case</td>
+            <td style="vertical-align:top;font-size:9px;background:#F5F5F5">Etsy is the revenue benchmark channel. It's where the 15–25/SKU/mo data comes from — without Etsy live, the base case OKR has no real validation path</td>
+          </tr>
+          <tr style="background:var(--go-bg)">
+            <td style="vertical-align:top"><strong>Launch completeness</strong></td>
+            <td style="vertical-align:top;color:var(--warn);font-style:italic;font-size:9px">Not launched — 0 channels live, 0 SKUs indexed</td>
+            <td style="vertical-align:top">Portal error &lt;5% · 3 channels synced · full catalog confirmed</td>
+            <td style="vertical-align:top;background:#F5F5F5;font-size:9px">One broken channel on launch day invalidates the post-launch demand signal — data is not comparable across channels if one is missing or degraded</td>
+            <td style="vertical-align:top;font-size:9px;color:var(--muted);font-style:italic">Printify channel launch precedent: &lt;5% portal error = launch threshold · below this: manual ops can absorb the volume without affecting margin</td>
+            <td style="vertical-align:top;font-size:9px;background:#F5F5F5">Clean launch = clean data = correct kill/scale decision. A broken launch wastes the $340K invested — you make the decision on noise, not signal</td>
+          </tr>
+          <!-- KILL/SCALE -->
+          <tr style="border-top:2px solid var(--warn)">
+            <td style="vertical-align:middle;background:#EBEBEB;border-right:3px solid var(--warn)"><strong>Post-launch<br>8 weeks</strong></td>
+            <td style="vertical-align:top;background:#EBEBEB"><strong>Kill or scale</strong></td>
+            <td style="vertical-align:top;background:#EBEBEB;color:var(--warn);font-style:italic;font-size:9px">0 cross-channel orders — no clean data yet</td>
+            <td style="vertical-align:top;background:#EBEBEB"><span style="color:var(--warn);font-weight:700">&lt;15/SKU → STOP</span><br><span style="color:var(--go);font-weight:700">≥15/SKU → SCALE</span></td>
+            <td style="vertical-align:top;background:#F5F5F5;font-size:9px">At 8 weeks the Amazon + Etsy indexing noise clears. First clean, comparable, 3-channel demand read. The only moment where the business thesis is provably right or wrong</td>
+            <td style="vertical-align:top;font-size:9px;color:var(--muted);font-style:italic">30-day indexing lag + 4-week stabilisation = 8-week clean signal · Kill at &lt;15 = conservative floor: below this, $340K investment not recovered even at 36 months</td>
+            <td style="vertical-align:top;font-size:9px;background:#F5F5F5"><strong>SCALE:</strong> 1,500 SKUs + 10 decorators → $150K–$375K/mo<br><strong>STOP:</strong> $0 further spend · team reallocated · $340K written off</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- SECTION B: BUSINESS OKRs -->
+  <div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);border-bottom:1px solid var(--border);padding-bottom:2px;margin-bottom:3px">B · Business OKRs — activated once MVP3 launches</div>
+  <div style="background:var(--surface);border-left:3px solid var(--accent);padding:3px 6px;border-radius:0 3px 3px 0;font-size:9px;color:var(--muted);margin-bottom:4px;line-height:1.5">
+    <strong style="color:var(--accent)">O3 enables O2 · O2 enables O1 · O1 justifies the $340K.</strong> Kill condition: if sales velocity &lt;15 orders/SKU at 8 weeks post-launch → stop, reallocate team.
+  </div>
+
+  <div class="tw" style="margin-bottom:5px">
+    <table style="font-size:9.5px;table-layout:fixed;width:100%">
+      <colgroup>
+        <col style="width:11%"><col style="width:15%">
+        <col style="width:12%"><col style="width:8%">
+        <col style="width:22%"><col style="width:25%"><col style="width:7%">
+      </colgroup>
+      <thead>
+        <tr>
+          <th>Objective</th>
+          <th>What I'm measuring</th>
+          <th>FROM — today</th>
+          <th>→ TO target</th>
+          <th style="background:#1a4a10;color:#fff">WHY this number</th>
+          <th style="background:#3a3a3a;color:#fff">BASED ON (evidence)</th>
+          <th>When</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- O1 -->
+        <tr style="background:var(--go-bg)">
+          <td style="vertical-align:middle;border-right:3px solid var(--go)">
+            <div style="font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--go)">O1 · Revenue</div>
+            <div style="font-size:9px;font-weight:800;color:var(--go);line-height:1.2;margin:2px 0">$0 → $150K/mo</div>
+            <div style="font-size:8px;color:var(--muted)">New premium leather margin</div>
+          </td>
+          <td style="vertical-align:top"><strong>Sales velocity</strong><div style="color:var(--muted);font-size:8px">Orders / SKU / month · organic · all channels</div></td>
+          <td style="vertical-align:top;color:var(--warn);font-size:9px;font-style:italic">0 orders/SKU<div style="font-size:8px">Premium leather can't be properly listed — missing taxonomy fields</div></td>
+          <td style="vertical-align:middle;font-weight:800;color:var(--go);text-align:center;font-size:10px">≥20<div style="font-size:8px;font-weight:400">/SKU/mo</div></td>
+          <td style="vertical-align:top;font-size:9px;background:#F5F5F5">Kill triggers at &lt;15 at 8 weeks post-launch. ≥20/SKU gives a 33% safety buffer above kill and is the minimum floor to recover $340K in ~16 months. At 20/SKU, monthly margin = $150K automatically.</td>
+          <td style="vertical-align:top;font-size:9px;color:var(--muted);font-style:italic">Etsy top-quartile leather sellers: 15–25/SKU/mo (ShelfTrend 2025) · Amazon BULLIANT wallet BSR: 8,365 units/mo across ~150 SKUs · MVP2 Shopify pilot adds 3rd channel with immediate indexing.</td>
+          <td style="vertical-align:middle;text-align:center;color:var(--muted);font-size:9px">Post-<br>MVP3</td>
+        </tr>
+
+        <!-- O2 -->
+        <tr style="background:var(--accent-light)">
+          <td rowspan="2" style="vertical-align:middle;border-right:2px solid var(--border)">
+            <div style="font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--accent)">O2 · Supply Infra</div>
+            <div style="font-size:9.5px;font-weight:700;line-height:1.3;margin:2px 0">Premium catalog ready in &lt;24h</div>
+            <div style="font-size:8px;color:var(--muted)">Friction-free onboarding at scale</div>
+          </td>
+          <td style="vertical-align:top"><strong>Decorator onboarding time</strong><div style="color:var(--muted);font-size:8px">Portal open → first approved blueprint</div></td>
+          <td style="vertical-align:top;color:var(--warn);font-size:9px;font-style:italic">~3–5 days<div style="font-size:8px">No portal today · email back-and-forth with Ops</div></td>
+          <td style="vertical-align:middle;font-weight:800;color:var(--go);text-align:center;font-size:10px">&lt;24h</td>
+          <td style="vertical-align:top;font-size:9px;background:#F5F5F5">Slow onboarding → Decorator gives up → supply gap → pilot fails before launch. 24h only achievable if AI Field-Assist pre-fills the 8 premium schema fields from the supplier data sheet.</td>
+          <td style="vertical-align:top;font-size:9px;color:var(--muted);font-style:italic">Printify apparel onboarding today: 3–5 days without AI · Field-Assist Agent estimated ~70% time reduction (comparable LLM-assisted field completion tools).</td>
+          <td style="vertical-align:middle;text-align:center;color:var(--muted);font-size:9px">Post-<br>MVP3</td>
+        </tr>
+        <tr style="background:var(--accent-light)">
+          <td style="vertical-align:top"><strong>Portal submission error rate</strong><div style="color:var(--muted);font-size:8px">Rejected / total submitted blueprints</div></td>
+          <td style="vertical-align:top;color:var(--warn);font-size:9px;font-style:italic">~20–35%<div style="font-size:8px">Industry avg · complex fields with no AI assist</div></td>
+          <td style="vertical-align:middle;font-weight:800;color:var(--go);text-align:center;font-size:10px">&lt;10%</td>
+          <td style="vertical-align:top;font-size:9px;background:#F5F5F5">Above 20% errors → manual Ops review queue. Each manual review costs ~$40 in ops time vs. $8 margin/order — unit economics collapse at any volume above pilot scale.</td>
+          <td style="vertical-align:top;font-size:9px;color:var(--muted);font-style:italic">Unassisted multi-field enum forms: 20–35% error industry avg · AI pre-fill reduces to &lt;10% in comparable deployments (Printify internal UX data).</td>
+          <td style="vertical-align:middle;text-align:center;color:var(--muted);font-size:9px">Post-<br>MVP3</td>
+        </tr>
+
+        <!-- O3 -->
+        <tr>
+          <td style="vertical-align:middle;border-right:2px solid var(--border)">
+            <div style="font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--accent)">O3 · Compliance Moat</div>
+            <div style="font-size:9.5px;font-weight:700;line-height:1.3;margin:2px 0">Only POD with FTC-grade leather taxonomy</div>
+            <div style="font-size:8px;color:var(--muted)">No competitor has this today</div>
+          </td>
+          <td style="vertical-align:top"><strong>MAT-001 auto-approval rate</strong><div style="color:var(--muted);font-size:8px">Premium listings correctly auto-approved by AI classifier</div></td>
+          <td style="vertical-align:top;color:var(--warn);font-size:9px;font-style:italic">0% auto-approval<div style="font-size:8px">100% manual review today — no classifier exists</div></td>
+          <td style="vertical-align:middle;font-weight:800;color:var(--go);text-align:center;font-size:10px">≥88%</td>
+          <td style="vertical-align:top;font-size:9px;background:#F5F5F5">Below 88% auto-approval, manual ops scale linearly with every new SKU. At 3,000 orders/mo, manual review costs exceed the $8/order margin entirely. 88% is the ops break-even floor.</td>
+          <td style="vertical-align:top;font-size:9px;color:var(--muted);font-style:italic">LLM classifiers on structured material-label tasks: 85–92% accuracy (Printify compliance team estimate) · 88% sets a conservative floor with safety margin below best-case.</td>
+          <td style="vertical-align:middle;text-align:center;color:var(--muted);font-size:9px">Post-<br>MVP3</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- INTRO REVENUE IMPACT -->
+  <div style="font-size:9.5px;color:var(--muted);line-height:1.5;margin-bottom:5px;padding:4px 6px;border-left:2px solid var(--border);background:var(--surface);border-radius:0 3px 3px 0">
+    <strong style="color:var(--body)">How to read the revenue scenarios:</strong> the only variable is <em>orders per SKU per month</em>. SKU count (150), margin per order ($8), and total investment ($340K) are fixed. The conservative case ($60K/mo) is POD industry average — achievable without being a top performer. The question is whether premium leather commands above-average search intent — all market signals suggest yes. The phase checkpoints below are the decision points where we either double down or exit.
+  </div>
+
+  <!-- Revenue card + Gates -->
+  <div class="okr-wrap">
+    <div>
+      <div class="rev-card" style="margin-bottom:5px">
+        <div class="rev-card-hdr">Revenue potential · 150 SKUs pilot · $8/order</div>
+        <div class="rev-card-nums">
+          <div><div class="rev-n" style="color:var(--warn)">$60K</div><div class="rev-l">Conservative/mo<br>8 orders/SKU</div></div>
+          <div style="border-left:1px solid var(--border);border-right:1px solid var(--border)"><div class="rev-n" style="color:var(--go)">$150K</div><div class="rev-l">Base target/mo<br>20 orders/SKU</div></div>
+          <div><div class="rev-n" style="color:var(--go)">$375K</div><div class="rev-l">Optimistic/mo<br>50 orders/SKU</div></div>
+        </div>
+        <div class="rev-card-foot">Payback: ~15–17 mo (base) · ~9–10 mo (optimistic) · &gt;36 mo → KILL</div>
+      </div>
+    </div>
+    <div>
+      <div class="tw" style="margin-bottom:0">
+        <table>
+          <thead><tr><th>Phase checkpoint</th><th>Success threshold</th><th>If passed</th><th>If not met</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><strong>End of PoC</strong><br><span style="font-size:8px;color:var(--muted)">$0 invested</span></td>
+              <td style="font-size:9.5px">≥3 signed LOIs + supplier SLA confirmed</td>
+              <td style="font-size:9px;color:var(--go)">Approve Design Sprint ($20K)</td>
+              <td class="warn-c" style="font-size:9px">CANCEL — $0 eng spent</td>
+            </tr>
+            <tr>
+              <td><strong>End of MVP 2</strong><br><span style="font-size:8px;color:var(--muted)">$220K invested</span></td>
+              <td style="font-size:9.5px">Shopify pilot ≥4 orders/SKU/week · portal error &lt;10% · 150 SKUs catalogued</td>
+              <td style="font-size:9px;color:var(--go)">Proceed to MVP3 — marketplace integrations</td>
+              <td class="warn-c" style="font-size:9px">PAUSE — redesign portal UI &amp; AI flow</td>
+            </tr>
+            <tr>
+              <td><strong>8 weeks post-launch</strong><br><span style="font-size:8px;color:var(--muted)">$340K invested</span></td>
+              <td style="font-size:9.5px">≥15 orders/SKU/month across all channels</td>
+              <td style="font-size:9px;color:var(--go)">SCALE — expand to 1,500+ SKUs, 10 decorators</td>
+              <td class="warn-c" style="font-size:9px">KILL — halt &amp; reallocate team</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div style="font-size:9px;color:var(--muted);margin-top:3px;line-height:1.4;background:var(--surface);border-left:2px solid var(--border);padding:3px 5px;border-radius:0 3px 3px 0">
+        <strong>M2 gate rationale:</strong> Shopify listings are visible to existing customers immediately — no indexing delay. Etsy and Amazon marketplace algorithms require ~30 days to surface new SKUs organically; Month 1 data on those channels contains ranking noise. Month 2 provides a clean, comparable signal across all three channels.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PAGE BREAK -->
+<div class="page-break">Page 2 of 2</div>
+
+<!-- ══════════════════ PAGE 2 ══════════════════ -->
+
+<!-- 04-05 BUILD PLAN -->
+<div class="sec">
+  <div class="sec-hdr">
+    <h2>04–05 · Key Functional Features &amp; Execution Roadmap</h2>
+    <span class="sq">PoC + Design Sprint + 3 MVPs · 24 weeks · $340K total</span>
+  </div>
+
+  <!-- Timeline strip -->
+  <div style="display:flex;gap:3px;margin-bottom:5px;font-size:9px;font-weight:700">
+    <div style="flex:0.5;background:#555;color:#fff;padding:2px 5px;border-radius:3px;text-align:center">PoC<br><span style="font-weight:400;font-size:8px">W0</span></div>
+    <div style="flex:1;background:#555;color:#fff;padding:2px 5px;border-radius:3px;text-align:center">Design Sprint<br><span style="font-weight:400;font-size:8px">W1–2</span></div>
+    <div style="flex:3;background:#444;color:#fff;padding:2px 5px;border-radius:3px;text-align:center">MVP 1 · Core Schema &amp; AI Classifier<br><span style="font-weight:400;font-size:8px">W3–8</span></div>
+    <div style="flex:4;background:var(--warn);color:#fff;padding:2px 5px;border-radius:3px;text-align:center">MVP 2 · Mockup Engine &amp; Portal ⚠<br><span style="font-weight:400;font-size:8px">W9–16 · critical path · Shopify pilot ★</span></div>
+    <div style="flex:4;background:var(--go);color:#fff;padding:2px 5px;border-radius:3px;text-align:center">MVP 3 · Marketplace Sync &amp; Launch<br><span style="font-weight:400;font-size:8px">W17–24 · Shopify full integration ★</span></div>
+  </div>
+
+  <!-- SCHEMA FIELDS VALUE TABLE -->
+  <div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);border-bottom:1px solid var(--border);padding-bottom:2px;margin-bottom:3px">8 schema fields — value captured per field</div>
+  <div class="tw" style="margin-bottom:6px">
+    <table style="font-size:9px;table-layout:fixed;width:100%">
+      <colgroup>
+        <col style="width:14%"><col style="width:14%"><col style="width:30%"><col style="width:24%"><col style="width:18%">
+      </colgroup>
+      <thead>
+        <tr>
+          <th>Field</th>
+          <th>What it classifies</th>
+          <th style="background:#1a4a10;color:#fff">Value captured</th>
+          <th>Buyer segment unlocked</th>
+          <th style="background:#1a4a10;color:#fff">Price impact</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="background:var(--go-bg)">
+          <td><code>leather_grade</code></td>
+          <td>full-grain / top-grain / bonded / PU</td>
+          <td style="background:#F5F5F5">The single most critical FTC compliance field. Without it, "full-grain" and "bonded" are indistinguishable in listings — legal liability for Printify and decorators. Also the #1 filter buyers use in premium leather search.</td>
+          <td>All premium leather buyers. Required for marketplace category ranking algorithms on Etsy and Amazon.</td>
+          <td style="background:#F5F5F5">Full-grain commands <strong>40–60% price premium</strong> over bonded at equivalent SKU</td>
+        </tr>
+        <tr>
+          <td><code>tanning_method</code></td>
+          <td>vegetable / chrome / aldehyde / combination</td>
+          <td style="background:#F5F5F5">"Vegetable-tanned" is the highest-volume premium search term on Etsy for leather goods. Unlocks organic search traffic from buyers with high purchase intent. Also a gating requirement in several EU markets (chrome VI restrictions).</td>
+          <td>Eco-conscious buyers, craft leather enthusiasts, EU market. Etsy top search: "vegetable tanned leather wallet".</td>
+          <td style="background:#F5F5F5">Vegetable-tanned commands <strong>20–35% premium</strong> vs chrome-tanned equivalent</td>
+        </tr>
+        <tr style="background:var(--go-bg)">
+          <td><code>finish_type</code></td>
+          <td>aniline / semi-aniline / pigmented / nubuck / suede</td>
+          <td style="background:#F5F5F5">Aniline leather shows natural grain and develops patina over time — the hallmark of luxury leather goods. Pigmented is more durable but lower perceived value. This field directly determines price ceiling and buyer expectation alignment.</td>
+          <td>Luxury and craft buyers who understand leather quality. Aniline buyers have highest LTV and lowest return rate.</td>
+          <td style="background:#F5F5F5">Aniline SKUs command <strong>2–3× the price</strong> of pigmented equivalents</td>
+        </tr>
+        <tr>
+          <td><code>hide_thickness_mm</code></td>
+          <td>0.6 – 3.0 mm numeric</td>
+          <td style="background:#F5F5F5">Enables technical filtering by application (wallet = 0.8–1.2mm / bag = 1.4–2.0mm). Professional and B2B buyers require this. Consistent thickness is also a quality signal — premium tanneries hold tight tolerances; commodity ones don't.</td>
+          <td>B2B buyers, custom makers, professional leather workers. Enables Printify to serve wholesale channels.</td>
+          <td style="background:#F5F5F5">Correct thickness match reduces returns by an estimated <strong>15–20%</strong> — direct margin protection</td>
+        </tr>
+        <tr style="background:var(--go-bg)">
+          <td><code>hide_origin</code></td>
+          <td>Country of hide (Italy / Spain / Argentina / USA)</td>
+          <td style="background:#F5F5F5">"Italian leather" is a globally recognised quality signal with no regulation — but buyers pay for it. Origin drives premium pricing perception and enables marketplace "Made with Italian leather" filter badges. Argentine hides are known for softness; Spanish for durability.</td>
+          <td>Premium fashion buyers, gift market, corporate gifting. Origin is the #1 stated purchase criterion for premium leather gifts.</td>
+          <td style="background:#F5F5F5">Italian-origin listing: <strong>20–35% higher ASP</strong> vs unspecified origin at same grade</td>
+        </tr>
+        <tr>
+          <td><code>grain_correction</code></td>
+          <td>natural grain / corrected grain</td>
+          <td style="background:#F5F5F5">Natural grain = highest tier (no buffing to hide imperfections — every hide is unique). Corrected grain = uniform surface, still quality leather but not top-tier. Prevents misrepresentation (FTC concern) and helps premium buyers identify genuine quality. Direct correlate of price ceiling.</td>
+          <td>Discerning luxury buyers who research before buying. Buyers who have returned "misrepresented" leather before.</td>
+          <td style="background:#F5F5F5">Natural grain sets the <strong>price ceiling</strong> — corrected grain caps at ~60–70% of natural grain ASP</td>
+        </tr>
+        <tr style="background:var(--go-bg)">
+          <td><code>compliance_cert</code></td>
+          <td>LWG Gold·Silver·Bronze / REACH / Chrome VI-free / OEKO-TEX</td>
+          <td style="background:#F5F5F5">LWG certification is the B2B industry standard — retailers like H&amp;M and Nike require it from suppliers. REACH and Chrome VI-free are EU market entry requirements. OEKO-TEX increasingly required by Amazon Europe. These certs gate Printify's access to institutional and EU buyer segments.</td>
+          <td>EU market, B2B buyers, retailers, brands sourcing through Printify. Required for any decorator targeting the corporate gifting segment.</td>
+          <td style="background:#F5F5F5">LWG Gold unlocks <strong>B2B contracts</strong> that individual SKU pricing can't capture — higher volume, higher margin per deal</td>
+        </tr>
+        <tr>
+          <td><code>eco_claims</code></td>
+          <td>vegetable-tanned · recycled · carbon-offset · Rainforest Alliance · traceable hide</td>
+          <td style="background:#F5F5F5">Sustainable leather is the fastest-growing segment — Etsy searches for "sustainable leather" grew 45% YoY. "Traceable hide" (farm-to-product) is becoming a buyer requirement in ethical fashion. Carbon-offset leather commands a measurable premium in B2C. This field unlocks the highest willingness-to-pay buyer segment.</td>
+          <td>Ethical fashion buyers, Gen Z premium segment, sustainability-led brands. Lowest price sensitivity, highest loyalty.</td>
+          <td style="background:#F5F5F5">Eco-labelled SKUs: <strong>15–25% ASP premium</strong> + lower churn rate vs non-labelled equivalent</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- FEATURES TABLE -->
+  <div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);border-bottom:1px solid var(--border);padding-bottom:2px;margin-bottom:3px">Key features — 10 deliverables across 3 MVPs</div>
+  <div class="tw" style="margin-bottom:6px">
+    <table style="font-size:9px;table-layout:fixed;width:100%">
+      <colgroup>
+        <col style="width:8%"><col style="width:20%"><col style="width:40%"><col style="width:32%">
+      </colgroup>
+      <thead>
+        <tr>
+          <th>Phase</th>
+          <th>Feature</th>
+          <th>What it does</th>
+          <th>What it enables</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="background:var(--surface)">
+          <td rowspan="3" style="vertical-align:middle;border-right:3px solid #444;color:#333;font-weight:700">MVP 1</td>
+          <td><strong>Premium Leather Taxonomy Schema</strong></td>
+          <td>Adds 8 new attribute fields to Printify's catalog backend (<code>leather_grade</code>, <code>tanning_method</code>, <code>finish_type</code>, <code>hide_thickness_mm</code>, <code>hide_origin</code>, <code>grain_correction</code>, <code>compliance_cert</code>, <code>eco_claims</code>). Backward-compatible — doesn't break existing SKUs.</td>
+          <td>Decorators can list premium leather correctly for the first time. Without this, no SKU can be distinguished from commodity leather in marketplace search</td>
+        </tr>
+        <tr style="background:var(--surface)">
+          <td><strong>AI Leather Grade Classifier</strong></td>
+          <td>LLM model that reads supplier data sheets and assigns the correct leather grade to each SKU automatically. Trained on the 8 schema fields. Target: F1 ≥ 0.90 on full-grain / top-grain / bonded / PU classification.</td>
+          <td>Removes manual classification bottleneck. Scales to 1,500+ SKUs without ops headcount. Foundation for MAT-001 auto-approval</td>
+        </tr>
+        <tr style="background:var(--surface)">
+          <td><strong>MAT-001 Compliance Engine</strong></td>
+          <td>Automated FTC compliance validator. Reads the 8 schema fields + listing title → auto-approves listings that meet leather labeling law (&lt;2% false positive, ≥88% auto-approval). Includes audit log and decorator appeal workflow.</td>
+          <td>Eliminates manual ops review queue at scale. Creates the compliance moat — no POD competitor has this today. Enables $375K/mo optimistic scenario</td>
+        </tr>
+        <tr>
+          <td rowspan="4" style="vertical-align:middle;border-right:3px solid var(--warn);color:var(--warn);font-weight:700">MVP 2</td>
+          <td><strong>Decorator Self-Serve Portal</strong></td>
+          <td>Web interface where decorators upload supplier specs and manage their premium leather catalog. Plain-language labels, real-time MAT-001 scoring feedback, ECO cert upload, and blueprint approval flow. Target: onboarding &lt;24h, error rate &lt;10%.</td>
+          <td>Removes Ops from the onboarding loop entirely. Scales to 10+ decorators without headcount increase. Prerequisite for reaching 150 SKUs</td>
+        </tr>
+        <tr>
+          <td><strong>AI Field-Assist Agent</strong></td>
+          <td>LLM agent embedded in the portal. Reads supplier PDFs and pre-fills all 8 schema fields automatically. Decorator reviews and confirms — not replaces. Estimated 70% reduction in onboarding time vs manual entry.</td>
+          <td>Closes the gap from 3–5 days → &lt;24h onboarding. Reduces form errors from 20–35% → &lt;10%. Makes the portal usable by non-technical decorators</td>
+        </tr>
+        <tr>
+          <td><strong>Mockup Engine</strong></td>
+          <td>Static pre-rendered leather composite engine (1200×1200px, 3 texture tiers). Generates product visuals for wallets, bags and portfolios from supplier specs + decorator design files. Assets locked at MVP2 start — critical path.</td>
+          <td>Marketplace listings require hero images. Without mockups, SKUs can't go live on Etsy or Amazon. Also reduces decorator design effort by ~80%</td>
+        </tr>
+        <tr>
+          <td><strong>Shopify Channel Integration</strong></td>
+          <td>Direct sync of premium leather SKUs to decorator Shopify stores via metafield mapping (namespace:leather). No SP-API approval required. Activates at MVP2 pilot (W12) — first channel live, no indexing delay.</td>
+          <td>First revenue signal. Shopify = 60%+ of Printify GMV. The pilot demand read validates the business case before Amazon/Etsy spend. ≥4 orders/SKU/week → proceed to MVP3</td>
+        </tr>
+        <tr style="background:var(--go-bg)">
+          <td rowspan="3" style="vertical-align:middle;border-right:3px solid var(--go);color:var(--go);font-weight:700">MVP 3</td>
+          <td><strong>Amazon SP-API Integration</strong></td>
+          <td>Full marketplace integration via Amazon Selling Partner API. Handles listing creation with LeatherType nodes, inventory sync, order routing, and Prop 65 compliance warnings. Legal sign-off required at W10.</td>
+          <td>Unlocks Amazon — largest e-commerce market by GMV. 30-day indexing lag means must go live at MVP3 start for clean post-launch data at 8-week decision point</td>
+        </tr>
+        <tr style="background:var(--go-bg)">
+          <td><strong>Etsy API Integration</strong></td>
+          <td>Marketplace integration with Etsy. Grade-aware taxonomy sync, category indexing optimisation, listing management for premium leather. Etsy = highest buyer intent for personalised leather goods.</td>
+          <td>Validates the base case OKR — the 15–25 orders/SKU/mo benchmark comes from Etsy top-quartile sellers. Without Etsy live, the revenue thesis has no direct validation path</td>
+        </tr>
+        <tr style="background:var(--go-bg)">
+          <td><strong>Cross-Channel Catalog Sync</strong></td>
+          <td>Real-time sync engine keeping SKU data, pricing, inventory, and all 8 premium attributes consistent across Shopify, Amazon and Etsy simultaneously. Single source of truth in Printify catalog.</td>
+          <td>Prevents data drift across channels (price inconsistencies, de-listings). Enables scale to 1,500+ SKUs without per-channel manual maintenance</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="build-table tw" style="margin-bottom:5px">
+    <table>
+      <thead><tr><th>Phase</th><th>When</th><th>Cost</th><th>Core objectives &amp; engineering deliverables</th><th>Decision gate (Go/No-Go)</th></tr></thead>
+      <tbody>
+        <tr style="background:var(--warn-bg)">
+          <td style="color:#444">PoC<br><span style="font-size:8px;font-weight:400">Pre-Engineering<br>PM only</span></td>
+          <td style="color:#444">W0</td><td style="color:#444">$0</td>
+          <td>Validate supply &amp; merchant demand prior to engineering spend. Contact 50 existing US Printify Decorators → ~10% conversion into signed LOIs (target: 5 Decorators / 150 pilot SKUs). Confirm supplier MOQs and SLAs. Map channel field requirements (Etsy, Amazon, Shopify).</td>
+          <td>≥5 signed LOIs + supplier SLA confirmed → GO to Design Sprint.<br>Otherwise → <strong>STOP ($0 eng spend).</strong></td>
+        </tr>
+        <tr>
+          <td style="color:#444">Design Sprint<br><span style="font-size:8px;font-weight:400">UX Lead + Designer</span></td>
+          <td style="color:#444">W1–2</td><td style="color:#444">$20K</td>
+          <td><strong>UX Specs:</strong> Figma handoffs for Decorator portal, mobile form validation, and <strong>MAT-001 scoring state screens</strong> (pending / rejected / appeal). <strong>Appeal path:</strong> define self-serve (Decorator-initiated) vs. PM-mediated flow. <strong>Design System:</strong> ECO badge, quality-tier indicator, compliance warning banners. ≥3 usability sessions on plain-language taxonomy labels.</td>
+          <td>Approved Figma specs + DS components committed + ≥3 usability sessions passed → unlocks FE for MVP 2.</td>
+        </tr>
+        <tr style="background:var(--surface)">
+          <td style="color:#333">MVP 1<br>Core Schema &amp; AI Classifier<br><span style="font-size:8px;font-weight:400">2 BE</span></td>
+          <td style="color:#333">W3–8</td><td style="color:#333">$80K</td>
+          <td><strong>Leather Taxonomy — 8 schema fields (backward-compatible):</strong><br>
+          <code>leather_grade</code> (full-grain/top-grain/bonded/PU) · <code>tanning_method</code> (vegetable/chrome/aldehyde) · <code>finish_type</code> (aniline/semi-aniline/pigmented/nubuck/suede) · <code>hide_thickness_mm</code> (0.6–3.0mm) · <code>hide_origin</code> (country of hide) · <code>grain_correction</code> (natural/corrected) · <code>compliance_cert</code> (LWG Gold·Silver·Bronze / REACH / Chrome VI-free / OEKO-TEX) · <code>eco_claims</code> (vegetable-tanned / recycled content / carbon-offset / Rainforest Alliance / traceable hide).<br>
+          <strong>AI MAT-001 Classifier:</strong> Async LLM scoring job reads titles + 8 fields → auto-rejects PU labeled "Genuine Leather" at ingestion. Includes audit log &amp; appeal workflow.</td>
+          <td>FTC auto-approve ≥88% + false-positive &lt;2% + appeal path &amp; audit log live.</td>
+        </tr>
+        <tr style="background:var(--warn-bg)">
+          <td style="color:var(--warn)">MVP 2<br>Mockup Engine &amp; Portal<br><span style="font-size:8px;font-weight:400">1 Mockup + 2 FE<br>⚠ Critical path 8w</span><br><span style="display:inline-block;margin-top:3px;background:#2B5A18;color:#fff;font-size:8px;font-weight:700;padding:1px 4px;border-radius:2px">Shopify Pilot ★</span></td>
+          <td style="color:var(--warn)">W9–16</td><td style="color:var(--warn)">$120K</td>
+          <td>
+            <div style="background:var(--accent-light);border-left:2px solid var(--accent);padding:3px 5px;border-radius:0 2px 2px 0;margin-bottom:4px;font-size:9px"><strong style="color:var(--accent)">★ Shopify Pilot — Business Case Validator (W12–16):</strong> 5 Decorators activate leather listings on their Shopify stores via basic metafield mapping (namespace:leather). No SP-API approval required. This is the first real merchant demand signal — Shopify is Printify's #1 channel (60%+ of GMV). If Shopify sales don't materialise here, we do not proceed to Amazon/Etsy marketplace spend.</div>
+            <strong>Mockup Engine (Critical Path):</strong> Static pre-rendered leather composite engine (1200×1200px; 3 textures/tier). <u>Assets locked W9 Day 1</u> — any delay slips MVP 3. <strong>Decorator Portal:</strong> Form UI with plain-language labels, ECO cert uploads, real-time scoring feedback. <strong>AI Field-Assist Agent:</strong> Predictive helper reads supplier PDF/specs and pre-fills <code>leather_grade</code>, <code>tanning_method</code>, <code>finish_type</code>, <code>hide_thickness_mm</code>, <code>hide_origin</code>, <code>grain_correction</code>, <code>compliance_cert</code> and <code>eco_claims</code> — decorator reviews and confirms.
+          </td>
+          <td>Shopify pilot live + 5 Decorators with valid blueprints + form error &lt;10% + mockup approval ≥90%.</td>
+        </tr>
+        <tr style="background:var(--go-bg)">
+          <td style="color:var(--go)">MVP 3<br>Marketplace Sync &amp; Launch<br><span style="font-size:8px;font-weight:400">2 BE + 2 FE</span><br><span style="display:inline-block;margin-top:3px;background:#2B5A18;color:#fff;font-size:8px;font-weight:700;padding:1px 4px;border-radius:2px">Shopify Full ★</span></td>
+          <td style="color:var(--go)">W17–24</td><td style="color:var(--go)">$120K</td>
+          <td>
+            <div style="background:var(--go-bg);border-left:2px solid var(--go);padding:3px 5px;border-radius:0 2px 2px 0;margin-bottom:4px;font-size:9px"><strong style="color:var(--go)">★ Shopify Full Integration (W17–18):</strong> Upgrade pilot metafields to full namespace:leather spec — material_tier, tannage_method, finish_type, laser_engraving_area mapped to Shopify product metafields. All 5 pilot Decorators migrated automatically. Foundation for Shopify app store listing (v2).</div>
+            <strong>Etsy (W17–18):</strong> Material attribute mapping. <strong>Amazon SP-API (W19–22):</strong> LeatherType nodes + Prop 65 warnings — <em>apply W10, legal sign-off required.</em> <strong>WooCommerce (W23–24):</strong> Core attribute mapping. <strong>Pilot Launch:</strong> 150 SKUs across 5 Decorators. Month 1 demand read; Month 2 kill/scale gate.
+          </td>
+          <td>≥20 orders/SKU/mo → CONTINUE · ≥50 → SCALE (1,500+ SKUs) · &lt;15 at M2 → <strong>KILL &amp; reallocate resources.</strong></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Top risks -->
+  <div style="border:1px solid var(--border);border-radius:4px;overflow:hidden;margin-bottom:6px">
+    <div class="risk-hdr" style="display:grid;grid-template-columns:2.5fr 55px 55px 2.5fr;gap:0">
+      <span style="padding:2px 5px">Top risks</span><span style="padding:2px 5px">Likelihood</span><span style="padding:2px 5px">Impact</span><span style="padding:2px 5px">Mitigation</span>
+    </div>
+    <div style="display:grid;grid-template-columns:2.5fr 55px 55px 2.5fr;font-size:9.5px">
+      <div style="padding:3px 5px;border-bottom:1px solid var(--border)">Mockup engine slip — 8w critical path, blocks MVP 3</div><div style="padding:3px 5px;border-bottom:1px solid var(--border);text-align:center"><span class="badge h">High</span></div><div style="padding:3px 5px;border-bottom:1px solid var(--border);text-align:center"><span class="badge h">High</span></div><div style="padding:3px 5px;border-bottom:1px solid var(--border);color:var(--muted)">Static textures locked W9D1. Dynamic render deferred to v2.</div>
+      <div style="padding:3px 5px;border-bottom:1px solid var(--border)">Amazon SP-API delay — 2–4w approval cycle outside our control</div><div style="padding:3px 5px;border-bottom:1px solid var(--border);text-align:center"><span class="badge m">Med</span></div><div style="padding:3px 5px;border-bottom:1px solid var(--border);text-align:center"><span class="badge m">Med</span></div><div style="padding:3px 5px;border-bottom:1px solid var(--border);color:var(--muted)">Apply at W10. Etsy-only soft-launch if delayed; Amazon follows.</div>
+      <div style="padding:3px 5px">MAT-001 FP rate &gt;2% — legitimate Decorators blocked at ingestion</div><div style="padding:3px 5px;text-align:center"><span class="badge m">Med</span></div><div style="padding:3px 5px;text-align:center"><span class="badge h">High</span></div><div style="padding:3px 5px;color:var(--muted)">Training data audit pre-W3. Appeal path mandatory in MVP 1.</div>
+    </div>
+  </div>
+</div>
+
+<!-- 06 NEXT STEPS -->
+<div class="sec">
+  <div class="sec-hdr"><h2>06 · Next Steps — Before Engineering Starts</h2></div>
+  <div class="tw" style="margin-bottom:5px">
+    <table>
+      <thead><tr><th style="width:42%">Action</th><th>Owner</th><th>By</th><th>Blocks</th></tr></thead>
+      <tbody>
+        <tr style="background:var(--accent-light)"><td colspan="4" style="font-size:9px;font-weight:700;text-transform:uppercase;color:var(--accent);padding:2px 6px">Business &amp; Supply</td></tr>
+        <tr><td>Confirm supplier readiness (Photograve/Fulfill Engine) — MOQ, lead time, SLA</td><td style="color:var(--go);font-weight:700">PM</td><td style="font-weight:700">W0</td><td style="color:var(--muted);font-size:9.5px">PoC gate · no supplier = no pilot</td></tr>
+        <tr><td>Secure ≥5 Decorator LOIs — outreach to 50 existing Printify customers (US, leather-adjacent GMV)</td><td style="color:var(--go);font-weight:700">PM</td><td style="font-weight:700">W0</td><td style="color:var(--muted);font-size:9.5px">PoC gate · only pre-W1 demand signal</td></tr>
+        <tr><td>Legal sign-off on Prop 65 auto-disclosure for chrome-tanned leather (CA / Amazon)</td><td style="color:var(--go);font-weight:700">PM + Legal</td><td style="font-weight:700">W10</td><td style="color:var(--muted);font-size:9.5px">Amazon W19 integration · CA AG enforcement risk</td></tr>
+        <tr style="background:var(--accent-light)"><td colspan="4" style="font-size:9px;font-weight:700;text-transform:uppercase;color:var(--accent);padding:2px 6px">Backend &amp; Frontend</td></tr>
+        <tr><td>Audit MAT-001 classifier training data — label data availability before W3</td><td style="color:var(--go);font-weight:700">BE Director</td><td style="font-weight:700">Pre-W3</td><td style="color:var(--muted);font-size:9.5px">MVP 1 · FP &gt;2% breaks Decorator trust</td></tr>
+        <tr><td>Decide blueprint schema versioning strategy — API version policy, deprecation path</td><td style="color:var(--go);font-weight:700">BE Director</td><td style="font-weight:700">Pre-W3</td><td style="color:var(--muted);font-size:9.5px">MVP 1 start · version bump adds 1–2w</td></tr>
+        <tr><td>Submit Amazon SP-API application (LeatherType + Prop 65 seller-central) — 2–4w approval</td><td style="color:var(--go);font-weight:700">BE + PM</td><td style="font-weight:700">W10</td><td style="color:var(--muted);font-size:9.5px">MVP 3 go-live W17 · late = Amazon channel slips</td></tr>
+        <tr><td>Resolve DS scope (extend vs. new) · ≥3 Decorator usability sessions on field labels</td><td style="color:var(--go);font-weight:700">FE Dir + UX</td><td style="font-weight:700">W1–2</td><td style="color:var(--muted);font-size:9.5px">MVP 2 FE start · portal abandonment risk</td></tr>
+        <tr style="background:var(--accent-light)"><td colspan="4" style="font-size:9px;font-weight:700;text-transform:uppercase;color:var(--accent);padding:2px 6px">AI / UX</td></tr>
+        <tr><td><strong>Spec MAT-001 scoring state UX</strong> — design pending / rejected / appeal screens · define self-serve (Decorator-initiated) vs. PM-mediated appeal path</td><td style="color:var(--go);font-weight:700">FE Dir + UX</td><td style="font-weight:700">W1–2</td><td style="color:var(--muted);font-size:9.5px">MVP 1 appeal path · unlocks trust in classifier at launch</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- 07 RISKS & MITIGATIONS -->
+<div class="sec">
+  <div class="sec-hdr">
+    <h2>07 · Risks &amp; Mitigations</h2>
+  </div>
+  <table style="width:100%;border-collapse:collapse;font-size:9px">
+    <thead>
+      <tr style="background:var(--surface)">
+        <th style="padding:4px 6px;text-align:left;color:var(--muted);font-weight:700;border-bottom:1px solid var(--border);width:22%">Risk</th>
+        <th style="padding:4px 6px;text-align:center;color:var(--muted);font-weight:700;border-bottom:1px solid var(--border);width:9%">Category</th>
+        <th style="padding:4px 6px;text-align:center;color:var(--muted);font-weight:700;border-bottom:1px solid var(--border);width:8%">Likelihood</th>
+        <th style="padding:4px 6px;text-align:center;color:var(--muted);font-weight:700;border-bottom:1px solid var(--border);width:7%">Impact</th>
+        <th style="padding:4px 6px;text-align:left;color:var(--muted);font-weight:700;border-bottom:1px solid var(--border)">Mitigation</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr style="background:var(--warn-bg)">
+        <td style="padding:4px 6px;border-bottom:1px solid var(--border);line-height:1.4"><strong style="color:var(--warn)">Mockup engine slip</strong><br>8-week critical path blocks MVP 3 timeline</td>
+        <td style="padding:4px 6px;border-bottom:1px solid var(--border);text-align:center;color:var(--muted)">Execution</td>
+        <td style="padding:4px 6px;border-bottom:1px solid var(--border);text-align:center;font-weight:700;color:var(--warn)">High</td>
+        <td style="padding:4px 6px;border-bottom:1px solid var(--border);text-align:center;font-weight:700;color:var(--warn)">High</td>
+        <td style="padding:4px 6px;border-bottom:1px solid var(--border);line-height:1.4">Static textures locked W9 Day 1. Dynamic render deferred to v2. No scope expansion until engine is shipped.</td>
+      </tr>
+      <tr>
+        <td style="padding:4px 6px;border-bottom:1px solid var(--border);line-height:1.4"><strong>Decorator LOI shortfall at G0</strong><br>Fewer than 5 signed by end of PoC</td>
+        <td style="padding:4px 6px;border-bottom:1px solid var(--border);text-align:center;color:var(--muted)">Market</td>
+        <td style="padding:4px 6px;border-bottom:1px solid var(--border);text-align:center;font-weight:700;color:var(--warn)">Med</td>
+        <td style="padding:4px 6px;border-bottom:1px solid var(--border);text-align:center;font-weight:700;color:var(--warn)">High</td>
+        <td style="padding:4px 6px;border-bottom:1px solid var(--border);line-height:1.4">Outreach to 50 Decorators (10% conversion target). G0 costs $0 engineering — cancel with zero sunk cost if demand signal not confirmed.</td>
+      </tr>
+      <tr style="background:var(--warn-bg)">
+        <td style="padding:4px 6px;border-bottom:1px solid var(--border);line-height:1.4"><strong style="color:var(--warn)">MAT-001 false positive &gt;2%</strong><br>Legitimate Decorators blocked at ingestion</td>
+        <td style="padding:4px 6px;border-bottom:1px solid var(--border);text-align:center;color:var(--muted)">Technical</td>
+        <td style="padding:4px 6px;border-bottom:1px solid var(--border);text-align:center;font-weight:700;color:var(--warn)">Med</td>
+        <td style="padding:4px 6px;border-bottom:1px solid var(--border);text-align:center;font-weight:700;color:var(--warn)">High</td>
+        <td style="padding:4px 6px;border-bottom:1px solid var(--border);line-height:1.4">Training data audit before W3. Decorator-initiated self-serve appeal resolved within 48h. Audit log live in MVP 1 — not MVP 3.</td>
+      </tr>
+      <tr>
+        <td style="padding:4px 6px;border-bottom:1px solid var(--border);line-height:1.4"><strong>Amazon SP-API approval delay</strong><br>2–4 week cycle outside our control</td>
+        <td style="padding:4px 6px;border-bottom:1px solid var(--border);text-align:center;color:var(--muted)">Execution</td>
+        <td style="padding:4px 6px;border-bottom:1px solid var(--border);text-align:center;font-weight:700;color:var(--muted)">Med</td>
+        <td style="padding:4px 6px;border-bottom:1px solid var(--border);text-align:center;font-weight:700;color:var(--muted)">Med</td>
+        <td style="padding:4px 6px;border-bottom:1px solid var(--border);line-height:1.4">Application submitted W10 — before MVP 3 starts. Etsy + Shopify soft-launch if delayed. Amazon adds revenue; it does not gate the pilot.</td>
+      </tr>
+      <tr style="background:var(--warn-bg)">
+        <td style="padding:4px 6px;border-bottom:1px solid var(--border);line-height:1.4"><strong style="color:var(--warn)">Shopify pilot underperforms</strong><br>Basic metafield mapping drives no demand signal</td>
+        <td style="padding:4px 6px;border-bottom:1px solid var(--border);text-align:center;color:var(--muted)">Market</td>
+        <td style="padding:4px 6px;border-bottom:1px solid var(--border);text-align:center;font-weight:700;color:var(--warn)">Med</td>
+        <td style="padding:4px 6px;border-bottom:1px solid var(--border);text-align:center;font-weight:700;color:var(--muted)">Med</td>
+        <td style="padding:4px 6px;border-bottom:1px solid var(--border);line-height:1.4">No SP-API dependency — fails gracefully. Etsy and Amazon proceed independently in MVP 3. Poor Shopify signal at G1 triggers design review before committing full namespace:leather spec.</td>
+      </tr>
+      <tr>
+        <td style="padding:4px 6px;border-bottom:1px solid var(--border);line-height:1.4"><strong>Thin pilot signal (5 Decorators)</strong><br>Too small to be statistically reliable</td>
+        <td style="padding:4px 6px;border-bottom:1px solid var(--border);text-align:center;color:var(--muted)">Market</td>
+        <td style="padding:4px 6px;border-bottom:1px solid var(--border);text-align:center;font-weight:700;color:var(--muted)">Low</td>
+        <td style="padding:4px 6px;border-bottom:1px solid var(--border);text-align:center;font-weight:700;color:var(--muted)">Med</td>
+        <td style="padding:4px 6px;border-bottom:1px solid var(--border);line-height:1.4">Gate is binary velocity (≥20/SKU), not cohort size. Shopify adds a 3rd channel for earlier signal. Outliers flagged separately at Month 1 to avoid false GO at Month 2.</td>
+      </tr>
+      <tr style="background:var(--warn-bg)">
+        <td style="padding:4px 6px;border-bottom:1px solid var(--border);line-height:1.4"><strong style="color:var(--warn)">Blueprint schema versioning conflict</strong><br>New fields break backward compatibility</td>
+        <td style="padding:4px 6px;border-bottom:1px solid var(--border);text-align:center;color:var(--muted)">Technical</td>
+        <td style="padding:4px 6px;border-bottom:1px solid var(--border);text-align:center;font-weight:700;color:var(--muted)">Low</td>
+        <td style="padding:4px 6px;border-bottom:1px solid var(--border);text-align:center;font-weight:700;color:var(--warn)">High</td>
+        <td style="padding:4px 6px;border-bottom:1px solid var(--border);line-height:1.4">API versioning policy and deprecation path decided before W3. All 8 new fields are additive — no existing field removed or renamed in MVP 1.</td>
+      </tr>
+      <tr>
+        <td style="padding:4px 6px;border-bottom:1px solid var(--border);line-height:1.4"><strong>FTC enforcement on mislabeled SKUs</strong><br>Legal exposure post-launch if classifier fails</td>
+        <td style="padding:4px 6px;border-bottom:1px solid var(--border);text-align:center;color:var(--muted)">Regulatory</td>
+        <td style="padding:4px 6px;border-bottom:1px solid var(--border);text-align:center;font-weight:700;color:var(--muted)">Low</td>
+        <td style="padding:4px 6px;border-bottom:1px solid var(--border);text-align:center;font-weight:700;color:var(--warn)">High</td>
+        <td style="padding:4px 6px;border-bottom:1px solid var(--border);line-height:1.4">MAT-001 auto-classification + full audit log is the primary defense. Legal review of Prop 65 disclosures at W10 before Amazon go-live. Appeal path provides traceable paper trail.</td>
+      </tr>
+      <tr style="background:var(--warn-bg)">
+        <td style="padding:4px 6px;border-bottom:1px solid var(--border);line-height:1.4"><strong style="color:var(--warn)">Competitor replicates taxonomy first</strong><br>12–18 month first-mover window closes</td>
+        <td style="padding:4px 6px;border-bottom:1px solid var(--border);text-align:center;color:var(--muted)">Strategic</td>
+        <td style="padding:4px 6px;border-bottom:1px solid var(--border);text-align:center;font-weight:700;color:var(--muted)">Low</td>
+        <td style="padding:4px 6px;border-bottom:1px solid var(--border);text-align:center;font-weight:700;color:var(--warn)">High</td>
+        <td style="padding:4px 6px;border-bottom:1px solid var(--border);line-height:1.4">namespace:leather spec (MVP 3) + Shopify App Store v2 creates switching cost before replication is possible. MAT-001 trained classifier cannot be cloned in under 6 months.</td>
+      </tr>
+      <tr>
+        <td style="padding:4px 6px;line-height:1.4"><strong>Payback timeline (15–17 months)</strong><br>Long horizon for a $340K pilot commitment</td>
+        <td style="padding:4px 6px;text-align:center;color:var(--muted)">Strategic</td>
+        <td style="padding:4px 6px;text-align:center;font-weight:700;color:var(--muted)">Low</td>
+        <td style="padding:4px 6px;text-align:center;font-weight:700;color:var(--muted)">Med</td>
+        <td style="padding:4px 6px;line-height:1.4">Kill gate at Month 2 caps max engineering exposure at $220K (not $340K). PoC = $0. Each phase earns the right to spend the next. Conservative scenario (&gt;36mo) is the explicit kill signal.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- SOURCES -->
+<div class="sources">
+  <strong style="color:var(--accent)">Sources:</strong> &nbsp;
+  <a href="https://www.novaoneadvisor.com/report/us-leather-goods-market">Nova One Advisor — US Leather Goods Market 2025 ($54.26B, 6.7% CAGR)</a> &nbsp;·&nbsp;
+  <a href="https://www.accio.com/business/amazon-mens-wallet-best-seller">accio.com — Amazon Leather Wallet BSR (BULLIANT 8,365 units/mo)</a> &nbsp;·&nbsp;
+  <a href="https://www.accio.com/business/best_selling_leather_items_on_etsy">accio.com — Best Selling Leather Items on Etsy</a> &nbsp;·&nbsp;
+  <a href="https://help.erank.com/blog/top-etsy-searches-in-2025/">eRank — Top Etsy Searches 2025 ("leather" #215, 125%+ CTR)</a> &nbsp;·&nbsp;
+  <a href="https://shop.tiktok.com/us/k/laser-engraving-gifts">TikTok Shop — Laser Engraving Gifts category</a>
+</div>
