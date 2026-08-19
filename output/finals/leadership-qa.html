@@ -1,0 +1,827 @@
+<title>PRD Defense Brief</title>
+<style>
+:root {
+  --bg:         #FFFFFF;
+  --surface:    #F8FAF5;
+  --ink:        #141F10;
+  --muted:      #587048;
+  --rule:       #C5E89A;
+  --accent:     #2B5A18;
+  --accent-lt:  #E8FCC0;
+  --warn:       #B45309;
+  --warn-bg:    #FEF3C7;
+  --go:         #1D6B0F;
+  --go-bg:      #EAFAD8;
+  --pill-hard:  #7A1F00;
+  --pill-h-bg:  #FDE8D8;
+  --pill-med:   #5A4100;
+  --pill-m-bg:  #FEF9E7;
+  --border:     #D6EAB0;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg:        #0D1A0D;
+    --surface:   #152215;
+    --ink:       #EDFCD0;
+    --muted:     #90C078;
+    --rule:      #2A4A2A;
+    --accent:    #A8E832;
+    --accent-lt: #1A3010;
+    --warn:      #FB923C;
+    --warn-bg:   #1F1208;
+    --go:        #A8E832;
+    --go-bg:     #152215;
+    --pill-hard: #FFBBA0;
+    --pill-h-bg: #3D1200;
+    --pill-med:  #FFE8A0;
+    --pill-m-bg: #2A1E00;
+    --border:    #1E3A1E;
+  }
+}
+:root[data-theme="dark"] {
+  --bg:        #0D1A0D;
+  --surface:   #152215;
+  --ink:       #EDFCD0;
+  --muted:     #90C078;
+  --rule:      #2A4A2A;
+  --accent:    #A8E832;
+  --accent-lt: #1A3010;
+  --warn:      #FB923C;
+  --warn-bg:   #1F1208;
+  --go:        #A8E832;
+  --go-bg:     #152215;
+  --pill-hard: #FFBBA0;
+  --pill-h-bg: #3D1200;
+  --pill-med:  #FFE8A0;
+  --pill-m-bg: #2A1E00;
+  --border:    #1E3A1E;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 14px;
+  line-height: 1.65;
+  min-height: 100vh;
+}
+
+/* ── LAYOUT ──────────────────────────────────────────────── */
+.shell {
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 0 20px 80px;
+}
+
+/* ── HEADER ──────────────────────────────────────────────── */
+.doc-header {
+  border-bottom: 2px solid var(--accent);
+  padding: 28px 0 16px;
+  margin-bottom: 24px;
+}
+.doc-eyebrow {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 6px;
+}
+.doc-title {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 1.2;
+  text-wrap: balance;
+}
+.doc-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-top: 10px;
+  font-size: 11px;
+  color: var(--muted);
+  font-family: 'Courier New', Courier, monospace;
+}
+.theme-toggle {
+  margin-left: auto;
+  background: none;
+  border: 1px solid var(--border);
+  color: var(--muted);
+  padding: 3px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 11px;
+  font-family: 'Courier New', Courier, monospace;
+}
+.theme-toggle:hover { border-color: var(--accent); color: var(--accent); }
+
+/* ── TOP 3 HERO ──────────────────────────────────────────── */
+.top3 {
+  background: var(--surface);
+  border: 1.5px solid var(--accent);
+  border-radius: 6px;
+  padding: 20px 22px;
+  margin-bottom: 28px;
+}
+.top3-label {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 12px;
+}
+.top3-item {
+  display: grid;
+  grid-template-columns: 28px 1fr;
+  gap: 0 12px;
+  padding: 10px 0;
+  border-top: 1px solid var(--rule);
+}
+.top3-item:first-of-type { border-top: none; padding-top: 0; }
+.top3-num {
+  font-family: Georgia, serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--accent);
+  line-height: 1;
+  padding-top: 2px;
+}
+.top3-q {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 4px;
+  line-height: 1.35;
+}
+.top3-hint {
+  font-size: 11.5px;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+/* ── CATEGORY NAV ────────────────────────────────────────── */
+.cat-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 24px;
+}
+.cat-btn {
+  background: none;
+  border: 1px solid var(--border);
+  color: var(--muted);
+  padding: 5px 12px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 11px;
+  font-family: 'Courier New', Courier, monospace;
+  letter-spacing: .04em;
+  transition: background .15s, border-color .15s, color .15s;
+}
+.cat-btn:hover, .cat-btn.active {
+  background: var(--accent-lt);
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* ── CATEGORY SECTION ────────────────────────────────────── */
+.cat-section { margin-bottom: 36px; }
+.cat-heading {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-style: italic;
+  font-size: 15px;
+  color: var(--accent);
+  border-bottom: 1px solid var(--rule);
+  padding-bottom: 7px;
+  margin-bottom: 14px;
+}
+
+/* ── Q&A CARD ────────────────────────────────────────────── */
+.qa-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  margin-bottom: 8px;
+  overflow: hidden;
+}
+.qa-trigger {
+  width: 100%;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  padding: 14px 16px;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 10px;
+  align-items: start;
+}
+.qa-trigger:hover { background: var(--accent-lt); }
+.qa-trigger:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+
+.pill {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  padding: 2px 7px;
+  border-radius: 3px;
+  white-space: nowrap;
+  margin-top: 2px;
+}
+.pill-hard { color: var(--pill-hard); background: var(--pill-h-bg); }
+.pill-med  { color: var(--pill-med);  background: var(--pill-m-bg); }
+
+.qa-q {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 1.4;
+}
+
+.qa-chevron {
+  color: var(--muted);
+  font-size: 14px;
+  transition: transform .2s;
+  margin-top: 3px;
+  flex-shrink: 0;
+}
+.qa-card.open .qa-chevron { transform: rotate(180deg); }
+
+/* ── EXPANDED CONTENT ────────────────────────────────────── */
+.qa-body {
+  display: none;
+  padding: 0 16px 16px;
+  border-top: 1px solid var(--rule);
+  margin-top: -1px;
+}
+.qa-card.open .qa-body { display: block; }
+
+.qa-why {
+  background: var(--bg);
+  border-left: 3px solid var(--accent);
+  padding: 8px 12px;
+  margin: 12px 0;
+  font-size: 12px;
+  color: var(--muted);
+  font-style: italic;
+}
+.qa-why strong {
+  font-family: 'Courier New', Courier, monospace;
+  font-style: normal;
+  font-size: 9px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  display: block;
+  margin-bottom: 3px;
+}
+
+.qa-answer {
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--ink);
+}
+.qa-answer-label {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 5px;
+}
+
+.qa-trap {
+  background: var(--warn-bg);
+  border-left: 3px solid var(--warn);
+  padding: 8px 12px;
+  margin-top: 12px;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 11px;
+  color: var(--warn);
+  line-height: 1.55;
+}
+.qa-trap strong {
+  font-size: 9px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 3px;
+}
+</style>
+
+<div class="shell">
+
+  <header class="doc-header">
+    <div class="doc-eyebrow">Printify · Supply Pillar · Leadership Review</div>
+    <h1 class="doc-title">PRD Defense Brief</h1>
+    <div class="doc-meta">
+      <span>28 Q&amp;As · 6 categories</span>
+      <span>Initiative: Premium Leather Goods · $340K · 24 weeks</span>
+      <span>Audience: Marcel Kilgenstein</span>
+      <button class="theme-toggle" onclick="toggleTheme()">◐ theme</button>
+    </div>
+  </header>
+
+  <!-- TOP 3 -->
+  <section class="top3">
+    <div class="top3-label">Top 3 — highest probability in the room</div>
+
+    <div class="top3-item">
+      <div class="top3-num">1</div>
+      <div>
+        <div class="top3-q">"Your base case assumes 20 orders/SKU/month. Walk me through how you got that number."</div>
+        <div class="top3-hint">Anchor in Amazon 8K+/SKU and Etsy 15–30/month comps. Don't defend 20 — explain it's the <em>kill threshold</em> of Gate 2, not a starting belief. Market comps first, then the gate mechanism.</div>
+      </div>
+    </div>
+
+    <div class="top3-item">
+      <div class="top3-num">2</div>
+      <div>
+        <div class="top3-q">"What are we not building if we commit this capacity? Name the specific initiatives this blocks."</div>
+        <div class="top3-hint">Name routing optimization + Merchant Analytics dashboard directly. Frame the tradeoff as a leadership call, not yours. Say that — it's the right altitude.</div>
+      </div>
+    </div>
+
+    <div class="top3-item">
+      <div class="top3-num">3</div>
+      <div>
+        <div class="top3-q">"What would change your recommendation to 'wait'?"</div>
+        <div class="top3-hint">Three specific conditions: (1) Decorators lack production capacity at Gate 0, (2) competitor announces genuine leather pilot in 30 days, (3) engineering capacity review changes at Q3. None apply today — that's the answer.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CATEGORY NAV -->
+  <nav class="cat-nav" aria-label="Jump to category">
+    <button class="cat-btn active" onclick="filterCat('all', this)">All 25</button>
+    <button class="cat-btn" onclick="filterCat('strategic', this)">01 · Strategic Challenge</button>
+    <button class="cat-btn" onclick="filterCat('financial', this)">02 · Financial Scrutiny</button>
+    <button class="cat-btn" onclick="filterCat('technical', this)">03 · Technical Risk</button>
+    <button class="cat-btn" onclick="filterCat('alternatives', this)">04 · Alternatives</button>
+    <button class="cat-btn" onclick="filterCat('deprioritization', this)">05 · Deprioritization</button>
+    <button class="cat-btn" onclick="filterCat('alignment', this)">06 · Role &amp; JD Fit</button>
+  </nav>
+
+  <!-- ── SECTION 01 ── -->
+  <section class="cat-section" data-cat="strategic" id="strategic">
+    <h2 class="cat-heading">01 · Strategic Challenge</h2>
+
+    <div class="qa-card">
+      <button class="qa-trigger" onclick="toggleCard(this)">
+        <span class="pill pill-hard">Hard</span>
+        <span class="qa-q">"Why leather now? What's the opportunity cost signal that makes this the right category expansion versus ceramics, pet accessories, or anything else on the backlog?"</span>
+        <span class="qa-chevron">▾</span>
+      </button>
+      <div class="qa-body">
+        <div class="qa-why"><strong>Why they ask it</strong>Probing whether the market signal is real or the first plausible pitch that came in.</div>
+        <div class="qa-answer-label">Answer</div>
+        <div class="qa-answer">Three signals converge on leather specifically. First, ~45 current Printify listings are tagged "leather" and generating orders — all synthetic PU. We have active merchant demand with zero genuine supply: the revenue is leaking to PrintKK today, not hypothetically. Second, "custom leather wallet" is Etsy keyword #215 with $35–70 AOV vs. our $18–25 apparel baseline — a 75–100% AOV lift with no incremental merchant acquisition cost. Third, all three main competitors — Gelato, Gooten, SPOD — offer zero genuine leather SKUs. First-mover advantage is available right now. Ceramics and pet accessories don't have all three conditions simultaneously.</div>
+        <div class="qa-trap"><strong>Trap to avoid</strong>Saying "leather is trending." Lead with the demand leak (45 SKUs, all synthetic, all converting), then the AOV uplift, then the white space — in that order.</div>
+      </div>
+    </div>
+
+    <div class="qa-card">
+      <button class="qa-trigger" onclick="toggleCard(this)">
+        <span class="pill pill-hard">Hard</span>
+        <span class="qa-q">"How do you know merchant demand is real and not a selection bias from a handful of vocal power users?"</span>
+        <span class="qa-chevron">▾</span>
+      </button>
+      <div class="qa-body">
+        <div class="qa-why"><strong>Why they ask it</strong>Testing whether demand signal is broad or a survey artifact.</div>
+        <div class="qa-answer-label">Answer</div>
+        <div class="qa-answer">The signal is marketplace-level, not survey-level. ShelfTrend shows $130K–$270K weekly GMV on "personalized leather bag" on Amazon. Amazon's top leather SKUs reach >8,000 units/month. We also have a baseline proxy: the 45 synthetic leather listings on Printify are converting despite not being the product customers searched for — showing merchant willingness to list and consumer willingness to buy before we've offered the genuine article. Gate 0 is the true demand test: 5 signed Decorator LOIs by W0. We don't spend engineering dollars until that gate clears.</div>
+        <div class="qa-trap"><strong>Trap to avoid</strong>Citing the Etsy keyword ranking alone. Connect it to conversion-level GMV data — the ShelfTrend figure is the credible number.</div>
+      </div>
+    </div>
+
+    <div class="qa-card">
+      <button class="qa-trigger" onclick="toggleCard(this)">
+        <span class="pill pill-hard">Hard</span>
+        <span class="qa-q">"Printify's moat is network breadth and price. How does a compliance-heavy category play to that strength rather than fighting it?"</span>
+        <span class="qa-chevron">▾</span>
+      </button>
+      <div class="qa-body">
+        <div class="qa-why"><strong>Why they ask it</strong>Testing strategic coherence — does this actually fit the platform's competitive identity.</div>
+        <div class="qa-answer-label">Answer</div>
+        <div class="qa-answer">This is a deliberate expansion of the moat's second dimension: structural complexity as a barrier. Network breadth and price are table stakes; PrintKK has leather supply but zero taxonomy or FTC compliance framework. By being the first POD platform with automated FTC classification at ingestion (MAT-001) and a structured material taxonomy, we create a category where switching costs are high — decorators onboarded to our taxonomy don't want to re-classify 150 SKUs for a competitor. Compliance isn't a burden; it's a feature only a scaled platform can afford to build.</div>
+        <div class="qa-trap"><strong>Trap to avoid</strong>Defending the category purely on margin uplift without naming the structural defensibility. "Can PrintKK copy this in 6 months?" — no, not without the compliance infrastructure we're building now.</div>
+      </div>
+    </div>
+
+    <div class="qa-card">
+      <button class="qa-trigger" onclick="toggleCard(this)">
+        <span class="pill pill-med">Med</span>
+        <span class="qa-q">"What happens if Etsy changes its algorithm or Amazon tightens POD restrictions in the next 12 months?"</span>
+        <span class="qa-chevron">▾</span>
+      </button>
+      <div class="qa-body">
+        <div class="qa-why"><strong>Why they ask it</strong>Testing channel concentration risk and whether the strategy is platform-dependent.</div>
+        <div class="qa-answer-label">Answer</div>
+        <div class="qa-answer">Platform dependency is real and mitigated two ways. First, the 150-SKU pilot spans both Etsy and Amazon — a single-channel algorithm change distorts one signal, not both, and we triangulate. Second, the Month 2 gate (≥20 orders/SKU/month) is platform-agnostic — if only one channel performs, that informs the scale strategy rather than killing the initiative. The FTC compliance framework has standalone value regardless of channel; it protects Printify from regulatory exposure that isn't platform-dependent at all.</div>
+        <div class="qa-trap"><strong>Trap to avoid"</strong>"We'll monitor it." That's not mitigation. Name the dual-channel diversification mechanism and the platform-independent asset (FTC compliance).</div>
+      </div>
+    </div>
+
+    <div class="qa-card">
+      <button class="qa-trigger" onclick="toggleCard(this)">
+        <span class="pill pill-hard">Hard</span>
+        <span class="qa-q">"Leatherology owns the premium leather narrative. How does Printify's brand equity translate to a category where the craft story matters?"</span>
+        <span class="qa-chevron">▾</span>
+      </button>
+      <div class="qa-body">
+        <div class="qa-why"><strong>Why they ask it</strong>Testing whether Printify has brand permission to play in genuine leather.</div>
+        <div class="qa-answer-label">Answer</div>
+        <div class="qa-answer">Printify isn't competing with Leatherology for end consumers — we're competing for the decorator relationship. Our brand is "best platform to sell on," not "best leather brand." The genuine leather label plus FTC compliance plus structured taxonomy is our merchant-facing value prop: it lets decorators position their storefronts as premium without Printify's name appearing on the product. The question isn't "can Printify own leather?" — it's "can Printify make leather profitable for decorators?" The $35–70 AOV data says yes.</div>
+        <div class="qa-trap"><strong>Trap to avoid</strong>Trying to argue Printify should own the leather narrative. Wrong battleground. The platform is invisible to the end consumer — that's the answer, not a problem to overcome.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SECTION 02 ── -->
+  <section class="cat-section" data-cat="financial" id="financial">
+    <h2 class="cat-heading">02 · Financial Scrutiny</h2>
+
+    <div class="qa-card">
+      <button class="qa-trigger" onclick="toggleCard(this)">
+        <span class="pill pill-hard">Hard</span>
+        <span class="qa-q">"Your base case assumes 20 orders/SKU/month. What's the actual basis — market comp, model assumption, or a target you reverse-engineered from the payback you wanted?"</span>
+        <span class="qa-chevron">▾</span>
+      </button>
+      <div class="qa-body">
+        <div class="qa-why"><strong>Why they ask it</strong>This is the central assumption the entire financial model rests on — it gets tested first.</div>
+        <div class="qa-answer-label">Answer</div>
+        <div class="qa-answer">It's a market comp, stress-tested against two references. Amazon's top leather SKUs reach 8,000+ units/month; at 150 SKUs spread across a wider niche, 20 orders/SKU/month is conservative relative to that ceiling. On Etsy, comparable handmade leather wallet listings show 15–30 orders/month organically. More importantly: the Gate 2 mechanism exists precisely because we don't have our own historical data. We're not assuming 20 — we're making it the go/kill threshold. Month 2 is the data; 20 is the bar.</div>
+        <div class="qa-trap"><strong>Trap to avoid</strong>Defending 20 as "conservative" without anchoring it to a market comp in the next sentence. If you say "conservative" and can't back it, you've lost the room.</div>
+      </div>
+    </div>
+
+    <div class="qa-card">
+      <button class="qa-trigger" onclick="toggleCard(this)">
+        <span class="pill pill-hard">Hard</span>
+        <span class="qa-q">"Walk me through the P&amp;L if MVP 1 goes 4 weeks over and we hit the MVP 2 gate at W20 instead of W16."</span>
+        <span class="qa-chevron">▾</span>
+      </button>
+      <div class="qa-body">
+        <div class="qa-why"><strong>Why they ask it</strong>Testing whether the financial model accounts for schedule slippage or only on-time delivery.</div>
+        <div class="qa-answer-label">Answer</div>
+        <div class="qa-answer">A 4-week slip adds roughly $20–27K in engineering time (assuming a ~2-person squad) and delays launch revenue by one month. At base case $150K/month, that's $150K in deferred revenue — not lost, deferred. Payback extends from ~16 months to ~17 months, still well within investment threshold. The harder impact is opportunity cost: 4 weeks of a product squad not on other initiatives. That's the real conversation if we slip, not the financial model.</div>
+        <div class="qa-trap"><strong>Trap to avoid</strong>Saying "we have contingency" without quantifying it. Leadership will do the math themselves — do it first, out loud, and own the number.</div>
+      </div>
+    </div>
+
+    <div class="qa-card">
+      <button class="qa-trigger" onclick="toggleCard(this)">
+        <span class="pill pill-hard">Hard</span>
+        <span class="qa-q">"$8 margin per order — how did you arrive at that, and what's the compression risk if a Decorator renegotiates or raw material costs spike?"</span>
+        <span class="qa-chevron">▾</span>
+      </button>
+      <div class="qa-body">
+        <div class="qa-why"><strong>Why they ask it</strong>Unit economics are the foundation — this gets stress-tested before the model is trusted.</div>
+        <div class="qa-answer-label">Answer</div>
+        <div class="qa-answer">The $8/order is modeled against a typical leather wallet at $45 MSRP: decorator price ~$22, Printify take $8 (36% of the decorator-to-platform spread), leaving the decorator ~$15–17 net. Compression risk is real: raw leather prices carry ~15% seasonal volatility, and decorators negotiate on volume. Our hedge: PoC LOIs lock pricing for the 150-SKU pilot period, and the MVP 3 scale decision is made with 3 months of real margin data. If compression exceeds 20% in Month 1–2 actuals, that feeds directly into the Gate 2 decision.</div>
+        <div class="qa-trap"><strong>Trap to avoid</strong>Defending $8 as fixed. Leadership has already modeled compression to $5. Acknowledge the risk, name the hedge, and move on.</div>
+      </div>
+    </div>
+
+    <div class="qa-card">
+      <button class="qa-trigger" onclick="toggleCard(this)">
+        <span class="pill pill-med">Med</span>
+        <span class="qa-q">"At a kill threshold of &lt;15 orders/SKU/month, what's the total write-off by Gate 2 — and what's the recovery path for those engineering assets?"</span>
+        <span class="qa-chevron">▾</span>
+      </button>
+      <div class="qa-body">
+        <div class="qa-why"><strong>Why they ask it</strong>Testing downside planning — whether you've genuinely designed the exit, not just the entry.</div>
+        <div class="qa-answer-label">Answer</div>
+        <div class="qa-answer">At Gate 2 (Month 2), total sunk cost is $220K: Design Sprint $20K + MVP 1 $80K + MVP 2 $120K. Three engineering assets are platform-reusable regardless of kill: MAT-001 applies to any material classification at ingestion, not only leather; Field-Assist Agent applies to any taxonomy pre-fill use case; the structured taxonomy schema is a template for future premium categories. The kill costs $220K and preserves those assets vs. continuing on weak signal and spending the full $340K before stopping.</div>
+        <div class="qa-trap"><strong>Trap to avoid</strong>"Some of the tech transfers." Be specific. Name MAT-001, Field-Assist, and the taxonomy schema explicitly — or this sounds like rationalization after the fact.</div>
+      </div>
+    </div>
+
+    <div class="qa-card">
+      <button class="qa-trigger" onclick="toggleCard(this)">
+        <span class="pill pill-hard">Hard</span>
+        <span class="qa-q">"You're projecting $1.8M ARR at base case. What would need to be true for this to come in at $900K instead?"</span>
+        <span class="qa-chevron">▾</span>
+      </button>
+      <div class="qa-body">
+        <div class="qa-why"><strong>Why they ask it</strong>Testing whether you've genuinely stress-tested the model or built a single-scenario pitch.</div>
+        <div class="qa-answer-label">Answer</div>
+        <div class="qa-answer">$900K ARR requires 10 orders/SKU/month — half the base case. That scenario materializes if: (1) marketplace indexing takes >60 days for leather as a new category, (2) decorator merchandising quality is poor in Month 1–2 before we provide marketing playbooks, or (3) a single-channel policy change reduces one channel to near zero. At $900K, payback extends to ~22–24 months — borderline against our threshold. That's the honest range: base case is the plan; $900K is the review conversation. That's also why Month 2 is the gate, not Month 1 — the signal is cleaner after indexing noise clears.</div>
+        <div class="qa-trap"><strong>Trap to avoid</strong>Saying the model is conservative when it isn't. Have the half-base answer ready before they ask.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SECTION 03 ── -->
+  <section class="cat-section" data-cat="technical" id="technical">
+    <h2 class="cat-heading">03 · Technical Risk</h2>
+
+    <div class="qa-card">
+      <button class="qa-trigger" onclick="toggleCard(this)">
+        <span class="pill pill-hard">Hard</span>
+        <span class="qa-q">"What if the Mockup Engine slips past W17? You've built your critical path around an 8-week dependency — what's the product without it?"</span>
+        <span class="qa-chevron">▾</span>
+      </button>
+      <div class="qa-body">
+        <div class="qa-why"><strong>Why they ask it</strong>The mockup engine is the highest-impact single dependency — tests whether you've decoupled it.</div>
+        <div class="qa-answer-label">Answer</div>
+        <div class="qa-answer">We decoupled this explicitly. Static texture mockups — flat lay, plain background — can be delivered by W9 with no Mockup Engine involvement. That's enough to launch 150 SKUs on Etsy and Amazon with compliant listings. Dynamic v2 mockups (lifestyle scenes, 3D previews) enhance conversion rate but are not a launch blocker. If the Mockup Engine slips to W19, we launch on static assets, measure conversion baseline, and layer in dynamic mockups as a Month 3 fast-follow. Assets are locked W9 Day 1 to enforce this decoupling.</div>
+        <div class="qa-trap"><strong>Trap to avoid</strong>"We'll accelerate the mockup engine." You don't own that dependency. The mitigation must work without it — static assets are the mitigation, not a prayer to the other team's roadmap.</div>
+      </div>
+    </div>
+
+    <div class="qa-card">
+      <button class="qa-trigger" onclick="toggleCard(this)">
+        <span class="pill pill-hard">Hard</span>
+        <span class="qa-q">"What's your false-positive rate on the current MAT-001 training dataset, and what's the failure mode if it goes above 2% at scale?"</span>
+        <span class="qa-chevron">▾</span>
+      </button>
+      <div class="qa-body">
+        <div class="qa-why"><strong>Why they ask it</strong>Both a technical and regulatory risk — tests whether you've validated the AI component before committing to it as a gate metric.</div>
+        <div class="qa-answer-label">Answer</div>
+        <div class="qa-answer">We don't have a production false-positive rate yet — the MAT-001 training data audit is on the W3 critical path specifically because we set the 2% gate before committing to MVP 2. False positives above 2% mean legitimate genuine leather listings get auto-rejected: decorator friction and manual review burden, not an FTC compliance failure. If the W3 audit shows >5% FP rate in training data, we pause and retrain before MVP 1 — that costs 2–3 weeks but is preferable to shipping a classifier that alienates our pilot decorators. We do not ship MVP 1 without hitting &lt;2%.</div>
+        <div class="qa-trap"><strong>Trap to avoid</strong>Overclaiming classifier accuracy before you've audited the training data. Say directly: "We don't have the number yet. The W3 audit produces it, and it's on the critical path before any MVP 1 spend."</div>
+      </div>
+    </div>
+
+    <div class="qa-card">
+      <button class="qa-trigger" onclick="toggleCard(this)">
+        <span class="pill pill-med">Med</span>
+        <span class="qa-q">"You're applying for Amazon SP-API at W10. Approval can take longer than 4 weeks. What's the contingency if you're still pending at launch?"</span>
+        <span class="qa-chevron">▾</span>
+      </button>
+      <div class="qa-body">
+        <div class="qa-why"><strong>Why they ask it</strong>Testing external dependency management — whether "apply early" is your whole plan.</div>
+        <div class="qa-answer-label">Answer</div>
+        <div class="qa-answer">W10 application gives us a 2–4 week buffer before the W16 MVP 2 gate. If approval slips to 6 weeks (W16), we soft-launch Etsy-only and delay Amazon to W18–19. Etsy represents ~55–60% of projected handmade leather GMV signal, so Month 1 data is still directional without Amazon. The Month 2 Gate 2 uses combined channel data; if Amazon comes live by Month 1 Week 3, we have enough dual-channel signal for the go/kill decision. We apply at W10 to build this buffer deliberately.</div>
+        <div class="qa-trap"><strong>Trap to avoid</strong>Treating SP-API approval as a binary block. Etsy-only launch is a real, modeled option — name it as the contingency, not as a failure.</div>
+      </div>
+    </div>
+
+    <div class="qa-card">
+      <button class="qa-trigger" onclick="toggleCard(this)">
+        <span class="pill pill-hard">Hard</span>
+        <span class="qa-q">"How structured are supplier data sheets in practice — what's your data quality assumption for Field-Assist Agent inputs?"</span>
+        <span class="qa-chevron">▾</span>
+      </button>
+      <div class="qa-body">
+        <div class="qa-why"><strong>Why they ask it</strong>Testing whether the AI component is built on a realistic input assumption or an idealized one.</div>
+        <div class="qa-answer-label">Answer</div>
+        <div class="qa-answer">Supplier data sheets are inconsistently structured — this is a known input quality risk. Our pilot scopes to 5 Decorators specifically to allow manual audit and normalization of their data sheets before Field-Assist ingestion. The agent's pre-fill is a starting point, not a final submission: KR 1.2 targets &lt;10% portal error rate at MVP 2, not 0% — we budget for human correction in the loop. The 24-hour onboarding target is the meaningful outcome; the agent is the mechanism, not the SLA.</div>
+        <div class="qa-trap"><strong>Trap to avoid</strong>Claiming the agent "handles" unstructured data. It doesn't. The 5-decorator pilot exists to normalize data quality before we scale — say that directly.</div>
+      </div>
+    </div>
+
+    <div class="qa-card">
+      <button class="qa-trigger" onclick="toggleCard(this)">
+        <span class="pill pill-med">Med</span>
+        <span class="qa-q">"Multiple AI components interacting in this system. What's your observability strategy — how do you know when something breaks in production?"</span>
+        <span class="qa-chevron">▾</span>
+      </button>
+      <div class="qa-body">
+        <div class="qa-why"><strong>Why they ask it</strong>Testing operational maturity — whether observability is a Phase 2 afterthought or part of MVP 1 definition of done.</div>
+        <div class="qa-answer-label">Answer</div>
+        <div class="qa-answer">Two monitoring surfaces, both included in MVP 1 DoD. MAT-001 logs every classification decision with a confidence score; anything below 0.85 gets flagged for human review — that's the circuit breaker for classifier drift. Field-Assist tracks field completion rate and correction rate per session; a spike in correction rate is a leading indicator of data quality degradation. The KR targets — 88% auto-approval, &lt;2% FP — are operationalized as dashboard metrics reviewed weekly, not in quarterly retrospectives.</div>
+        <div class="qa-trap"><strong>Trap to avoid</strong>Answering as if observability is a Phase 2 concern. That signals you haven't shipped AI systems in production. Both monitoring layers are MVP 1 scope — say it before they ask.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SECTION 04 ── -->
+  <section class="cat-section" data-cat="alternatives" id="alternatives">
+    <h2 class="cat-heading">04 · Alternatives &amp; Opportunity Cost</h2>
+
+    <div class="qa-card">
+      <button class="qa-trigger" onclick="toggleCard(this)">
+        <span class="pill pill-hard">Hard</span>
+        <span class="qa-q">"What are we not building if we commit this engineering capacity? Name the specific initiatives this blocks."</span>
+        <span class="qa-chevron">▾</span>
+      </button>
+      <div class="qa-body">
+        <div class="qa-why"><strong>Why they ask it</strong>Forcing a real prioritization conversation — leadership knows what's queued and wants to see you name it.</div>
+        <div class="qa-answer-label">Answer</div>
+        <div class="qa-answer">At $340K over 24 weeks, the direct opportunity cost is roughly 2 senior engineers + 1 PM + design for 6 months. The nearest competitors for this capacity: (1) the fulfillment routing optimization project (projected 3–4% COGS reduction across all categories), and (2) the Merchant Analytics dashboard (queued for 2 quarters). The recommendation is that leather's margin expansion at $1.8M ARR outweighs routing optimization over this timeframe — but this is a leadership call, and the tradeoff should be explicit in the planning record.</div>
+        <div class="qa-trap"><strong>Trap to avoid</strong>Vague answers like "standard roadmap capacity." Leadership already knows what's queued. Name the initiatives you're displacing — it shows you've done the tradeoff.</div>
+      </div>
+    </div>
+
+    <div class="qa-card">
+      <button class="qa-trigger" onclick="toggleCard(this)">
+        <span class="pill pill-hard">Hard</span>
+        <span class="qa-q">"Could we partner with PrintKK or another existing leather POD supplier instead of building the taxonomy and compliance infrastructure ourselves?"</span>
+        <span class="qa-chevron">▾</span>
+      </button>
+      <div class="qa-body">
+        <div class="qa-why"><strong>Why they ask it</strong>A genuine make-vs-buy challenge — tests whether you've evaluated the alternative or assumed the build path.</div>
+        <div class="qa-answer-label">Answer</div>
+        <div class="qa-answer">Yes, we evaluated it. PrintKK partnership: faster to market (~8 weeks vs. 24), zero build cost, but margin compresses to ~$3–4/order vs. $8, and Printify becomes a reseller with no proprietary taxonomy, no FTC automation, and no switching cost for decorators — PrintKK can partner with any competing platform on the same terms. The build path is slower but the FTC classifier and taxonomy are durable platform assets. Partnership is worth revisiting only if Gate 0 fails to secure Decorator LOIs and we need to derisk supply quickly.</div>
+        <div class="qa-trap"><strong>Trap to avoid</strong>Dismissing the partnership option — that signals you didn't evaluate it. Show you ran the math ($3–4 vs. $8) and name the specific strategic reason the build wins: switching costs and asset durability.</div>
+      </div>
+    </div>
+
+    <div class="qa-card">
+      <button class="qa-trigger" onclick="toggleCard(this)">
+        <span class="pill pill-med">Med</span>
+        <span class="qa-q">"What if we ran a 90-day market test using our existing synthetic leather products relabeled correctly, before committing to genuine leather infrastructure?"</span>
+        <span class="qa-chevron">▾</span>
+      </button>
+      <div class="qa-body">
+        <div class="qa-why"><strong>Why they ask it</strong>Proposing a lower-cost alternative path — tests whether you understand what a synthetic test actually measures.</div>
+        <div class="qa-answer-label">Answer</div>
+        <div class="qa-answer">We're already running that experiment passively: the 45 synthetic listings on Printify are converting, which confirms merchant willingness to list. The problem with a deliberate synthetic test is it doesn't answer the question we need answered: will merchants and consumers pay the premium for genuine leather at $35–70 AOV vs. synthetic at $20–30? A synthetic test relabeled correctly deflates the signal — you'd be testing price-sensitive demand in the wrong segment. The genuine leather pilot is the only test that answers the genuine leather question.</div>
+        <div class="qa-trap"><strong>Trap to avoid</strong>Agreeing the synthetic test is a good idea. It conflates two different markets and two different AOV segments. The test already ran passively — it was the wrong test for what we're building toward.</div>
+      </div>
+    </div>
+
+    <div class="qa-card">
+      <button class="qa-trigger" onclick="toggleCard(this)">
+        <span class="pill pill-med">Med</span>
+        <span class="qa-q">"Should we use a third-party catalog enrichment service for taxonomy and FTC compliance instead of building MAT-001 internally?"</span>
+        <span class="qa-chevron">▾</span>
+      </button>
+      <div class="qa-body">
+        <div class="qa-why"><strong>Why they ask it</strong>Make-vs-buy specifically on the AI component — tests the build decision for the most technically uncertain piece.</div>
+        <div class="qa-answer-label">Answer</div>
+        <div class="qa-answer">We evaluated this. Third-party enrichment services (Salsify, Akeneo with custom rules) handle catalog structuring but are not trained on FTC leather compliance — they'd require significant customization that approaches build cost. More critically, FTC compliance accuracy is a liability question: if a third-party misclassifies a listing and we ship it, Printify carries the regulatory exposure regardless of vendor contract. Owning MAT-001 means we own the audit trail. The 88% auto-approval target is achievable with in-house LLM fine-tuning at a fraction of a third-party enterprise SLA cost.</div>
+        <div class="qa-trap"><strong>Trap to avoid</strong>Framing it as purely a build cost decision. The liability ownership argument is the more compelling one — lead with that, then support with cost comparison.</div>
+      </div>
+    </div>
+
+    <div class="qa-card">
+      <button class="qa-trigger" onclick="toggleCard(this)">
+        <span class="pill pill-hard">Hard</span>
+        <span class="qa-q">"Ceramics, woodworking, candles — several premium craft categories have similar AOV profiles. Shouldn't we do a category strategy review before committing to leather specifically?"</span>
+        <span class="qa-chevron">▾</span>
+      </button>
+      <div class="qa-body">
+        <div class="qa-why"><strong>Why they ask it</strong>Challenging the selection of leather over other premium categories — tests whether this is a reasoned first-mover bet or a random proposal.</div>
+        <div class="qa-answer-label">Answer</div>
+        <div class="qa-answer">Leather wins on three criteria simultaneously that no other premium craft category matches today: (1) existing suppressed demand — 45 live listings, all synthetic, all converting — no other category has this at scale; (2) FTC compliance forcing function — the regulatory barrier makes our compliance investment durable in a way ceramics or candles don't require; (3) no POD competitor coverage — ceramics have Gooten SKUs, candles have Printful SKUs; genuine leather has nobody. A full category review is the right long-term play. This is a first-mover bet on the one category where the gap is most acute right now.</div>
+        <div class="qa-trap"><strong>Trap to avoid</strong>Defending leather as "the best category" in the abstract. Defend the timing and the specific gap — three conditions simultaneously met, right now.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SECTION 05 ── -->
+  <section class="cat-section" data-cat="deprioritization" id="deprioritization">
+    <h2 class="cat-heading">05 · Deprioritization Pressure</h2>
+
+    <div class="qa-card">
+      <button class="qa-trigger" onclick="toggleCard(this)">
+        <span class="pill pill-hard">Hard</span>
+        <span class="qa-q">"What's the cost of waiting 6 months? If we deprioritize to H2, what specifically do we lose?"</span>
+        <span class="qa-chevron">▾</span>
+      </button>
+      <div class="qa-body">
+        <div class="qa-why"><strong>Why they ask it</strong>Testing whether the urgency is real or manufactured to create pressure in the room.</div>
+        <div class="qa-answer-label">Answer</div>
+        <div class="qa-answer">Six months costs two things. First, $900K in base-case revenue — 6 months × $150K/month not collected. Second, and more important: the first-mover window. "Custom leather wallet" at Etsy #215 is growing; in 6 months it could be #150 with an established POD competitor occupying the top merchant slots. Our taxonomy and compliance framework takes 16 weeks to build — a competitor starting today could be live before we ship. The PoC costs nothing (W0, no engineering). Waiting 6 months to start the PoC means losing the LOI conversations before a competitor has them.</div>
+        <div class="qa-trap"><strong>Trap to avoid</strong>Framing the delay cost as purely financial. The competitive first-mover loss is the more credible argument — the $900K is real but recoverable. The lost LOIs are not.</div>
+      </div>
+    </div>
+
+    <div class="qa-card">
+      <button class="qa-trigger" onclick="toggleCard(this)">
+        <span class="pill pill-med">Med</span>
+        <span class="qa-q">"Walk me through a scenario where we kill this at Gate 2. What does a responsible wind-down look like?"</span>
+        <span class="qa-chevron">▾</span>
+      </button>
+      <div class="qa-body">
+        <div class="qa-why"><strong>Why they ask it</strong>Testing whether you've designed the exit — a PM who's genuinely thought through the kill scenario is more credible, not less.</div>
+        <div class="qa-answer-label">Answer</div>
+        <div class="qa-answer">Gate 2 kill (Month 2 signal &lt;15 orders/SKU/month): freeze decorator onboarding, move the 150-SKU catalog to hidden — not deleted, preserving SEO history for potential re-activation — and publish a Kill report with MAT-001 performance data and sales velocity analysis. MAT-001 and Field-Assist get documented and tagged for reuse in future catalog categories. The 5 pilot decorators receive written communication with 60 days' notice and an offer to migrate listings to a maintained synthetic leather category. Wind-down: ~2–3 weeks PM and engineering time. Total write-off: $220K and a set of reusable platform assets.</div>
+        <div class="qa-trap"><strong>Trap to avoid</strong>Making the wind-down sound easy. Name the 60-day notice obligation and the migration offer. Own the $220K number directly.</div>
+      </div>
+    </div>
+
+    <div class="qa-card">
+      <button class="qa-trigger" onclick="toggleCard(this)">
+        <span class="pill pill-med">Med</span>
+        <span class="qa-q">"You have gates at W0, W16, and Month 2. Why not add an intermediate gate at W8?"</span>
+        <span class="qa-chevron">▾</span>
+      </button>
+      <div class="qa-body">
+        <div class="qa-why"><strong>Why they ask it</strong>Probing whether the gate structure is complete — also a test of whether you understand what gates actually measure.</div>
+        <div class="qa-answer-label">Answer</div>
+        <div class="qa-answer">W8 is mid-MVP 1 build. The only meaningful signal available at that point is MAT-001 training data quality (from the W3 audit) and SP-API application status — both tracked as weekly risks in sprint cadence. A formal gate at W8 measures inputs, not outcomes; it can only return "continue" or "continue with concern" — which isn't a gate, it's a status meeting. The W3 MAT-001 training data audit is the functional early-warning mechanism: if FP rate exceeds 5% in training data, that's a de-facto pause before W16 without needing a separate gate. Adding W8 would create accountability theater, not decision quality.</div>
+        <div class="qa-trap"><strong>Trap to avoid</strong>Agreeing more gates are better. A gate with no real binary outcome isn't a gate.</div>
+      </div>
+    </div>
+
+    <div class="qa-card">
+      <button class="qa-trigger" onclick="toggleCard(this)">
+        <span class="pill pill-hard">Hard</span>
+        <span class="qa-q">"If this is such a strong opportunity, why hasn't Merchandising or Merchant Success proposed it? Why is Supply Pillar leading this?"</span>
+        <span class="qa-chevron">▾</span>
+      </button>
+      <div class="qa-body">
+        <div class="qa-why"><strong>Why they ask it</strong>Probing ownership legitimacy and whether there's a cross-functional alignment problem hiding under the PRD.</div>
+        <div class="qa-answer-label">Answer</div>
+        <div class="qa-answer">Two reasons. First, the FTC compliance infrastructure is a Supply-layer concern — material classification at ingestion lives in the catalog pipeline, which is our domain. Merchant Success doesn't own the technical classification system. Second, the 45 synthetic leather listings likely came through Merchant Success channels, but the compliance failure is invisible to them — they see successful listings, not the FTC exposure embedded in them. Supply Pillar identified the gap because we own the ingestion layer. Merchandising and Merchant Success are aligned as beneficiaries; they're not the right owners of the build. Both teams are briefed and supportive.</div>
+        <div class="qa-trap"><strong>Trap to avoid</strong>Getting defensive about cross-functional credit. Answer the structural ownership question directly, then confirm the other teams' alignment.</div>
+      </div>
+    </div>
+
+    <div class="qa-card">
+      <button class="qa-trigger" onclick="toggleCard(this)">
+        <span class="pill pill-hard">Hard</span>
+        <span class="qa-q">"You've presented this as a 'start now' recommendation. What would change your recommendation to 'wait'?"</span>
+        <span class="qa-chevron">▾</span>
+      </button>
+      <div class="qa-body">
+        <div class="qa-why"><strong>Why they ask it</strong>Marcel's test for intellectual honesty — a PM who's genuinely considered the kill scenario is more credible than one defending a single path.</div>
+        <div class="qa-answer-label">Answer</div>
+        <div class="qa-answer">Three specific signals would move the recommendation to "wait." First: if Gate 0 LOI conversations reveal that the 5 target Decorators lack production capacity to hit 30 SKUs each within 8 weeks — supply constraint, not demand, is the binding limiter. Second: if a direct competitor (Gelato, Gooten) announces a genuine leather pilot in the next 30 days — at that point the first-mover window may be closed and we'd need to re-evaluate differentiation. Third: if the Q3 engineering capacity review shows the 2 senior engineers required for MVP 1 have a higher-ROI alternative deployment. None of those conditions are true today. That's why the recommendation is start now.</div>
+        <div class="qa-trap"><strong>Trap to avoid</strong>Giving a theoretical answer about "market conditions." Be specific: name which conditions, in which sequence, actually change the call. Vague triggers read as deflection, not analysis.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SECTION 06 ── -->
+  <section class="cat-section" data-cat="alignment" id="alignment">
+    <h2 class="cat-heading">06 · Role &amp; JD Fit</h2>
+
+    <div class="qa-card">
+      <button class="qa-trigger" onclick="toggleCard(this)">
+        <span class="pill pill-hard">Hard</span>
+        <span class="qa-q">"Your PRD is almost entirely Decorator-facing. This role owns internal ops tools too. What's your plan for the ops team?"</span>
+        <span class="qa-chevron">▾</span>
+      </button>
+      <div class="qa-body">
+        <div class="qa-why"><strong>Why they ask it</strong>The JD explicitly lists "internal tools and workflows used by internal operations teams" as a core ownership area — equal to the Decorator portal. A PRD that ignores this reads as incomplete scope understanding.</div>
+        <div class="qa-answer-label">Answer</div>
+        <div class="qa-answer">The MAT-001 audit log is the first ops tool this PRD ships: every ingestion decision, false-positive flag, and appeal outcome is visible to ops without manual intervention. The Gate 1 review at W16 is an ops-owned checkpoint — ops signs off on the 150 SKU quality before marketplace launch. That's in scope. What's deferred to a phase 2 roadmap: a catalog health dashboard giving ops real-time error rates by Decorator, a priority-scored manual review queue for the &lt;12% of submissions that need human eyes, and bulk-edit tooling for taxonomy corrections. The Decorator portal's plain-language labels also reduce the ops correction load — fewer mis-labeled submissions means fewer ops tickets. I'd size that phase 2 work at roughly 6 weeks post-MVP 3, once we have real error rate data from the pilot.</div>
+        <div class="qa-trap"><strong>Trap to avoid</strong>Saying ops tooling is out of scope or will be handled separately. Name the audit log and Gate 1 sign-off as ops deliverables already in the PRD, then describe phase 2 specifically. "We'll figure it out later" reads as an oversight, not a decision.</div>
+      </div>
+    </div>
+
+    <div class="qa-card">
+      <button class="qa-trigger" onclick="toggleCard(this)">
+        <span class="pill pill-med">Med</span>
+        <span class="qa-q">"Your OKRs don't include supplier activation rate. That's a named KPI in this role's charter — catalog growth, supplier activation rates, time-to-live."</span>
+        <span class="qa-chevron">▾</span>
+      </button>
+      <div class="qa-body">
+        <div class="qa-why"><strong>Why they ask it</strong>The JD names supplier activation rate explicitly. A candidate who knows the role well should have anticipated this and either included it or have a clear rationale for the omission.</div>
+        <div class="qa-answer-label">Answer</div>
+        <div class="qa-answer">You're right — it's the gap in the current OKR set. The KR I'd add formally is: ≥70% of onboarded Decorators activate ≥1 leather SKU within 30 days of portal access. At pilot scale with 5 Decorators that's nearly binary, but it becomes the critical metric at scale. The portal form error rate KR (&lt;10%) is the leading indicator — high error rate directly predicts low activation rate, which is why it's in O3. I'd track both: error rate as the lever, activation rate as the outcome. I'd add the activation rate KR to O3 before the PRD goes to final approval.</div>
+        <div class="qa-trap"><strong>Trap to avoid</strong>Claiming it's already covered by other KRs without naming the exact metric you'd add. Acknowledge the gap directly, state the exact KR you'd add, and explain the relationship to the error rate KR already in the doc.</div>
+      </div>
+    </div>
+
+    <div class="qa-card">
+      <button class="qa-trigger" onclick="toggleCard(this)">
+        <span class="pill pill-hard">Hard</span>
+        <span class="qa-q">"Your PoC is discovery — LOIs, supplier validation. How is this not 'discovery disguised as delivery'? You said the PRD is solution-complete."</span>
+        <span class="qa-chevron">▾</span>
+      </button>
+      <div class="qa-body">
+        <div class="qa-why"><strong>Why they ask it</strong>The JD's exact language is "PRDs that are solution-complete before execution begins. No discovery disguised as delivery." Marcel will test whether you understand the distinction or just used the phrase.</div>
+        <div class="qa-answer-label">Answer</div>
+        <div class="qa-answer">Discovery disguised as delivery is when engineering starts building before the problem is validated — you pay engineering cost while you're still learning whether to build. PoC Week 0 is PM-only: outreach, LOI conversations, supplier SLA calls. Zero engineering spend. The solution is already fully specified — all 7 schema fields, MAT-001 thresholds, mockup engine specs are locked in this document before a single line of code starts. Gate 0 validates that supply and demand exist before the engineering clock starts. That's pre-delivery validation, not discovery in a sprint. Engineering doesn't touch this until Gate 0 returns a GO — at which point we're building a specified solution, not learning whether to build one.</div>
+        <div class="qa-trap"><strong>Trap to avoid</strong>Defending PoC as standard PM practice in the abstract. Be precise: $0 engineering at PoC, PM-only activity, solution already specified in full in the PRD. The distinction is who bears the cost of the learning — if it's the PM's time and not engineering cycles, it's not delivery.</div>
+      </div>
+    </div>
+
+  </section>
+
+</div>
+
+<script>
+function toggleCard(btn) {
+  const card = btn.closest('.qa-card');
+  card.classList.toggle('open');
+}
+
+function filterCat(cat, btn) {
+  document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.cat-section').forEach(s => {
+    s.style.display = (cat === 'all' || s.dataset.cat === cat) ? '' : 'none';
+  });
+}
+
+function toggleTheme() {
+  const root = document.documentElement;
+  const current = root.getAttribute('data-theme');
+  root.setAttribute('data-theme', current === 'dark' ? 'light' : 'dark');
+}
+
+// Open first card of each visible section by default for quick review
+document.querySelectorAll('.cat-section').forEach(sec => {
+  const first = sec.querySelector('.qa-card');
+  if (first) first.classList.add('open');
+});
+</script>

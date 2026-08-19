@@ -1,0 +1,1651 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Interview Leadership Q&A — FYUL Supply PM</title>
+<style>
+/* ─────────────────────────────────────────────
+   TOKEN SYSTEM
+   Light theme (default / un-stamped state)
+───────────────────────────────────────────── */
+:root {
+  --bg:              #F8F5F0;
+  --surface:         #FFFFFF;
+  --surface-2:       #F2EDE6;
+  --text-primary:    #1A1714;
+  --text-secondary:  #6B5E52;
+  --text-muted:      #9C8E83;
+  --accent:          #7B4F2E;
+  --accent-muted:    #B07A50;
+  --accent-faint:    #EDE0D5;
+  --border:          #DDD5CA;
+  --border-strong:   #C5B9AE;
+
+  /* Category accents */
+  --cat-1: #2B5F75;   /* Stakeholders — steel blue */
+  --cat-2: #3D6640;   /* Priorización — forest green */
+  --cat-3: #614A7A;   /* Ambigüedad — slate purple */
+  --cat-4: #7B4F2E;   /* Lanzamiento — leather brown */
+  --cat-5: #2E5279;   /* Datos — navy */
+  --cat-6: #7A3F2E;   /* Riesgos — rust */
+  --cat-7: #4E3769;   /* Liderazgo — deep violet */
+
+  --nav-w: 220px;
+  --col-w: 820px;
+}
+
+/* Dark theme — system preference */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg:              #121110;
+    --surface:         #1C1916;
+    --surface-2:       #231E1A;
+    --text-primary:    #EDE8E2;
+    --text-secondary:  #A89D93;
+    --text-muted:      #6E6258;
+    --accent:          #C49A6C;
+    --accent-muted:    #A07848;
+    --accent-faint:    #2A2018;
+    --border:          #2E2820;
+    --border-strong:   #3E3530;
+
+    --cat-1: #5B9AB5;
+    --cat-2: #6EA870;
+    --cat-3: #9A7DB5;
+    --cat-4: #C49A6C;
+    --cat-5: #5E8EB5;
+    --cat-6: #C47860;
+    --cat-7: #9070B5;
+  }
+}
+
+/* Dark theme — explicit toggle */
+:root[data-theme="dark"] {
+  --bg:              #121110;
+  --surface:         #1C1916;
+  --surface-2:       #231E1A;
+  --text-primary:    #EDE8E2;
+  --text-secondary:  #A89D93;
+  --text-muted:      #6E6258;
+  --accent:          #C49A6C;
+  --accent-muted:    #A07848;
+  --accent-faint:    #2A2018;
+  --border:          #2E2820;
+  --border-strong:   #3E3530;
+
+  --cat-1: #5B9AB5;
+  --cat-2: #6EA870;
+  --cat-3: #9A7DB5;
+  --cat-4: #C49A6C;
+  --cat-5: #5E8EB5;
+  --cat-6: #C47860;
+  --cat-7: #9070B5;
+}
+
+/* ─────────────────────────────────────────────
+   RESET & BASE
+───────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { font-size: 16px; scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text-primary);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ─────────────────────────────────────────────
+   LAYOUT
+───────────────────────────────────────────── */
+.page-wrap {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* Left nav */
+.nav-rail {
+  width: var(--nav-w);
+  flex-shrink: 0;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+  border-right: 1px solid var(--border);
+  background: var(--surface);
+  padding: 2rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.nav-logo {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 0.875rem;
+  font-weight: normal;
+  color: var(--accent);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  margin-bottom: 0.25rem;
+}
+
+.nav-subtitle {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  margin-bottom: 2rem;
+  line-height: 1.4;
+}
+
+.nav-section {
+  margin-bottom: 1.5rem;
+}
+
+.nav-section-label {
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+.nav-link {
+  display: block;
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+  text-decoration: none;
+  padding: 0.22rem 0;
+  border-left: 2px solid transparent;
+  padding-left: 0.6rem;
+  line-height: 1.4;
+  margin-bottom: 0.1rem;
+  transition: color 0.15s, border-color 0.15s;
+}
+
+.nav-link:hover { color: var(--text-primary); }
+.nav-link:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px; }
+
+.nav-link.cat-1 { border-left-color: var(--cat-1); }
+.nav-link.cat-2 { border-left-color: var(--cat-2); }
+.nav-link.cat-3 { border-left-color: var(--cat-3); }
+.nav-link.cat-4 { border-left-color: var(--cat-4); }
+.nav-link.cat-5 { border-left-color: var(--cat-5); }
+.nav-link.cat-6 { border-left-color: var(--cat-6); }
+.nav-link.cat-7 { border-left-color: var(--cat-7); }
+
+/* Main content */
+.main {
+  flex: 1;
+  min-width: 0;
+  padding: 3rem 2.5rem 6rem;
+  max-width: calc(var(--nav-w) + var(--col-w) + 5rem);
+}
+
+.content-col {
+  max-width: var(--col-w);
+}
+
+/* ─────────────────────────────────────────────
+   PAGE HEADER
+───────────────────────────────────────────── */
+.page-header {
+  margin-bottom: 3.5rem;
+  padding-bottom: 2.5rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.page-eyebrow {
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+}
+
+.page-title {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: clamp(1.75rem, 3vw, 2.5rem);
+  font-weight: normal;
+  line-height: 1.2;
+  color: var(--text-primary);
+  text-wrap: balance;
+  margin-bottom: 1.25rem;
+}
+
+.page-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.5rem;
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+
+.page-meta-item {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.page-meta-label {
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  font-size: 0.65rem;
+  letter-spacing: 0.08em;
+}
+
+.context-box {
+  margin-top: 1.5rem;
+  background: var(--accent-faint);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+  border-radius: 0 4px 4px 0;
+  padding: 1rem 1.25rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 0.75rem 2rem;
+}
+
+.context-item {
+  font-size: 0.8rem;
+}
+
+.context-key {
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--accent-muted);
+  font-weight: 600;
+  margin-bottom: 0.15rem;
+}
+
+.context-val {
+  color: var(--text-primary);
+  font-variant-numeric: tabular-nums;
+  line-height: 1.4;
+}
+
+/* ─────────────────────────────────────────────
+   CATEGORY SECTIONS
+───────────────────────────────────────────── */
+.category-section {
+  margin-bottom: 4rem;
+}
+
+.category-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.75rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.category-num {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+}
+
+.category-pill {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.2rem 0.6rem;
+  border-radius: 2px;
+  color: #fff;
+  flex-shrink: 0;
+}
+
+.cat-bg-1 { background: var(--cat-1); }
+.cat-bg-2 { background: var(--cat-2); }
+.cat-bg-3 { background: var(--cat-3); }
+.cat-bg-4 { background: var(--cat-4); }
+.cat-bg-5 { background: var(--cat-5); }
+.cat-bg-6 { background: var(--cat-6); }
+.cat-bg-7 { background: var(--cat-7); }
+
+.category-title {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 1.3rem;
+  font-weight: normal;
+  color: var(--text-primary);
+}
+
+/* ─────────────────────────────────────────────
+   QUESTION CARDS
+───────────────────────────────────────────── */
+.qa-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  margin-bottom: 1.5rem;
+  overflow: hidden;
+}
+
+.qa-card-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 1.25rem 1.5rem 1rem;
+  border-bottom: 1px solid var(--border);
+  border-left: 3px solid var(--cat-accent);
+}
+
+/* Apply per-category left border via CSS variables */
+.cat-1 .qa-card-header { border-left-color: var(--cat-1); }
+.cat-2 .qa-card-header { border-left-color: var(--cat-2); }
+.cat-3 .qa-card-header { border-left-color: var(--cat-3); }
+.cat-4 .qa-card-header { border-left-color: var(--cat-4); }
+.cat-5 .qa-card-header { border-left-color: var(--cat-5); }
+.cat-6 .qa-card-header { border-left-color: var(--cat-6); }
+.cat-7 .qa-card-header { border-left-color: var(--cat-7); }
+
+.q-num {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.04em;
+  flex-shrink: 0;
+  padding-top: 0.15rem;
+  min-width: 2rem;
+}
+
+.q-text {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 1rem;
+  font-style: italic;
+  color: var(--text-primary);
+  line-height: 1.5;
+  text-wrap: balance;
+}
+
+/* STAR body */
+.star-body {
+  padding: 0;
+}
+
+.star-row {
+  display: grid;
+  grid-template-columns: 80px 1fr;
+  border-bottom: 1px solid var(--border);
+}
+
+.star-row:last-child {
+  border-bottom: none;
+}
+
+.star-label-cell {
+  padding: 1.1rem 1rem 1.1rem 1.5rem;
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.2rem;
+}
+
+.star-badge {
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.star-word {
+  font-size: 0.6rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  opacity: 0.7;
+  line-height: 1.2;
+}
+
+.star-content {
+  padding: 1.1rem 1.5rem;
+  font-size: 0.88rem;
+  color: var(--text-primary);
+  line-height: 1.7;
+}
+
+.star-content strong {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.star-content .num {
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+}
+
+/* Highlight key numbers inside star content */
+.highlight {
+  background: var(--accent-faint);
+  color: var(--accent);
+  padding: 0.05em 0.3em;
+  border-radius: 2px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  font-size: 0.85em;
+}
+
+/* Subtle background per STAR component */
+.star-row.s-row { background: transparent; }
+.star-row.t-row { background: var(--surface-2); }
+.star-row.a-row { background: transparent; }
+.star-row.r-row { background: var(--accent-faint); }
+
+/* ─────────────────────────────────────────────
+   STUDY TIPS FOOTER
+───────────────────────────────────────────── */
+.study-footer {
+  margin-top: 4rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--border);
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1rem 2rem;
+}
+
+.study-tip-label {
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--accent-muted);
+  font-weight: 700;
+  margin-bottom: 0.3rem;
+}
+
+/* ─────────────────────────────────────────────
+   RESPONSIVE — collapse nav rail below 900px
+───────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .nav-rail { display: none; }
+  .main { padding: 2rem 1.25rem 4rem; }
+  .star-row { grid-template-columns: 70px 1fr; }
+  .qa-card-header { border-left-width: 3px; }
+}
+
+@media (max-width: 600px) {
+  .star-row {
+    grid-template-columns: 1fr;
+  }
+  .star-label-cell {
+    flex-direction: row;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.6rem 1rem;
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+  }
+  .star-word { display: none; }
+  .star-content { padding: 0.85rem 1rem; }
+  .context-box { grid-template-columns: 1fr 1fr; }
+}
+
+/* Focus / a11y */
+a:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
+</style>
+</head>
+<body>
+
+<div class="page-wrap">
+
+  <!-- ─── NAV RAIL ─── -->
+  <nav class="nav-rail" aria-label="Question navigation">
+    <div class="nav-logo">FYUL Supply PM</div>
+    <div class="nav-subtitle">Leadership Interview Q&amp;A<br>Marcel Kilgenstein</div>
+
+    <div class="nav-section">
+      <div class="nav-section-label">Stakeholders</div>
+      <a class="nav-link cat-1" href="#q1">01 — Alinear stakeholders</a>
+      <a class="nav-link cat-1" href="#q2">02 — Pushback al clasificador</a>
+      <a class="nav-link cat-1" href="#q3">03 — Retrasos en partners</a>
+    </div>
+
+    <div class="nav-section">
+      <div class="nav-section-label">Priorización</div>
+      <a class="nav-link cat-2" href="#q4">04 — Trade-off en MVP1</a>
+      <a class="nav-link cat-2" href="#q5">05 — Nueva área vs. existente</a>
+      <a class="nav-link cat-2" href="#q6">06 — Decir no al top partner</a>
+    </div>
+
+    <div class="nav-section">
+      <div class="nav-section-label">Ambigüedad</div>
+      <a class="nav-link cat-3" href="#q7">07 — Kill gate sin datos</a>
+      <a class="nav-link cat-3" href="#q8">08 — Definir desde cero</a>
+      <a class="nav-link cat-3" href="#q9">09 — Debate arquitectónico</a>
+    </div>
+
+    <div class="nav-section">
+      <div class="nav-section-label">Lanzamiento</div>
+      <a class="nav-link cat-4" href="#q10">10 — MVP1 launch post-mortem</a>
+      <a class="nav-link cat-4" href="#q11">11 — ¿Lanzar o retrasar?</a>
+      <a class="nav-link cat-4" href="#q12">12 — Amazon SP-API</a>
+    </div>
+
+    <div class="nav-section">
+      <div class="nav-section-label">Datos</div>
+      <a class="nav-link cat-5" href="#q13">13 — Datos que cambiaron todo</a>
+      <a class="nav-link cat-5" href="#q14">14 — Métricas clave</a>
+      <a class="nav-link cat-5" href="#q15">15 — Convencer con datos</a>
+    </div>
+
+    <div class="nav-section">
+      <div class="nav-section-label">Riesgos</div>
+      <a class="nav-link cat-6" href="#q16">16 — Kill gate fraud-proof</a>
+      <a class="nav-link cat-6" href="#q17">17 — Fallo de proveedor</a>
+    </div>
+
+    <div class="nav-section">
+      <div class="nav-section-label">Liderazgo difícil</div>
+      <a class="nav-link cat-7" href="#q18">18 — Una falla real</a>
+      <a class="nav-link cat-7" href="#q19">19 — Conflicto en equipo</a>
+      <a class="nav-link cat-7" href="#q20">20 — ¿Qué cambiarías?</a>
+    </div>
+  </nav>
+
+  <!-- ─── MAIN CONTENT ─── -->
+  <main class="main">
+    <div class="content-col">
+
+      <!-- PAGE HEADER -->
+      <header class="page-header">
+        <div class="page-eyebrow">Preparación de entrevista de liderazgo</div>
+        <h1 class="page-title">Interview Leadership Q&amp;A<br>FYUL Supply PM — Cuero Premium</h1>
+        <div class="page-meta">
+          <div class="page-meta-item">
+            <span class="page-meta-label">Entrevistadora</span>
+            <span>Marcel Kilgenstein</span>
+          </div>
+          <div class="page-meta-item">
+            <span class="page-meta-label">Empresa</span>
+            <span>FYUL (Printify + Printful + Snow Commerce)</span>
+          </div>
+          <div class="page-meta-item">
+            <span class="page-meta-label">Rol</span>
+            <span>Supply PM — Integración Cuero Premium</span>
+          </div>
+          <div class="page-meta-item">
+            <span class="page-meta-label">Preguntas</span>
+            <span>20 preguntas · 7 categorías · formato STAR</span>
+          </div>
+        </div>
+
+        <div class="context-box">
+          <div class="context-item">
+            <div class="context-key">Inversión total</div>
+            <div class="context-val">$340K phase-gated</div>
+          </div>
+          <div class="context-item">
+            <div class="context-key">Fases</div>
+            <div class="context-val">PoC $0 → Sprint $20K → MVP1 $80K → MVP2 $120K → MVP3 $120K</div>
+          </div>
+          <div class="context-item">
+            <div class="context-key">Kill gate</div>
+            <div class="context-val">&lt;15 órdenes/SKU en Mes 2 post-launch</div>
+          </div>
+          <div class="context-item">
+            <div class="context-key">Base case</div>
+            <div class="context-val">5 decorators × 30 SKUs × $8 margen × 20 órdenes/SKU/mo = $150K/mo</div>
+          </div>
+          <div class="context-item">
+            <div class="context-key">Timeline</div>
+            <div class="context-val">24 semanas</div>
+          </div>
+          <div class="context-item">
+            <div class="context-key">Schema</div>
+            <div class="context-val">8 campos · Clasificador AI MAT-001 · Portal decorador · Shopify / Etsy / Amazon SP-API</div>
+          </div>
+        </div>
+      </header>
+
+
+      <!-- ══════════════════════════════════════════
+           CATEGORÍA 1: GESTIÓN DE STAKEHOLDERS
+      ══════════════════════════════════════════ -->
+      <section class="category-section cat-1">
+        <div class="category-header">
+          <span class="category-num">01</span>
+          <span class="category-pill cat-bg-1">Stakeholders</span>
+          <h2 class="category-title">Gestión de Stakeholders</h2>
+        </div>
+
+        <!-- Q1 -->
+        <article class="qa-card" id="q1">
+          <div class="qa-card-header">
+            <div class="q-num">Q 01</div>
+            <div class="q-text">"Tell me about a time you had to align multiple stakeholders with conflicting priorities on a product initiative."</div>
+          </div>
+          <div class="star-body">
+            <div class="star-row s-row">
+              <div class="star-label-cell">
+                <div class="star-badge">S</div>
+                <div class="star-word">Situation</div>
+              </div>
+              <div class="star-content">
+                Lanzar la integración de cuero en FYUL requería alinear simultáneamente a <strong>3 proveedores de cuero</strong> (tenerías con MOQs y lead times distintos), <strong>5 partners decoradores</strong> (cada uno con su roadmap de producto propio), y <strong>2 equipos internos</strong>: platform engineering y marketplace ops. Cada grupo tenía incentivos distintos: los proveedores querían volumen garantizado antes de comprometerse; los decoradores pedían catálogo listo antes de integrar el portal; engineering pedía un scope fijo antes de estimar el MVP1.
+              </div>
+            </div>
+            <div class="star-row t-row">
+              <div class="star-label-cell">
+                <div class="star-badge">T</div>
+                <div class="star-word">Task</div>
+              </div>
+              <div class="star-content">
+                Mi responsabilidad era definir un plan de integración por fases que mantuviera a todos los grupos avanzando — sin que ningún equipo bloqueara a los demás — y sin comprometer el kill gate ni el business case.
+              </div>
+            </div>
+            <div class="star-row a-row">
+              <div class="star-label-cell">
+                <div class="star-badge">A</div>
+                <div class="star-word">Action</div>
+              </div>
+              <div class="star-content">
+                Construí una RACI matrix mapeando cada uno de los <span class="highlight">8 campos del schema</span> (MAT-001, grain_type, thickness_mm, temper, tannage_process, finish_type, color_code, hide_origin) a equipos propietarios, con fechas de entrega concretas. Usé la estructura phase-gated como mecanismo de alineación: cada fase tiene un decision gate que convierte el desacuerdo en una pregunta binaria — ¿aprobamos continuar o no? Establecí syncs quincenales con decoradores y revisiones mensuales de supply con las tenerías.
+              </div>
+            </div>
+            <div class="star-row r-row">
+              <div class="star-label-cell">
+                <div class="star-badge">R</div>
+                <div class="star-word">Result</div>
+              </div>
+              <div class="star-content">
+                Los <span class="highlight">5 decoradores</span> firmaron compromiso de onboarding antes del kickoff de MVP1. Los <span class="highlight">3 proveedores</span> confirmaron capacidad para las primeras <span class="highlight">30 SKUs</span>. El Design Sprint se entregó dentro del presupuesto de <span class="highlight">$20K</span> y sin scope surprises en las primeras 12 semanas.
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Q2 -->
+        <article class="qa-card" id="q2">
+          <div class="qa-card-header">
+            <div class="q-num">Q 02</div>
+            <div class="q-text">"Describe a situation where a key stakeholder pushed back on your product decision. How did you handle it?"</div>
+          </div>
+          <div class="star-body">
+            <div class="star-row s-row">
+              <div class="star-label-cell">
+                <div class="star-badge">S</div>
+                <div class="star-word">Situation</div>
+              </div>
+              <div class="star-content">
+                Durante el Design Sprint, el equipo de marketplace ops se opuso a incluir el clasificador AI MAT-001 en MVP1. Su argumento: añadía complejidad técnica, requería datos de entrenamiento que no teníamos, y podía retrasar el milestone de <span class="highlight">$80K</span>. El pushback era serio — ops controla el proceso de indexación de catálogo, y sin su sign-off el clasificador no entraría en producción.
+              </div>
+            </div>
+            <div class="star-row t-row">
+              <div class="star-label-cell">
+                <div class="star-badge">T</div>
+                <div class="star-word">Task</div>
+              </div>
+              <div class="star-content">
+                Defender la inclusión del MAT-001 con evidencia, sin perder la confianza de ops, y sin retrasar el MVP1.
+              </div>
+            </div>
+            <div class="star-row a-row">
+              <div class="star-label-cell">
+                <div class="star-badge">A</div>
+                <div class="star-word">Action</div>
+              </div>
+              <div class="star-content">
+                Construí un caso con datos: el clasificador auto-taggearía el <span class="highlight">85%+</span> de los SKUs de cuero, reduciendo el QA manual en aproximadamente <span class="highlight">40 horas/decorator/año</span>. Propuse un fallback que eliminaba el riesgo de ops: manual override siempre disponible, el clasificador sería sugerencia, no obligatorio. Añadí un argumento clave para el kill gate: sin MAT-001, medir órdenes/SKU de forma consistente en <span class="highlight">30 SKUs</span> requeriría tagging manual — fuente de error en la métrica de corte.
+              </div>
+            </div>
+            <div class="star-row r-row">
+              <div class="star-label-cell">
+                <div class="star-badge">R</div>
+                <div class="star-word">Result</div>
+              </div>
+              <div class="star-content">
+                Ops aprobó el MAT-001 con la condición del manual override. El clasificador entró en MVP1 según lo planificado. El kill gate quedó medible desde el día uno del lanzamiento, con datos limpios para el Mes 2.
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Q3 -->
+        <article class="qa-card" id="q3">
+          <div class="qa-card-header">
+            <div class="q-num">Q 03</div>
+            <div class="q-text">"How do you manage relationships with external partners when timelines slip?"</div>
+          </div>
+          <div class="star-body">
+            <div class="star-row s-row">
+              <div class="star-label-cell">
+                <div class="star-badge">S</div>
+                <div class="star-word">Situation</div>
+              </div>
+              <div class="star-content">
+                En la fase MVP2 (<span class="highlight">$120K</span>), uno de nuestros 5 decoradores acumuló un retraso de 3 semanas en la integración de su portal decorador. El riesgo real no era ese partner en aislamiento — era el efecto cascada: los otros 4 decoradores estaban en cola para onboarding, y cualquier retraso en el proceso compartido podía impactarlos a todos.
+              </div>
+            </div>
+            <div class="star-row t-row">
+              <div class="star-label-cell">
+                <div class="star-badge">T</div>
+                <div class="star-word">Task</div>
+              </div>
+              <div class="star-content">
+                Evitar que el retraso de un partner se convirtiera en un retraso de plataforma, y mantener la relación con el partner afectado sin comprometer el business case de <span class="highlight">$150K/mo</span>.
+              </div>
+            </div>
+            <div class="star-row a-row">
+              <div class="star-label-cell">
+                <div class="star-badge">A</div>
+                <div class="star-word">Action</div>
+              </div>
+              <div class="star-content">
+                Construí un onboarding path asíncrono de emergencia: el partner retrasado podía listar sus SKUs vía importación CSV manual mientras terminaba su integración de portal. Esto aislaba su retraso del pipeline de los otros 4 decoradores. Comuniqué el status a todos los partners vía un dashboard compartido — transparencia total, sin alarmismo. Definí un trigger de escalación explícito: si la integración del portal no estaba completa en la Semana 18, pausaríamos ese onboarding y priorizaríamos a los restantes.
+              </div>
+            </div>
+            <div class="star-row r-row">
+              <div class="star-label-cell">
+                <div class="star-badge">R</div>
+                <div class="star-word">Result</div>
+              </div>
+              <div class="star-content">
+                El partner completó su integración en la <span class="highlight">Semana 17</span> — una semana antes del trigger de escalación. Los <span class="highlight">5 decoradores</span> estaban vivos en la <span class="highlight">Semana 20</span>. Sin impacto de revenue en el base case.
+              </div>
+            </div>
+          </div>
+        </article>
+      </section>
+
+
+      <!-- ══════════════════════════════════════════
+           CATEGORÍA 2: PRIORIZACIÓN Y TRADE-OFFS
+      ══════════════════════════════════════════ -->
+      <section class="category-section cat-2">
+        <div class="category-header">
+          <span class="category-num">02</span>
+          <span class="category-pill cat-bg-2">Priorización</span>
+          <h2 class="category-title">Priorización y Trade-offs</h2>
+        </div>
+
+        <!-- Q4 -->
+        <article class="qa-card" id="q4">
+          <div class="qa-card-header">
+            <div class="q-num">Q 04</div>
+            <div class="q-text">"Tell me about a time you had to make a difficult trade-off between features or initiatives."</div>
+          </div>
+          <div class="star-body">
+            <div class="star-row s-row">
+              <div class="star-label-cell">
+                <div class="star-badge">S</div>
+                <div class="star-word">Situation</div>
+              </div>
+              <div class="star-content">
+                En MVP1 (presupuesto <span class="highlight">$80K</span>), engineering estimó que implementar los <span class="highlight">8 campos del schema completo</span> más la integración de Shopify, Etsy y Amazon SP-API simultáneamente excedería el presupuesto en aproximadamente <span class="highlight">$25K</span>. No había margen de contingencia en esa fase.
+              </div>
+            </div>
+            <div class="star-row t-row">
+              <div class="star-label-cell">
+                <div class="star-badge">T</div>
+                <div class="star-word">Task</div>
+              </div>
+              <div class="star-content">
+                Decidir qué cortar sin comprometer la medibilidad del kill gate ni la viabilidad del pilot con decoradores.
+              </div>
+            </div>
+            <div class="star-row a-row">
+              <div class="star-label-cell">
+                <div class="star-badge">A</div>
+                <div class="star-word">Action</div>
+              </div>
+              <div class="star-content">
+                Prioricé con un criterio explícito: ¿qué necesita estar vivo el Día 1 para que el kill gate sea medible y que al menos 3 de 5 decoradores puedan vender? P0 — intocable: (1) MAT-001 + los 5 campos core del schema (grain_type, thickness_mm, temper, tannage_process, finish_type), y (2) integración Shopify — <span class="highlight">3 de 5</span> decoradores vendían principalmente via Shopify, representando el <span class="highlight">~65%</span> del revenue proyectado. P1 — diferido a MVP2: Etsy y Amazon SP-API, que cubrían el <span class="highlight">~20%</span> restante del revenue. Documenté el trade-off en el PRD con los porcentajes.
+              </div>
+            </div>
+            <div class="star-row r-row">
+              <div class="star-label-cell">
+                <div class="star-badge">R</div>
+                <div class="star-word">Result</div>
+              </div>
+              <div class="star-content">
+                MVP1 entregado en <span class="highlight">$78K</span> — dentro del presupuesto. Kill gate medible desde el primer día. Etsy y Amazon SP-API lanzados en MVP2 (<span class="highlight">$120K</span>) sin impacto en el base case de <span class="highlight">$150K/mo</span>.
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Q5 -->
+        <article class="qa-card" id="q5">
+          <div class="qa-card-header">
+            <div class="q-num">Q 05</div>
+            <div class="q-text">"How do you decide when to invest in a new product area vs. doubling down on an existing one?"</div>
+          </div>
+          <div class="star-body">
+            <div class="star-row s-row">
+              <div class="star-label-cell">
+                <div class="star-badge">S</div>
+                <div class="star-word">Situation</div>
+              </div>
+              <div class="star-content">
+                Antes del Design Sprint, existía una propuesta interna para expandir simultáneamente a cuero sintético/vegano y gamuza junto con el cuero genuino — argumentando que el esfuerzo de integración de schema era compartido. La presión venía de un stakeholder de marketing que veía una oportunidad de posicionamiento en sostenibilidad.
+              </div>
+            </div>
+            <div class="star-row t-row">
+              <div class="star-label-cell">
+                <div class="star-badge">T</div>
+                <div class="star-word">Task</div>
+              </div>
+              <div class="star-content">
+                Enmarcar la decisión de inversión para liderazgo antes del commitment de <span class="highlight">$340K</span>: ¿cuero genuino solo, o múltiples materiales desde el arranque?
+              </div>
+            </div>
+            <div class="star-row a-row">
+              <div class="star-label-cell">
+                <div class="star-badge">A</div>
+                <div class="star-word">Action</div>
+              </div>
+              <div class="star-content">
+                Apliqué el kill gate como filtro de decisión: si el cuero genuino no alcanzaba <span class="highlight">15 órdenes/SKU</span> en el Mes 2, el sintético enfrentaría las mismas barreras de adopción — con la complejidad añadida de una red de tenerías diferente y campos de schema distintos. El business case de cuero genuino solo ya justificaba la inversión: <span class="highlight">5 decoradores × 30 SKUs × $8 × 20 órdenes = $150K/mo</span>. Propuse a liderazgo un decision gate en el Mes 3: si el cuero genuino alcanzaba los targets, financiar sintético como fase independiente.
+              </div>
+            </div>
+            <div class="star-row r-row">
+              <div class="star-label-cell">
+                <div class="star-badge">R</div>
+                <div class="star-word">Result</div>
+              </div>
+              <div class="star-content">
+                Liderazgo aprobó la estrategia enfocada. Los <span class="highlight">$340K</span> quedaron ring-fenced para cuero genuino. El cuero sintético entró en el roadmap como decisión post-Mes 3, condicionada a los resultados del kill gate.
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Q6 -->
+        <article class="qa-card" id="q6">
+          <div class="qa-card-header">
+            <div class="q-num">Q 06</div>
+            <div class="q-text">"Tell me about a time you had to say no to a stakeholder request you couldn't deprioritize lightly."</div>
+          </div>
+          <div class="star-body">
+            <div class="star-row s-row">
+              <div class="star-label-cell">
+                <div class="star-badge">S</div>
+                <div class="star-word">Situation</div>
+              </div>
+              <div class="star-content">
+                Durante MVP2 (<span class="highlight">$120K</span>), nuestro decorator partner de mayor volumen proyectado — responsable de <span class="highlight">8 SKUs × 20 órdenes/mo = $9.600/mo</span> en revenue — solicitó una versión white-label del portal decorador: una UI con su branding completo, exclusiva para ellos. La petición era razonable desde su perspectiva; decir no significaba arriesgar la relación con el partner más importante.
+              </div>
+            </div>
+            <div class="star-row t-row">
+              <div class="star-label-cell">
+                <div class="star-badge">T</div>
+                <div class="star-word">Task</div>
+              </div>
+              <div class="star-content">
+                Decidir entre scope creep costoso y relación crítica con partner, sin retrasar MVP2 ni exceder el presupuesto.
+              </div>
+            </div>
+            <div class="star-row a-row">
+              <div class="star-label-cell">
+                <div class="star-badge">A</div>
+                <div class="star-word">Action</div>
+              </div>
+              <div class="star-content">
+                Cuantifiqué el costo real del white-label completo: <span class="highlight">~$35K</span> adicionales en engineering + <span class="highlight">3 semanas</span> de retraso en MVP2. Imposible dentro del budget y el timeline. En lugar de un no llano, ofrecí un "sí, pero diferente": un módulo de branding configurable (logo + color primario) por <span class="highlight">~$8K</span>, entregable dentro de MVP2, sin impactar el timeline. Lo enmarqué explícitamente como una feature de plataforma, no una excepción — beneficiaría a todos los decoradores.
+              </div>
+            </div>
+            <div class="star-row r-row">
+              <div class="star-label-cell">
+                <div class="star-badge">R</div>
+                <div class="star-word">Result</div>
+              </div>
+              <div class="star-content">
+                El partner aceptó el módulo configurable. MVP2 entregado en tiempo y presupuesto. El módulo se convirtió en una feature estándar solicitada por <span class="highlight">2 decoradores adicionales</span> en MVP3 — lo que ex-post justificó la decisión de hacerlo como plataforma desde el inicio.
+              </div>
+            </div>
+          </div>
+        </article>
+      </section>
+
+
+      <!-- ══════════════════════════════════════════
+           CATEGORÍA 3: MANEJO DE AMBIGÜEDAD
+      ══════════════════════════════════════════ -->
+      <section class="category-section cat-3">
+        <div class="category-header">
+          <span class="category-num">03</span>
+          <span class="category-pill cat-bg-3">Ambigüedad</span>
+          <h2 class="category-title">Manejo de Ambigüedad</h2>
+        </div>
+
+        <!-- Q7 -->
+        <article class="qa-card" id="q7">
+          <div class="qa-card-header">
+            <div class="q-num">Q 07</div>
+            <div class="q-text">"Tell me about a time you had to make a significant decision with incomplete information."</div>
+          </div>
+          <div class="star-body">
+            <div class="star-row s-row">
+              <div class="star-label-cell">
+                <div class="star-badge">S</div>
+                <div class="star-word">Situation</div>
+              </div>
+              <div class="star-content">
+                Al fijar el umbral del kill gate (<span class="highlight">&lt;15 órdenes/SKU</span> en el Mes 2), no había datos históricos de cuero POD en la plataforma Printify. La categoría era completamente nueva. El riesgo de fijar el umbral demasiado bajo: un producto fracasado sobrevive el gate. Demasiado alto: matamos un lanzamiento sano antes de que gane tracción.
+              </div>
+            </div>
+            <div class="star-row t-row">
+              <div class="star-label-cell">
+                <div class="star-badge">T</div>
+                <div class="star-word">Task</div>
+              </div>
+              <div class="star-content">
+                Fijar un kill gate con valor concreto y defensible, sin datos directos, antes del inicio del Design Sprint.
+              </div>
+            </div>
+            <div class="star-row a-row">
+              <div class="star-label-cell">
+                <div class="star-badge">A</div>
+                <div class="star-word">Action</div>
+              </div>
+              <div class="star-content">
+                Triangulé desde tres fuentes proxy: (1) Categorías POD comparables en Printify (canvas prints, mugs) — promedian <span class="highlight">12–18 órdenes/SKU/mo</span> en el Mes 2. (2) Entrevistas con decoradores — indicaron que compradores de cuero repiten a aproximadamente <span class="highlight">1.8× la tasa</span> de productos de papel o tela. (3) Steady-state del business case: <span class="highlight">20 órdenes/SKU/mo</span>. Derivé el threshold: <span class="highlight">15 órdenes = 75%</span> del steady-state target — señal mínima viable en Mes 2. Documenté el supuesto explícitamente en el PRD.
+              </div>
+            </div>
+            <div class="star-row r-row">
+              <div class="star-label-cell">
+                <div class="star-badge">R</div>
+                <div class="star-word">Result</div>
+              </div>
+              <div class="star-content">
+                Liderazgo aprobó el kill gate. El umbral de <span class="highlight">15 órdenes/SKU</span> dio una decisión binaria clara en el Mes 2, eliminando el riesgo de un review subjetivo de "¿es esto suficientemente bueno?" con datos incompletos.
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Q8 -->
+        <article class="qa-card" id="q8">
+          <div class="qa-card-header">
+            <div class="q-num">Q 08</div>
+            <div class="q-text">"Describe a time you had to define the scope of a problem that wasn't well-defined at all."</div>
+          </div>
+          <div class="star-body">
+            <div class="star-row s-row">
+              <div class="star-label-cell">
+                <div class="star-badge">S</div>
+                <div class="star-word">Situation</div>
+              </div>
+              <div class="star-content">
+                El brief inicial de liderazgo para este proyecto fue literalmente una frase: "explorar cuero como categoría POD." Sin lista de proveedores, sin relaciones con decoradores establecidas, sin schema, sin framing de inversión. El mandato era ambiguo por diseño — el objetivo implícito era que yo convirtiera esa frase en una propuesta de inversión concreta.
+              </div>
+            </div>
+            <div class="star-row t-row">
+              <div class="star-label-cell">
+                <div class="star-badge">T</div>
+                <div class="star-word">Task</div>
+              </div>
+              <div class="star-content">
+                Convertir un brief de una frase en una propuesta de inversión estructurada, ejecutable y con go/no-go gates, en menos de 4 semanas.
+              </div>
+            </div>
+            <div class="star-row a-row">
+              <div class="star-label-cell">
+                <div class="star-badge">A</div>
+                <div class="star-word">Action</div>
+              </div>
+              <div class="star-content">
+                Descompuse el problema en 3 dimensiones independientes: (1) <strong>Feasibilidad de supply</strong> — identifiqué <span class="highlight">3 tenerías</span>, mapeé MOQ y lead times para las primeras <span class="highlight">30 SKUs</span>. (2) <strong>Señal de demanda</strong> — encuesté a <span class="highlight">12 decoradores</span>, identifiqué <span class="highlight">5 dispuestos a pilotar</span> con compromiso escrito. (3) <strong>Readiness de plataforma</strong> — audité el schema de catálogo existente, identifiqué los <span class="highlight">8 campos faltantes</span> para cuero. El PoC lo ejecuté a <span class="highlight">$0</span> (recursos existentes). El resultado fue la propuesta del Design Sprint a <span class="highlight">$20K</span>.
+              </div>
+            </div>
+            <div class="star-row r-row">
+              <div class="star-label-cell">
+                <div class="star-badge">R</div>
+                <div class="star-word">Result</div>
+              </div>
+              <div class="star-content">
+                La descomposición en 3 dimensiones produjo un PRD completo con una propuesta de inversión phase-gated de <span class="highlight">$340K</span>. Liderazgo aprobó el Design Sprint en menos de <span class="highlight">2 semanas</span> tras los hallazgos del PoC.
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Q9 -->
+        <article class="qa-card" id="q9">
+          <div class="qa-card-header">
+            <div class="q-num">Q 09</div>
+            <div class="q-text">"How do you lead a team when the technical path forward isn't clear?"</div>
+          </div>
+          <div class="star-body">
+            <div class="star-row s-row">
+              <div class="star-label-cell">
+                <div class="star-badge">S</div>
+                <div class="star-word">Situation</div>
+              </div>
+              <div class="star-content">
+                Durante la fase de PoC, el equipo de engineering no tenía certeza de si el clasificador AI MAT-001 podría entrenarse con suficiente precisión: contábamos con solo <span class="highlight">~500 imágenes</span> de producto — por debajo del umbral típico para clasificación confiable. La incertidumbre técnica amenazaba con convertirse en un debate abierto que bloqueara el Design Sprint.
+              </div>
+            </div>
+            <div class="star-row t-row">
+              <div class="star-label-cell">
+                <div class="star-badge">T</div>
+                <div class="star-word">Task</div>
+              </div>
+              <div class="star-content">
+                Resolver la incertidumbre técnica sin que se convirtiera en un blocker de semanas — y sin tomar la decisión arquitectónica yo mismo sin datos.
+              </div>
+            </div>
+            <div class="star-row a-row">
+              <div class="star-label-cell">
+                <div class="star-badge">A</div>
+                <div class="star-word">Action</div>
+              </div>
+              <div class="star-content">
+                Establecí un spike acotado en el tiempo: <span class="highlight">1 semana</span>, testar el clasificador AI contra un clasificador basado en reglas, en <span class="highlight">3 tipos de grano</span> (full-grain, top-grain, genuine leather). Criterio de decisión acordado antes de empezar: si accuracy &gt; <span class="highlight">80%</span>, usamos el modelo AI; si &lt; 80%, enviamos el clasificador basado en reglas con override manual como fallback de MVP1. Comuniqué el criterio al equipo antes del spike — la decisión la tomaría el dato, no yo.
+              </div>
+            </div>
+            <div class="star-row r-row">
+              <div class="star-label-cell">
+                <div class="star-badge">R</div>
+                <div class="star-word">Result</div>
+              </div>
+              <div class="star-content">
+                El modelo AI alcanzó <span class="highlight">84%</span> de accuracy en el test inicial. El MAT-001 entró en MVP1 como clasificador AI. El spike de <span class="highlight">1 semana</span> evitó un debate de 3+ semanas y desbloqueó el Design Sprint sin conflicto en el equipo.
+              </div>
+            </div>
+          </div>
+        </article>
+      </section>
+
+
+      <!-- ══════════════════════════════════════════
+           CATEGORÍA 4: LANZAMIENTO DE PRODUCTOS
+      ══════════════════════════════════════════ -->
+      <section class="category-section cat-4">
+        <div class="category-header">
+          <span class="category-num">04</span>
+          <span class="category-pill cat-bg-4">Lanzamiento</span>
+          <h2 class="category-title">Lanzamiento de Productos</h2>
+        </div>
+
+        <!-- Q10 -->
+        <article class="qa-card" id="q10">
+          <div class="qa-card-header">
+            <div class="q-num">Q 10</div>
+            <div class="q-text">"Tell me about a product launch you owned. What went well and what would you do differently?"</div>
+          </div>
+          <div class="star-body">
+            <div class="star-row s-row">
+              <div class="star-label-cell">
+                <div class="star-badge">S</div>
+                <div class="star-word">Situation</div>
+              </div>
+              <div class="star-content">
+                Fui propietaria del lanzamiento de MVP1: el primer catálogo de cuero POD en Printify, con <span class="highlight">5 decoradores</span>, <span class="highlight">30 SKUs iniciales</span> y la integración Shopify activa. El contexto era de alta visibilidad — era la primera categoría de materiales premium en la plataforma, y liderazgo monitoreaba el kill gate desde el día uno.
+              </div>
+            </div>
+            <div class="star-row t-row">
+              <div class="star-label-cell">
+                <div class="star-badge">T</div>
+                <div class="star-word">Task</div>
+              </div>
+              <div class="star-content">
+                Lanzamiento limpio: decoradores vivos, SKUs indexados, integración Shopify funcional, datos de kill gate fluyendo desde el Día 1.
+              </div>
+            </div>
+            <div class="star-row a-row">
+              <div class="star-label-cell">
+                <div class="star-badge">A</div>
+                <div class="star-word">Action</div>
+              </div>
+              <div class="star-content">
+                Construí un launch checklist con <span class="highlight">4 criterios de go/no-go</span>: (1) onboarding completo para los 5 decoradores, (2) los 30 SKUs etiquetados con MAT-001 y los 5 campos core, (3) webhook Shopify testeado end-to-end, (4) dashboard de kill gate en analytics. Ejecuté un soft launch con <span class="highlight">2 decoradores</span> en la Semana 22 para validar el flujo completo antes del full launch en la Semana 24.
+              </div>
+            </div>
+            <div class="star-row r-row">
+              <div class="star-label-cell">
+                <div class="star-badge">R</div>
+                <div class="star-word">Result</div>
+              </div>
+              <div class="star-content">
+                Full launch en la <span class="highlight">Semana 24</span> según lo planificado. <span class="highlight">28 de 30 SKUs</span> indexados correctamente el día del lanzamiento; 2 requirieron corrección manual — un gap en la validación del schema que parcheamos en <span class="highlight">48 horas</span>. Lo que haría diferente: añadir un dry-run de validación de schema <span class="highlight">2 semanas antes</span> del launch para detectar edge cases como esos 2 SKUs antes del Día 1.
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Q11 -->
+        <article class="qa-card" id="q11">
+          <div class="qa-card-header">
+            <div class="q-num">Q 11</div>
+            <div class="q-text">"How do you decide when a product is ready to launch vs. when to delay?"</div>
+          </div>
+          <div class="star-body">
+            <div class="star-row s-row">
+              <div class="star-label-cell">
+                <div class="star-badge">S</div>
+                <div class="star-word">Situation</div>
+              </div>
+              <div class="star-content">
+                En la Semana 20, el portal decorador tenía un bug conocido: el flujo de bulk-upload de SKUs fallaba en lotes de más de <span class="highlight">10 ítems</span>. Tres de nuestros 5 decoradores tenían catálogos de <span class="highlight">20+ SKUs</span> — directamente afectados. Lanzar con el bug significaba una experiencia degradada para el <span class="highlight">60%</span> de los partners. Retrasar costaba revenue.
+              </div>
+            </div>
+            <div class="star-row t-row">
+              <div class="star-label-cell">
+                <div class="star-badge">T</div>
+                <div class="star-word">Task</div>
+              </div>
+              <div class="star-content">
+                Tomar la decisión launch/no-launch con datos, no con intuición, y comunicarla a stakeholders con claridad.
+              </div>
+            </div>
+            <div class="star-row a-row">
+              <div class="star-label-cell">
+                <div class="star-badge">A</div>
+                <div class="star-word">Action</div>
+              </div>
+              <div class="star-content">
+                Calculé el costo del retraso: <span class="highlight">~$75K en revenue retenido</span> (2 semanas × $150K/mo). Evaluué el impacto del bug: los 3 decoradores afectados podían usar importación CSV manual — operativa aunque incómoda; sus SKUs estarían vivos. Engineering estimó el fix en <span class="highlight">2 días</span> si lo atacábamos como parche de emergencia en la Semana 23. Eso eliminaba el bug antes de que cualquier decorator lo experimentara en producción. La decisión: lanzar en Semana 24, con el fix de bulk-upload desplegado en Semana 23.
+              </div>
+            </div>
+            <div class="star-row r-row">
+              <div class="star-label-cell">
+                <div class="star-badge">R</div>
+                <div class="star-word">Result</div>
+              </div>
+              <div class="star-content">
+                Lanzamiento en la <span class="highlight">Semana 24</span> según lo planificado. El fix de bulk-upload desplegado en <span class="highlight">Semana 23</span>, antes de que ningún decorador tocara el flujo en producción. El framework de decisión (costo del retraso vs. impacto con workaround) quedó como template para las decisiones de lanzamiento de MVP2 y MVP3.
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Q12 -->
+        <article class="qa-card" id="q12">
+          <div class="qa-card-header">
+            <div class="q-num">Q 12</div>
+            <div class="q-text">"Describe a time you launched in a new channel or with a new partner type."</div>
+          </div>
+          <div class="star-body">
+            <div class="star-row s-row">
+              <div class="star-label-cell">
+                <div class="star-badge">S</div>
+                <div class="star-word">Situation</div>
+              </div>
+              <div class="star-content">
+                La integración Amazon SP-API en MVP2 fue la primera vez que FYUL vendía productos POD de cuero a través del marketplace de Amazon — un canal con requisitos específicos para materiales naturales: divulgación del proceso de curtido, etiquetado de FBA para materiales de origen animal, y reglas de listing que nuestro schema existente no cubría explícitamente.
+              </div>
+            </div>
+            <div class="star-row t-row">
+              <div class="star-label-cell">
+                <div class="star-badge">T</div>
+                <div class="star-word">Task</div>
+              </div>
+              <div class="star-content">
+                Navegar los requisitos de compliance de Amazon para cuero genuino manteniendo el presupuesto de MVP2 y el timeline del lanzamiento.
+              </div>
+            </div>
+            <div class="star-row a-row">
+              <div class="star-label-cell">
+                <div class="star-badge">A</div>
+                <div class="star-word">Action</div>
+              </div>
+              <div class="star-content">
+                Contraté a un consultor de compliance de Amazon (<span class="highlight">$8K</span>, dentro del presupuesto de MVP2) para mapear los requisitos de listing de cuero a nuestros <span class="highlight">8 campos del schema</span>. Hallazgo clave: Amazon exige divulgación explícita del proceso de curtido — mapeado directamente a nuestro campo <span class="highlight">tannage_process</span>. Construí una capa de validación pre-submission: ningún SKU se enviaba a SP-API sin pasar el check de los 8 campos. Implementé en <span class="highlight">3 días</span> de engineering.
+              </div>
+            </div>
+            <div class="star-row r-row">
+              <div class="star-label-cell">
+                <div class="star-badge">R</div>
+                <div class="star-word">Result</div>
+              </div>
+              <div class="star-content">
+                Los primeros <span class="highlight">15 SKUs de cuero en Amazon</span> vivos en la <span class="highlight">Semana 2 de MVP2</span>. <span class="highlight">Cero rechazos de listing</span>. La capa de validación atrapó <span class="highlight">4 SKUs incompletos</span> antes del envío — previniendo una potencial suspensión de ASIN que habría afectado a todos los listings del decorator.
+              </div>
+            </div>
+          </div>
+        </article>
+      </section>
+
+
+      <!-- ══════════════════════════════════════════
+           CATEGORÍA 5: DATOS Y TOMA DE DECISIONES
+      ══════════════════════════════════════════ -->
+      <section class="category-section cat-5">
+        <div class="category-header">
+          <span class="category-num">05</span>
+          <span class="category-pill cat-bg-5">Datos</span>
+          <h2 class="category-title">Datos y Toma de Decisiones</h2>
+        </div>
+
+        <!-- Q13 -->
+        <article class="qa-card" id="q13">
+          <div class="qa-card-header">
+            <div class="q-num">Q 13</div>
+            <div class="q-text">"Tell me about a time data changed your recommendation."</div>
+          </div>
+          <div class="star-body">
+            <div class="star-row s-row">
+              <div class="star-label-cell">
+                <div class="star-badge">S</div>
+                <div class="star-word">Situation</div>
+              </div>
+              <div class="star-content">
+                A mitad del Design Sprint, los datos de la encuesta a decoradores sugerían que el promedio de órdenes por SKU en sus catálogos existentes era de solo <span class="highlight">~12 órdenes/mo</span> — por debajo del kill gate de <span class="highlight">15</span>. Si ese número era la señal correcta, el business case entero se tambaleaba antes de haber gastado el primer dólar de los <span class="highlight">$340K</span>.
+              </div>
+            </div>
+            <div class="star-row t-row">
+              <div class="star-label-cell">
+                <div class="star-badge">T</div>
+                <div class="star-word">Task</div>
+              </div>
+              <div class="star-content">
+                Decidir si los 12 órdenes/mo eran la señal correcta para cuero, o si había un factor de ajuste justificado — sin forzar los datos para salvar el business case.
+              </div>
+            </div>
+            <div class="star-row a-row">
+              <div class="star-label-cell">
+                <div class="star-badge">A</div>
+                <div class="star-word">Action</div>
+              </div>
+              <div class="star-content">
+                Separé la causa de los 12/mo: venía de los catálogos de los decoradores en categorías no-cuero (papel, tela). El cuero tiene un comportamiento de compra distinto — benchmarks de plataformas adyacentes (Etsy, Faire) mostraban tasas de recompra de artículos de cuero a <span class="highlight">1.8× las de artículos de papel</span>. Apliqué el multiplicador: <span class="highlight">12 × 1.8 ≈ 21 órdenes/mo</span> en steady state. Revisé el business case para ser conservador en Mes 2 (close to kill gate) pero preciso en Mes 6 (steady state). Documenté el supuesto del multiplicador explícitamente.
+              </div>
+            </div>
+            <div class="star-row r-row">
+              <div class="star-label-cell">
+                <div class="star-badge">R</div>
+                <div class="star-word">Result</div>
+              </div>
+              <div class="star-content">
+                El business case fue aprobado con el modelo revisado. La tasa de recompra se añadió como métrica de seguimiento desde el Día 1 de lanzamiento — convertida en la señal de confirmación para la decisión de MVP3 (<span class="highlight">$120K</span>).
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Q14 -->
+        <article class="qa-card" id="q14">
+          <div class="qa-card-header">
+            <div class="q-num">Q 14</div>
+            <div class="q-text">"How do you define and track the metrics that matter most for your product?"</div>
+          </div>
+          <div class="star-body">
+            <div class="star-row s-row">
+              <div class="star-label-cell">
+                <div class="star-badge">S</div>
+                <div class="star-word">Situation</div>
+              </div>
+              <div class="star-content">
+                Para la integración de cuero necesitaba un framework de métricas que señalizara product-market fit, salud operacional, y performance financiera — en una sola vista, sin instrumentación adicional de engineering, antes del launch de MVP1.
+              </div>
+            </div>
+            <div class="star-row t-row">
+              <div class="star-label-cell">
+                <div class="star-badge">T</div>
+                <div class="star-word">Task</div>
+              </div>
+              <div class="star-content">
+                Construir un dashboard de kill gate + métricas de éxito operativo antes del launch de MVP1, usando la infraestructura de analytics existente.
+              </div>
+            </div>
+            <div class="star-row a-row">
+              <div class="star-label-cell">
+                <div class="star-badge">A</div>
+                <div class="star-word">Action</div>
+              </div>
+              <div class="star-content">
+                Definí <span class="highlight">3 niveles</span> de métricas: (1) <strong>Kill gate:</strong> órdenes/SKU en Mes 2 (threshold: 15) — decisión binaria. (2) <strong>Health metrics:</strong> uptime del portal decorador, accuracy del MAT-001 (&gt;80%), tasa de completitud del schema por SKU. (3) <strong>Business metrics:</strong> GMV por canal (Shopify/Etsy/Amazon), margen por orden (target: <span class="highlight">$8</span>), retención de decoradores (churn Mes 3 &lt; 20%), unique buyers/SKU ≥ 5. Instrumenté los 3 niveles antes del launch usando analytics existente — sin sprint adicional de engineering.
+              </div>
+            </div>
+            <div class="star-row r-row">
+              <div class="star-label-cell">
+                <div class="star-badge">R</div>
+                <div class="star-word">Result</div>
+              </div>
+              <div class="star-content">
+                Dashboard vivo el Día 1 del launch. El review de Mes 2 tuvo datos limpios — sin buscar métricas post-hoc. El framework de <span class="highlight">3 niveles</span> fue adoptado por el equipo de supply para lanzamientos de categorías de materiales futuros.
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Q15 -->
+        <article class="qa-card" id="q15">
+          <div class="qa-card-header">
+            <div class="q-num">Q 15</div>
+            <div class="q-text">"Tell me about a time you had to convince stakeholders to act on data they were skeptical of."</div>
+          </div>
+          <div class="star-body">
+            <div class="star-row s-row">
+              <div class="star-label-cell">
+                <div class="star-badge">S</div>
+                <div class="star-word">Situation</div>
+              </div>
+              <div class="star-content">
+                El equipo de finanzas cuestionó el supuesto de <span class="highlight">$8/orden de margen</span> en el business case. Su referencia eran categorías POD de artículos blandos (canvas, tela) con márgenes de <span class="highlight">$3.50/orden</span> — más del <span class="highlight">50% por debajo</span> de lo que yo proyectaba. Cuestionaban que el cuero pudiera comportarse tan diferente.
+              </div>
+            </div>
+            <div class="star-row t-row">
+              <div class="star-label-cell">
+                <div class="star-badge">T</div>
+                <div class="star-word">Task</div>
+              </div>
+              <div class="star-content">
+                Defender el supuesto de $8 con benchmarks externos o revisarlo honestamente si los datos no lo respaldaban.
+              </div>
+            </div>
+            <div class="star-row a-row">
+              <div class="star-label-cell">
+                <div class="star-badge">A</div>
+                <div class="star-word">Action</div>
+              </div>
+              <div class="star-content">
+                Presenté tres puntos de datos: (1) Margen promedio de canvas en Printify: <span class="highlight">$3.50/orden</span> — su referencia era correcta. (2) Margen de artículos de cuero en Faire (wholesale platform): <span class="highlight">$12–$15/unidad</span>. (3) Nuestro pricing negociado con tenerías soportaba un margen de <span class="highlight">$8</span> con el modelo de cost-plus actual. Añadí una tabla de sensibilidad: a <span class="highlight">$6/margen</span>, break-even a 25 órdenes/SKU; a <span class="highlight">$8</span>, break-even a 20; a <span class="highlight">$10</span>, break-even a 16. En los tres escenarios, el kill gate de 15 órdenes era una señal válida.
+              </div>
+            </div>
+            <div class="star-row r-row">
+              <div class="star-label-cell">
+                <div class="star-badge">R</div>
+                <div class="star-word">Result</div>
+              </div>
+              <div class="star-content">
+                Finanzas aprobó el supuesto de <span class="highlight">$8</span>. La tabla de sensibilidad entró en el investment memo como parte estándar de la documentación. El margen de <span class="highlight">$8/orden</span> se sostuvo a través del launch de MVP1.
+              </div>
+            </div>
+          </div>
+        </article>
+      </section>
+
+
+      <!-- ══════════════════════════════════════════
+           CATEGORÍA 6: GESTIÓN DE RIESGOS
+      ══════════════════════════════════════════ -->
+      <section class="category-section cat-6">
+        <div class="category-header">
+          <span class="category-num">06</span>
+          <span class="category-pill cat-bg-6">Riesgos</span>
+          <h2 class="category-title">Gestión de Riesgos</h2>
+        </div>
+
+        <!-- Q16 -->
+        <article class="qa-card" id="q16">
+          <div class="qa-card-header">
+            <div class="q-num">Q 16</div>
+            <div class="q-text">"Tell me about a time you identified and mitigated a significant risk before it became a problem."</div>
+          </div>
+          <div class="star-body">
+            <div class="star-row s-row">
+              <div class="star-label-cell">
+                <div class="star-badge">S</div>
+                <div class="star-word">Situation</div>
+              </div>
+              <div class="star-content">
+                Durante el desarrollo del PRD, identifiqué que la métrica del kill gate — órdenes/SKU — podía ser manipulada: los propios decoradores podían comprarse sus SKUs para evitar ser cortados en el Mes 2. Con <span class="highlight">30 SKUs</span> y un threshold de <span class="highlight">15 órdenes</span>, bastaban <span class="highlight">15 autopedidos</span> por SKU para sobrevivir el gate artificialmente.
+              </div>
+            </div>
+            <div class="star-row t-row">
+              <div class="star-label-cell">
+                <div class="star-badge">T</div>
+                <div class="star-word">Task</div>
+              </div>
+              <div class="star-content">
+                Diseñar un kill gate fraud-resistant sin añadir complejidad operativa al proceso de review.
+              </div>
+            </div>
+            <div class="star-row a-row">
+              <div class="star-label-cell">
+                <div class="star-badge">A</div>
+                <div class="star-word">Action</div>
+              </div>
+              <div class="star-content">
+                Añadí <span class="highlight">dos filtros</span> a la definición del kill gate: (1) Exclusión automática de órdenes provenientes de cuentas registradas del propio decorator en el dashboard de analytics. (2) Una señal secundaria: unique buyer count por SKU debe ser ≥ <span class="highlight">5</span> compradores distintos — garantizando demanda orgánica mínima. Ambos filtros se implementaron en el dashboard antes del launch a costo cero de engineering adicional (era configuración de analytics, no código nuevo).
+              </div>
+            </div>
+            <div class="star-row r-row">
+              <div class="star-label-cell">
+                <div class="star-badge">R</div>
+                <div class="star-word">Result</div>
+              </div>
+              <div class="star-content">
+                El filtro fue aprobado sin pushback — ningún stakeholder había considerado ese vector. Post-launch, identificamos <span class="highlight">3 autopedidos</span> de <span class="highlight">2 decoradores</span>. Sin el filtro, esos pedidos habrían inflado artificialmente <span class="highlight">6 SKUs</span> por encima del threshold del kill gate.
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Q17 -->
+        <article class="qa-card" id="q17">
+          <div class="qa-card-header">
+            <div class="q-num">Q 17</div>
+            <div class="q-text">"How do you manage a situation where a key dependency is suddenly at risk?"</div>
+          </div>
+          <div class="star-body">
+            <div class="star-row s-row">
+              <div class="star-label-cell">
+                <div class="star-badge">S</div>
+                <div class="star-word">Situation</div>
+              </div>
+              <div class="star-content">
+                Cuatro semanas antes del launch de MVP1, uno de nuestros <span class="highlight">3 proveedores de tenerías</span> avisó que no podía garantizar suministro consistente de cuero full-grain para el pilot — un evento climático había afectado su cadena de pieles. <span class="highlight">8 de nuestros 30 SKUs</span> dependían de ese proveedor específico. Sin una respuesta rápida, lanzaríamos con solo 22 SKUs — por debajo del mínimo acordado con los decoradores.
+              </div>
+            </div>
+            <div class="star-row t-row">
+              <div class="star-label-cell">
+                <div class="star-badge">T</div>
+                <div class="star-word">Task</div>
+              </div>
+              <div class="star-content">
+                Asegurar que el pilot lanzara con suficientes SKUs para que el kill gate fuera estadísticamente significativo, en un plazo de 48–72 horas desde el aviso del proveedor.
+              </div>
+            </div>
+            <div class="star-row a-row">
+              <div class="star-label-cell">
+                <div class="star-badge">A</div>
+                <div class="star-word">Action</div>
+              </div>
+              <div class="star-content">
+                Contacté a las otras <span class="highlight">2 tenerías</span> el mismo día, pidiendo capacidad de emergencia para los <span class="highlight">8 SKUs</span> afectados. En <span class="highlight">48 horas</span> confirmé suministro alternativo para <span class="highlight">6 de los 8 SKUs</span>. Para los 2 restantes, negocié con el decorator afectado un listing diferido de <span class="highlight">3 semanas</span> post-launch. Actualicé el launch checklist para el futuro: cualquier material usado en más de <span class="highlight">5 SKUs</span> debe tener dual-sourcing confirmado 8 semanas antes del launch.
+              </div>
+            </div>
+            <div class="star-row r-row">
+              <div class="star-label-cell">
+                <div class="star-badge">R</div>
+                <div class="star-word">Result</div>
+              </div>
+              <div class="star-content">
+                Launch con <span class="highlight">28 SKUs</span> en la <span class="highlight">Semana 24</span>. Los 2 SKUs diferidos vivos en la <span class="highlight">Semana 27</span>. El requisito de dual-sourcing quedó como política permanente de supply — aplicada en todas las categorías de materiales posteriores.
+              </div>
+            </div>
+          </div>
+        </article>
+      </section>
+
+
+      <!-- ══════════════════════════════════════════
+           CATEGORÍA 7: PREGUNTAS DIFÍCILES DE LIDERAZGO
+      ══════════════════════════════════════════ -->
+      <section class="category-section cat-7">
+        <div class="category-header">
+          <span class="category-num">07</span>
+          <span class="category-pill cat-bg-7">Liderazgo</span>
+          <h2 class="category-title">Preguntas Difíciles de Liderazgo</h2>
+        </div>
+
+        <!-- Q18 -->
+        <article class="qa-card" id="q18">
+          <div class="qa-card-header">
+            <div class="q-num">Q 18</div>
+            <div class="q-text">"Tell me about a failure. What happened and what did you learn?"</div>
+          </div>
+          <div class="star-body">
+            <div class="star-row s-row">
+              <div class="star-label-cell">
+                <div class="star-badge">S</div>
+                <div class="star-word">Situation</div>
+              </div>
+              <div class="star-content">
+                En un proyecto de integración de catálogo anterior, lancé una feature de metadata sin validar el schema contra el formato de exportación real de los proveedores. Asumimos una estructura plana; los proveedores exportaban una estructura anidada. La feature estaba viva en producción impactando más de <span class="highlight">200 SKUs</span> con metadata incorrecta antes de que lo detectáramos — dos días después del launch.
+              </div>
+            </div>
+            <div class="star-row t-row">
+              <div class="star-label-cell">
+                <div class="star-badge">T</div>
+                <div class="star-word">Task</div>
+              </div>
+              <div class="star-content">
+                Corregir los <span class="highlight">200+ SKUs</span> afectados sin impacto visible para compradores, y sin pull de la feature entera.
+              </div>
+            </div>
+            <div class="star-row a-row">
+              <div class="star-label-cell">
+                <div class="star-badge">A</div>
+                <div class="star-word">Action</div>
+              </div>
+              <div class="star-content">
+                Retiré inmediatamente los SKUs afectados del índice de búsqueda — visibles para decoradores, pero no para compradores finales. Construí una capa de transformación del schema en <span class="highlight">48 horas</span>. Re-indexé los <span class="highlight">200 SKUs</span> el fin de semana siguiente. Dirigí el post-mortem: la causa raíz fue que la validación del schema sólo se había testeado con datos sintéticos internos, no con exportaciones reales de proveedores. Añadí un paso obligatorio al proceso: "supplier data validation con datos reales" antes de cualquier launch de catálogo.
+              </div>
+            </div>
+            <div class="star-row r-row">
+              <div class="star-label-cell">
+                <div class="star-badge">R</div>
+                <div class="star-word">Result</div>
+              </div>
+              <div class="star-content">
+                Todos los SKUs corregidos en <span class="highlight">72 horas</span> sin impacto en compradores finales. El paso de validación con datos reales de proveedor — nacido de ese post-mortem — fue exactamente el paso que atrapó los <span class="highlight">2 SKUs con schema incompleto</span> en el launch del cuero, limitando el impacto a <span class="highlight">48 horas</span> en lugar de días o semanas.
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Q19 -->
+        <article class="qa-card" id="q19">
+          <div class="qa-card-header">
+            <div class="q-num">Q 19</div>
+            <div class="q-text">"Tell me about a time you had to lead through a difficult team dynamic or conflict."</div>
+          </div>
+          <div class="star-body">
+            <div class="star-row s-row">
+              <div class="star-label-cell">
+                <div class="star-badge">S</div>
+                <div class="star-word">Situation</div>
+              </div>
+              <div class="star-content">
+                Durante el Design Sprint, dos ingenieros discrepaban sobre la arquitectura del clasificador MAT-001: uno defendía un sistema basado en reglas (más rápido de construir, menor accuracy proyectada), el otro un modelo ML (más lento, mayor accuracy). El debate llevaba <span class="highlight">5 días</span> sin resolución — y cada día sin decisión era un día perdido del Sprint.
+              </div>
+            </div>
+            <div class="star-row t-row">
+              <div class="star-label-cell">
+                <div class="star-badge">T</div>
+                <div class="star-word">Task</div>
+              </div>
+              <div class="star-content">
+                Resolver el debate arquitectónico sin alienar a ninguno de los dos ingenieros, y sin perder otra semana en deliberación sin datos.
+              </div>
+            </div>
+            <div class="star-row a-row">
+              <div class="star-label-cell">
+                <div class="star-badge">A</div>
+                <div class="star-word">Action</div>
+              </div>
+              <div class="star-content">
+                Reencuadré el debate: no era "¿cuál es mejor en abstracto?" sino "¿cuál supera el PoC kill gate más rápido?" Fijé un criterio de decisión compartido antes de empezar: el enfoque que alcanzara <span class="highlight">&gt;80% de accuracy</span> en un dataset de test de <span class="highlight">3 tipos de grano</span> (full-grain, top-grain, genuine leather) en <span class="highlight">1 semana</span> sería seleccionado. Ambos ingenieros acordaron el criterio. El spike se ejecutó en paralelo. La decisión la tomaría el dato, no yo ni ninguno de los dos.
+              </div>
+            </div>
+            <div class="star-row r-row">
+              <div class="star-label-cell">
+                <div class="star-badge">R</div>
+                <div class="star-word">Result</div>
+              </div>
+              <div class="star-content">
+                El modelo ML alcanzó <span class="highlight">84%</span>; el sistema de reglas, <span class="highlight">71%</span>. Decisión tomada sin conflicto interpersonal. Ambos ingenieros contribuyeron a la implementación final del ML. El método de "criterio acordado antes del spike" se compartió con el equipo como modelo de resolución de debates técnicos.
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Q20 -->
+        <article class="qa-card" id="q20">
+          <div class="qa-card-header">
+            <div class="q-num">Q 20</div>
+            <div class="q-text">"If you could go back and change one thing about this PRD, what would it be and why?"</div>
+          </div>
+          <div class="star-body">
+            <div class="star-row s-row">
+              <div class="star-label-cell">
+                <div class="star-badge">S</div>
+                <div class="star-word">Situation</div>
+              </div>
+              <div class="star-content">
+                El kill gate del PRD está definido únicamente como volumen: <span class="highlight">&lt;15 órdenes/SKU en Mes 2</span>. Es una señal necesaria, pero insuficiente. Un SKU puede superar 15 órdenes con márgenes artificialmente comprimidos — por ejemplo, si un decorator empuja descuentos agresivos para activar demanda — y el kill gate lo dejaría pasar aunque la economía no funcione.
+              </div>
+            </div>
+            <div class="star-row t-row">
+              <div class="star-label-cell">
+                <div class="star-badge">T</div>
+                <div class="star-word">Task</div>
+              </div>
+              <div class="star-content">
+                Esta es una pregunta de reflexión. La tarea es identificar el gap real y articular exactamente qué hubiera sido mejor — no qué hubiera sido más fácil.
+              </div>
+            </div>
+            <div class="star-row a-row">
+              <div class="star-label-cell">
+                <div class="star-badge">A</div>
+                <div class="star-word">Action</div>
+              </div>
+              <div class="star-content">
+                Añadiría un <strong>kill gate de margen</strong> junto al de volumen: si órdenes/SKU &gt; 15 pero el margen promedio por orden cae por debajo de <span class="highlight">$5</span> (el 62.5% del target de $8), la economía no se sostiene — y debería activarse un review de pricing antes de escalar. También cambiaría la cadencia: en lugar de un único checkpoint en el Mes 2, tendría dos — en la <span class="highlight">Semana 6</span> y en la <span class="highlight">Semana 10</span> — para detectar trayectorias negativas antes de que sea demasiado tarde para corregirlas dentro de la fase.
+              </div>
+            </div>
+            <div class="star-row r-row">
+              <div class="star-label-cell">
+                <div class="star-badge">R</div>
+                <div class="star-word">Result</div>
+              </div>
+              <div class="star-content">
+                Un kill gate de dos dimensiones (volumen + margen) y dos checkpoints (Semana 6 + Semana 10) daría a liderazgo <span class="highlight">cuatro señales</span> de intervención en lugar de una — haciendo la inversión phase-gated de <span class="highlight">$340K</span> notablemente más controlable. Es el cambio que haría antes de cualquier otra categoría nueva.
+              </div>
+            </div>
+          </div>
+        </article>
+      </section>
+
+
+      <!-- STUDY TIPS FOOTER -->
+      <footer class="study-footer">
+        <div>
+          <div class="study-tip-label">Tip de práctica</div>
+          Practica en voz alta — el formato STAR suena diferente dicho que leído. Cronométrate: cada respuesta debería tomar entre 90 y 150 segundos.
+        </div>
+        <div>
+          <div class="study-tip-label">Números clave a memorizar</div>
+          $340K · 5 decoradores · 30 SKUs · $8/orden · 15 órdenes/SKU · 84% accuracy · 24 semanas
+        </div>
+        <div>
+          <div class="study-tip-label">Señales de alerta durante la entrevista</div>
+          Si Marcel va más profundo en una respuesta, es buena señal — significa que le interesa. Prepara un nivel adicional de detalle para cada A (Action).
+        </div>
+        <div>
+          <div class="study-tip-label">Cierre recomendado</div>
+          Termina con una pregunta sobre el proceso de toma de decisiones de inversión en FYUL — demuestra que entiendes el contexto phase-gated desde adentro.
+        </div>
+      </footer>
+
+    </div>
+  </main>
+
+</div>
+
+</body>
+</html>

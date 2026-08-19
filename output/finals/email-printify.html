@@ -1,0 +1,120 @@
+<title>Email to Printify — Task Approach</title>
+<style>
+  :root{--green:#2B5A18;--light:#E8FCC0;--border:#C5E89A;--muted:#555;--text:#111;--bg:#fff;--surface:#F8FAF4}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:#F0F0F0;color:var(--text);min-height:100vh;padding:32px 16px;font-size:14px}
+  .email-wrapper{max-width:720px;margin:0 auto;background:#fff;border-radius:8px;box-shadow:0 2px 16px rgba(0,0,0,.12);overflow:hidden}
+  .email-chrome{background:var(--surface);border-bottom:1px solid var(--border);padding:16px 24px}
+  .chrome-field{display:grid;grid-template-columns:56px 1fr;gap:6px 12px;align-items:center;font-size:13px;margin-bottom:2px}
+  .chrome-label{color:var(--muted);font-weight:700;text-transform:uppercase;font-size:10px;letter-spacing:.06em}
+  .chrome-val{color:var(--text)}
+  .subject-line{font-size:16px;font-weight:700;color:var(--green);margin-top:12px}
+  .email-body{padding:28px 32px 40px;line-height:1.75;font-size:14px;color:var(--text)}
+  p{margin-bottom:16px}
+  .sig{margin-top:32px;padding-top:20px;border-top:1px solid var(--border);font-size:13px;color:var(--muted)}
+  .sig strong{color:var(--text);display:block;font-size:14px;margin-bottom:2px}
+  h3{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--green);margin:28px 0 10px;padding-bottom:6px;border-bottom:1px solid var(--border)}
+  ul{margin:0 0 16px 20px}
+  ul li{margin-bottom:6px}
+  .callout{background:var(--light);border-left:3px solid var(--green);border-radius:0 6px 6px 0;padding:12px 16px;margin:20px 0;font-size:13px}
+  .callout strong{color:var(--green)}
+  table{width:100%;border-collapse:collapse;margin:16px 0;font-size:13px}
+  th{background:var(--green);color:#fff;padding:8px 10px;text-align:left;font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:.05em}
+  td{padding:7px 10px;border-bottom:1px solid var(--border);vertical-align:top}
+  tr:nth-child(even) td{background:var(--surface)}
+  .note{font-size:12px;color:var(--muted);font-style:italic;margin-top:20px;padding:10px 14px;border:1px dashed var(--border);border-radius:6px}
+</style>
+
+<div class="email-wrapper">
+  <div class="email-chrome">
+    <div class="chrome-field"><span class="chrome-label">To</span><span class="chrome-val">Marcel Kilgenstein &lt;m.kilgenstein@fyul.com&gt;</span></div>
+    <div class="chrome-field"><span class="chrome-label">From</span><span class="chrome-val">Elena Castan &lt;castanlara@gmail.com&gt;</span></div>
+    <div class="chrome-field"><span class="chrome-label">Re</span><span class="chrome-val">Supply PM Task — Premium Leather Goods Integration</span></div>
+    <div class="subject-line">Re: Supply PM Task — My Approach, Methodology & Key Findings</div>
+  </div>
+
+  <div class="email-body">
+
+    <p>Hi Marcel,</p>
+
+    <p>Thank you for the task. I found it genuinely compelling — the leather taxonomy gap is one of those problems where the fix is well-defined but the path to it needs careful sequencing to de-risk a meaningful investment.</p>
+
+    <p>Below I'm sharing a brief summary of how I approached the work, the data proxies I relied on, and the key decisions I made along the way. The full PRD is linked at the end.</p>
+
+    <h3>1 · How I framed the problem</h3>
+
+    <p>My starting point was not "how do we add leather?" but <strong>"why are Printify decorators routing their best orders elsewhere?"</strong> The answer is structural: the platform's catalog schema doesn't have the fields required to list genuine leather properly — no grade, no tanning method, no origin. Without those fields, premium buyers searching on Etsy and Amazon can't find Printify sellers. The platform is invisible to the most valuable segment of its own market.</p>
+
+    <p>From there the hypothesis became testable: if we fix the taxonomy and add FTC-compliant auto-classification, decorators consolidate their leather spend on Printify. The revenue question becomes: at what order velocity does the $340K investment pay back?</p>
+
+    <h3>2 · Business proxy — how I validated demand without internal data</h3>
+
+    <p>Since I don't have access to Printify's internal GMV or category data, I built the demand case from public market signals:</p>
+
+    <table>
+      <thead><tr><th>Signal</th><th>Source</th><th>What it tells us</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Amazon US BSR</strong>: BULLIANT wallet = 8,365 units/mo</td><td>accio.com 2025</td><td>A single mature leather wallet SKU selling ~8K units/mo confirms high-volume demand exists on the channel Printify decorators would use</td></tr>
+        <tr><td><strong>Etsy US</strong>: "leather" = keyword #215, +57% search growth Nov–Dec</td><td>eRank 2025</td><td>Seasonal gifting peak + sustained search growth = structural demand, not a trend spike</td></tr>
+        <tr><td><strong>Etsy top-quartile sellers</strong>: 15–25 orders/SKU/mo</td><td>ShelfTrend 2025</td><td>This is my planning baseline (20 orders/SKU) — achievable for a well-positioned SKU, not an outlier</td></tr>
+        <tr><td><strong>US leather goods market</strong>: $54.26B · 6.7% CAGR</td><td>Nova One Advisor 2025</td><td>Category is growing, not declining — the window stays open beyond the pilot</td></tr>
+        <tr><td><strong>PrintKK 50-unit MOQ</strong>: competitor constraint</td><td>Public pricing</td><td>Defines the gap Printify can fill: 1-unit MOQ with comparable quality = structural differentiation</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout">
+      <strong>Key caveat I'm transparent about:</strong> the 8,365 units/mo BSR is a mature listing benchmark — a new POD SKU would realistically enter at 5–20 orders/mo. I use 20/SKU as the base case because it sits at the low end of the Etsy top-quartile range and requires no heroic assumptions. The conservative scenario (8/SKU → $60K/mo) is still profitable — just slower payback.
+    </div>
+
+    <h3>3 · The lean PM process — why I structured it as a phase gate</h3>
+
+    <p>The $340K can't be spent upfront when the demand signal is unvalidated. My approach was to design a kill gate at every stage where the investment commitment increases — each phase must earn the right to spend the next:</p>
+
+    <table>
+      <thead><tr><th>Phase</th><th>Spend</th><th>What we learn</th><th>Kill condition</th></tr></thead>
+      <tbody>
+        <tr><td><strong>PoC</strong></td><td>$0</td><td>Do existing decorators want this?</td><td>&lt;5 signed LOIs → stop, zero engineering spent</td></tr>
+        <tr><td><strong>Design Sprint</strong></td><td>$20K</td><td>Can decorators self-onboard without Ops?</td><td>Prototype usability &lt;60% → redesign before building</td></tr>
+        <tr><td><strong>MVP 1</strong></td><td>$80K</td><td>Can the AI classify leather reliably?</td><td>MAT-001 auto-approve &lt;88% → do not launch</td></tr>
+        <tr><td><strong>MVP 2</strong></td><td>$120K</td><td>Does real demand exist on Shopify?</td><td>&lt;4 orders/SKU/week → pause, redesign funnel</td></tr>
+        <tr><td><strong>MVP 3 + Post-launch</strong></td><td>$120K</td><td>Do all 3 channels scale at base case?</td><td>&lt;15 orders/SKU at Month 2 → KILL, reallocate team</td></tr>
+      </tbody>
+    </table>
+
+    <p>The hardest kill gate is at Month 2 post-launch — 8 weeks after MVP 3, when Amazon and Etsy indexing noise has cleared and we have a clean, comparable 3-channel read. Below 15 orders/SKU at that point means the investment doesn't recover even at 36 months. There's no ambiguity in the decision.</p>
+
+    <h3>4 · Key trade-offs I made explicitly</h3>
+
+    <ul>
+      <li><strong>Shopify pilot before Amazon/Etsy:</strong> Shopify has no SP-API approval dependency and no 30-day indexing lag. It's Printify's primary channel (60%+ of GMV). Starting there gives us a faster, cleaner demand signal before committing the Amazon integration budget.</li>
+      <li><strong>8 schema fields, not 15+:</strong> I scoped the MVP1 taxonomy to the 8 fields that directly affect pricing, compliance, and search ranking. More fields = more complexity, longer onboarding, higher form error rate. The 8 I chose capture 90%+ of the pricing differentiation available in the leather market.</li>
+      <li><strong>Static mockup engine, not dynamic:</strong> A dynamic render engine is a 12–16 week build that sits on the critical path. Static pre-rendered textures (3 per quality tier, locked W9 Day 1) protect the timeline. Dynamic rendering is deferred to v2 once the business case is validated.</li>
+      <li><strong>5 decorators, not 20:</strong> The goal is a clean velocity signal (orders/SKU), not statistical significance at cohort level. 5 decorators × 30 SKUs = 150 active listings — enough for Etsy/Amazon category algorithms to index the supplier and produce organic traffic data.</li>
+    </ul>
+
+    <h3>5 · Deliverables</h3>
+
+    <ul>
+      <li><strong>PRD (HTML):</strong> Full product spec with Phase KPIs, Business OKRs (4 KRs post-MVP3), 8-field schema value table, 10 feature descriptions, financial scenarios, risk table, next steps</li>
+      <li><strong>Financial model:</strong> 3-scenario Excel workbook (conservative / base / optimistic) with OKR tracking, proxy data sourcing, competitor benchmarks, and roadmap</li>
+      <li><strong>Demand trajectory chart:</strong> Orders/SKU/month across 5 time points (W16 Shopify pilot → M0 full launch → M1 → M2 kill gate → M3)</li>
+    </ul>
+
+    <div class="callout">
+      <strong>One thing I'd want to validate with your team before proceeding:</strong> the $8 platform margin/order assumption. If Printify's actual take rate on premium leather differs materially, the entire payback calculation shifts. The framework holds regardless — but the kill gate threshold would need recalibration against the real margin figure.
+    </div>
+
+    <p>Happy to walk through any section in more detail during the interview. Looking forward to the conversation.</p>
+
+    <p>Best,<br>Elena</p>
+
+    <div class="sig">
+      <strong>Elena Castan</strong>
+      Product Manager · Supply &amp; Catalog<br>
+      castanlara@gmail.com · github.com/elenacastan-maker
+    </div>
+
+    <div class="note">⟶ Full PRD, financial model, and all supporting documents available on GitHub: <em>github.com/elenacastan-maker/fyul-pm-interview-prep</em></div>
+
+  </div>
+</div>
