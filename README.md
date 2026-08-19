@@ -11,7 +11,7 @@
 | Document | View |
 |---|---|
 | **PRD — Premium Leather Goods** | [elenacastan-maker.github.io/fyul-pm-interview-prep ↗](https://elenacastan-maker.github.io/fyul-pm-interview-prep/) |
-| **Financial model (Excel)** | [`output/finals/Printify_Leather_PRD_Workbook.xlsx`](output/finals/Printify_Leather_PRD_Workbook.xlsx) |
+| **Financial model (Excel)** | [`output/finals/FYUL_Leather_Financial_Model.xlsx`](output/finals/FYUL_Leather_Financial_Model.xlsx) |
 
 ---
 
@@ -21,10 +21,11 @@
 output/finals/
 ├── premium-leather-prd-fyul.html     ← Full PRD (HTML) — also live at GitHub Pages
 ├── premium-leather-prd-fyul.docx     ← Full PRD (Word)
-├── Printify_Leather_PRD_Workbook.xlsx ← 6-sheet financial model
-├── demand_trajectory_v7.png          ← Demand signal chart
-├── financial_scenarios_v7.png        ← 3-scenario financial chart
-└── monthly_margin_v7.png             ← Annual run-rate chart
+├── FYUL_Leather_Financial_Model.xlsx  ← 6-sheet financial model
+├── Demand_Signal_Trajectory.png      ← Demand signal chart (W16 → M2 kill gate)
+├── Financial_Scenarios.png           ← 3-scenario financial chart
+├── Annual_Run-Rate.png               ← Annual run-rate by scenario
+└── Execution_Roadmap.png             ← 24-week phase roadmap
 ```
 
 ---
